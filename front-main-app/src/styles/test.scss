@@ -1,0 +1,716 @@
+@charset "UTF-8";
+// 全局变量
+$lightRed: #ff363c;
+$red: #d70011;
+$darkRed: #b80303;
+$orange: #f4b475;
+$violet: #928bba;
+$green: #75be7a;
+$blue: #86c8df;
+$yellow: #f7b143;
+$drakBrown: #a0815f;
+$brown: #cfa871;
+$lightBrown: #c9b691;
+$lightBlue: #8dbef3;
+$border-inner-left-side-color: #f6f6f6;
+$border-left-color: $border-inner-left-side-color;
+$border-right-color: $border-inner-left-side-color;
+$labelColors: $lightBlue, $lightBrown, $violet, $green, $blue, $yellow, $brown,
+  $orange, $lightRed;
+$bgColor: $lightRed, $orange, $violet, $green, $blue;
+$bglightOrangeColor: #fbfaf8;
+$quickLinksColors: #fef7eb, #38ade3, #6438c9, #f8c821, #da1826;
+$yearCurrentColor: #d5b07f;
+$yearCurrentLineColor: #d1b790;
+$yearGrayColor: #999;
+$yearGrayLineColor: #c2c2c2;
+$leftBgColor: #fbfaf8;
+$minWidth: 1200px;
+$sgSubLefts: 360px, 440px-4px, 550px, 660px+2px, 770px+2px, 880px+2px,
+  990px+24px;
+$quickLinksBgImgTops: 60px, 60px, 58px, 56px, 90px;
+$quickLinksBgImgLefts: 0px, 88px, 70px, 80px, 30px;
+$qlbih1: 100px, 35px;
+$qlbih2: 170px, 30px;
+$qlbih3: 180px, 20px;
+$qlbih4: 170px, 40px;
+$qlbih5: 150px, 25px;
+$videoWidth: 1280px;
+$videoHeight: 720px;
+$quickLinksBgImgHovers: $qlbih1, $qlbih2, $qlbih3, $qlbih4, $qlbih5;
+// 图片路径
+$logo: "~@/assets/app/logo.svg";
+$qrcode-download: "~@/assets/app/qrcode-downlaod-icon.png";
+$qrcode-download-hover: "~@/assets/app/qrcode-downlaod-icon-hover.png";
+$qrcode: "~@/assets/app/qrcode-app-download.png";
+$search-icon: "~@/assets/app/search-icon.png";
+$search-icon-close: "~@/assets/app/search-icon-close.png";
+// 格式图标
+$mp3: "~@/assets/components/report/audio.svg";
+$doc: "~@/assets/components/report/doc.svg";
+$pdf: "~@/assets/components/report/pdf.svg";
+$ppt: "~@/assets/components/report/ppt.svg";
+$rtf: "~@/assets/components/report/rtf.svg";
+$txt: "~@/assets/components/report/txt.svg";
+$mp4: "~@/assets/components/report/video.svg";
+$xls: "~@/assets/components/report/xls.svg";
+$format: $mp3, $doc, $pdf, $ppt, $rtf, $txt, $mp4, $xls;
+$formatName: "mp3", "doc", "pdf", "ppt", "rtf", "txt", "mp4", "xls";
+// 方法
+@mixin gradient-bg($deg: to bottom, $startColr: white, $endColor: black) {
+  background: -webkit-linear-gradient(#{$deg}deg, #{$startColr}, #{$endColor});
+  background: -o-linear-gradient(#{$deg}deg, #{$startColr}, #{$endColor});
+  background: -moz-linear-gradient(#{$deg}deg, #{$startColr}, #{$endColor});
+  background: linear-gradient(#{$deg}deg, #{$startColr}, #{$endColor});
+}
+
+@mixin active($x: 1, $y: 1, $color: initial) {
+  transform: translate(#{$x}px, #{$y}px);
+  @if $color!=initial {
+    color: $color;
+  }
+}
+
+@mixin dot(
+  $out-width: 0,
+  $opacity: 0,
+  $in-width: 10,
+  $background-color: white,
+  $border-olor: $red
+) {
+  &::before {
+    content: "";
+    /*父元素需要position: relative;*/
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 100%;
+    box-sizing: border-box;
+    border: 1px solid $border-olor;
+    width: #{$out-width}px;
+    height: #{$out-width}px;
+    opacity: $opacity;
+  }
+  &:after {
+    content: "";
+    /*父元素需要position: relative;*/
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 100%;
+    width: #{$in-width}px;
+    height: #{$in-width}px;
+    background: $background-color;
+  }
+}
+
+@mixin scale($scale: 1.1) {
+  transform: scale($scale);
+  -ms-transform: scale($scale);
+  /* IE 9 */
+  -webkit-transform: scale($scale);
+  /* Safari and Chrome */
+  -o-transform: scale($scale);
+  /* Opera */
+  -moz-transform: scale($scale);
+  /* Firefox */
+}
+
+@mixin scrollbar(
+  $background-bg-color: #eeeeee,
+  $background-thumb-color: $red,
+  $background-thumb-hover-color: #aaa,
+  $border-radius: 8,
+  $width: 8,
+  $height: 8
+) {
+  // 【局部】滚动条样式________________________
+  &::-webkit-scrollbar {
+    /*滚动条轨道*/
+    background: $background-bg-color;
+    border-radius: #{$border-radius}px;
+    width: #{$width}px;
+    height: #{$height}px;
+    &-thumb {
+      /*滚动条滑块*/
+      background: $background-thumb-color;
+      border-radius: #{$border-radius}px;
+      &:hover {
+        /*移入滑块*/
+        background: $background-thumb-hover-color;
+      }
+    }
+  }
+}
+
+@mixin opemt($opacity: 1, $pointer-events: auto, $margin-top: 0) {
+  .sg-sub-overlay {
+    pointer-events: $pointer-events;
+    .sg-sub {
+      // opacity: $opacity;
+      margin-top: $margin-top;
+    }
+  }
+}
+
+@mixin multi-line-ellipsis($line: 3, $height: 80) {
+  /*多行省略号*/
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $line;
+  overflow: hidden;
+  height: #{$height}px;
+}
+
+@mixin transition($second: 0.382, $property: all) {
+  transition: $property #{$second}s;
+  -moz-transition: $property #{$second}s;
+  -webkit-transition: $property #{$second}s;
+  -o-transition: $property #{$second}s;
+  -khtml-transition: $property #{$second}s;
+}
+
+@mixin updownAnimate($second: 1) {
+  animation: updownAnimate #{$second}s ease-in-out infinite;
+  -moz-animation: updownAnimate #{$second}s ease-in-out infinite;
+  -webkit-animation: updownAnimate #{$second}s ease-in-out infinite;
+  -o-animation: updownAnimate #{$second}s ease-in-out infinite;
+  @keyframes updownAnimate {
+    0% {
+      background-position-y: top;
+    }
+    50% {
+      background-position-y: bottom;
+    }
+    100% {
+      background-position-y: top;
+    }
+  }
+  @-moz-keyframes updownAnimate {
+    0% {
+      background-position-y: top;
+    }
+    50% {
+      background-position-y: bottom;
+    }
+    100% {
+      background-position-y: top;
+    }
+  }
+  @-webkit-keyframes updownAnimate {
+    0% {
+      background-position-y: top;
+    }
+    50% {
+      background-position-y: bottom;
+    }
+    100% {
+      background-position-y: top;
+    }
+  }
+  @-ms-keyframes updownAnimate {
+    0% {
+      background-position-y: top;
+    }
+    50% {
+      background-position-y: bottom;
+    }
+    100% {
+      background-position-y: top;
+    }
+  }
+  @-o-keyframes updownAnimate {
+    0% {
+      background-position-y: top;
+    }
+    50% {
+      background-position-y: bottom;
+    }
+    100% {
+      background-position-y: top;
+    }
+  }
+}
+
+// 嵌套
+%flip-horizontal {
+  transform: scaleX(-1);
+  -ms-transform: scaleX(-1);
+  /* IE 9 */
+  -webkit-transform: scaleX(-1);
+  /* Safari and Chrome */
+  -o-transform: scaleX(-1);
+  /* Opera */
+  -moz-transform: scaleX(-1);
+  /* Firefox */
+}
+
+%un-select {
+  /*禁止选中文本*/
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+}
+
+%single-line-ellipsis {
+  /*单行省略号*/
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+%dot {
+  content: "";
+  position: absolute;
+  /*父元素需要position: relative;*/
+  margin: auto;
+  left: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border: 3px solid #ccc;
+  box-shadow: 0 6px 9px rgba(153, 153, 153, 0.35);
+  border-radius: 8px;
+}
+
+%dot-red-shadow {
+  border-color: $red;
+  box-shadow: 0 6px 9px rgba(220, 24, 40, 0.35);
+}
+
+%cp {
+  &[current] {
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+  }
+}
+
+%dj {
+  display: flex;
+  justify-content: space-between;
+}
+
+%dj-left {
+  display: flex;
+  justify-content: flex-start;
+}
+
+%dj-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+%dj-around {
+  display: flex;
+  justify-content: space-around;
+}
+
+%djfa-left {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-content: space-between;
+}
+
+%djfa-justify {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-content: space-between;
+}
+
+%djfa-left-top-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+%right-angled-triangle {
+  /* 向右的直角三角形 */
+  content: "";
+  position: absolute;
+  top: 4px;
+  right: -20px;
+  width: 0;
+  height: 0;
+  border: 4px solid transparent;
+  border-left-color: currentColor;
+}
+
+%sgDownArrow1 {
+  /* 向下的直角箭头 */
+  .sg-down-arrow {
+    pointer-events: none;
+    width: 43px;
+    height: 43px;
+    margin-left: -21px;
+    margin-top: -9px;
+    background: white;
+    position: relative;
+    &::after {
+      content: "";
+      /*父元素需要position: relative;*/
+      position: absolute;
+      margin: auto;
+      top: -8px;
+      left: -22px;
+      right: 0;
+      bottom: 0;
+      border-width: 0 0 1px 1px;
+      border-style: solid;
+      border-color: #666;
+      width: 7px;
+      height: 7px;
+      transform: rotate(-45deg);
+      -ms-transform: rotate(-45deg);
+      /* IE 9 */
+      -webkit-transform: rotate(-45deg);
+      /* Safari and Chrome */
+      -o-transform: rotate(-45deg);
+      /* Opera */
+      -moz-transform: rotate(-45deg);
+      /* Firefox */
+    }
+  }
+}
+
+%sgDownArrow2 {
+  /* 向下的直角三角形箭头 */
+  .sg-down-arrow {
+    pointer-events: none;
+    width: 43px;
+    height: 43px;
+    margin-left: -44px;
+    margin-top: -9px;
+    background: white;
+    position: relative;
+    &::after {
+      content: "";
+      z-index: 1;
+      position: absolute;
+      margin: auto;
+      top: 6px;
+      left: 31px;
+      right: 0;
+      bottom: 0;
+      width: 0;
+      height: 0;
+      margin-left: -20px;
+      /* border-width: 6px;
+            border-style: solid;
+            border-color: #ccc transparent transparent transparent; */
+      border: 6px solid transparent;
+      border-top-color: #ccc;
+    }
+  }
+}
+
+%transition {
+  transition: 0.382s;
+  -moz-transition: 0.382s;
+  -webkit-transition: 0.382s;
+  -o-transition: 0.382s;
+  -khtml-transition: 0.382s;
+}
+
+%no-transition {
+  transition: none !important;
+  -moz-transition: none !important;
+  -webkit-transition: none !important;
+  -o-transition: none !important;
+  -khtml-transition: none !important;
+}
+
+%p {
+  & > p {
+    color: $red;
+    border-color: currentColor;
+    &:after {
+      transform: rotate(180deg);
+      transform-origin: 5px 2px;
+      border-top-color: currentColor;
+    }
+  }
+}
+
+%nav-hover {
+  &[current] {
+    @extend %p;
+  }
+  &[hover] {
+    @extend %p;
+    @include opemt(1, auto, 0);
+  }
+}
+
+%subOvelay {
+  .sg-sub-overlay {
+    position: absolute;
+    top: 120px;
+    left: 0;
+    width: 100%;
+    height: 45px;
+    overflow: hidden;
+    .sg-sub {
+      display: flex;
+      position: absolute;
+      height: 45px;
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.8);
+      &:after {
+        content: "";
+        left: -3000px;
+        top: 0;
+        height: 45px;
+        position: absolute;
+        width: 6000px;
+        background: rgba(0, 0, 0, 0.35);
+      }
+      li {
+        cursor: pointer;
+        height: 45px;
+        line-height: 40px;
+        z-index: 1;
+        margin: 0 60px 0 0;
+        &:hover {
+          color: white;
+        }
+        &[current] {
+          color: $red;
+        }
+      }
+    }
+  }
+  @include opemt(0, none, -45px);
+}
+
+%transitionAll {
+  @extend %transition;
+  *,
+  * ::before,
+  * ::after {
+    @extend %transition;
+  }
+}
+
+%detail {
+  font-size: 14px;
+  text-align: center;
+  & >>> p {
+    @extend %transition;
+    font-size: 14px;
+    text-align: justify;
+    line-height: 26px;
+    color: #666;
+    margin-bottom: 20px;
+    &:hover {
+      color: $red;
+    }
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+  & >>> img {
+    @extend %transition;
+    margin-bottom: 20px;
+  }
+}
+
+/* 无线循环往下往复淡入淡出运动 */
+
+%auto-down-animate {
+  animation: auto-down-animate 1s ease-in-out infinite;
+  -moz-animation: auto-down-animate 1s ease-in-out infinite;
+  /** Firefox */
+  -webkit-animation: auto-down-animate 1s ease-in-out infinite;
+  /** Safari 和 Chrome */
+  -o-animation: auto-down-animate 1s ease-in-out infinite;
+  /** Opera */
+  @keyframes auto-down-animate {
+    0% {
+      opacity: 0;
+      top: 0px;
+    }
+    50% {
+      opacity: 1;
+      top: 13px;
+    }
+    100% {
+      opacity: 0;
+      top: 27px;
+    }
+  }
+  @-moz-keyframes auto-down-animate {
+    0% {
+      -moz-transform: rotate(0deg);
+    }
+    50% {
+      -moz-transform: rotate(180deg);
+    }
+    100% {
+      -moz-transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes auto-down-animate {
+    0% {
+      -webkit-transform: rotate(0deg);
+    }
+    50% {
+      -webkit-transform: rotate(180deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+  @-ms-keyframes auto-down-animate {
+    0% {
+      -ms-transform: rotate(0deg);
+    }
+    50% {
+      -ms-transform: rotate(180deg);
+    }
+    100% {
+      -ms-transform: rotate(360deg);
+    }
+  }
+  @-o-keyframes auto-down-animate {
+    0% {
+      -o-transform: rotate(0deg);
+    }
+    50% {
+      -o-transform: rotate(180deg);
+    }
+    100% {
+      -o-transform: rotate(360deg);
+    }
+  }
+}
+
+/* 外发光动画、向外辐射动画效果 */
+
+$orangeColor: rgba(251, 193, 105, 0.6);
+%out-glow {
+  &:before,
+  &:after {
+    background-color: $orangeColor;
+    width: 70px;
+    height: 70px;
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    z-index: -1;
+    border-radius: 100%;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    animation: out-glow 1.5s infinite ease-out;
+    -moz-animation: out-glow 1.5s infinite ease-out;
+    /* Firefox */
+    -webkit-animation: out-glow 1.5s infinite ease-out;
+    /* Safari 和 Chrome */
+    -o-animation: out-glow 1.5s infinite ease-out;
+    /* Opera */
+    animation-fill-mode: both;
+    /*动画播放到最后一帧或者倒放到第一帧停止*/
+    -webkit-animation-fill-mode: both;
+    /* Safari 和 Chrome */
+  }
+  &:after {
+    animation: out-glow 2.5s infinite ease-out;
+    -moz-animation: out-glow 2.5s infinite ease-out;
+    /* Firefox */
+    -webkit-animation: out-glow 2.5s infinite ease-out;
+    /* Safari 和 Chrome */
+    -o-animation: out-glow 2.5s infinite ease-out;
+    /* Opera */
+    -ms-animation: out-glow 2.5s infinite ease-out;
+  }
+  @keyframes out-glow {
+    0% {
+      opacity: 0;
+      transform: scale(0);
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1.5);
+    }
+  }
+  @-moz-keyframes out-glow {
+    0% {
+      opacity: 0;
+      -moz-transform: scale(0);
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      -moz-transform: scale(1.5);
+    }
+  }
+  @-webkit-keyframes out-glow {
+    0% {
+      opacity: 0;
+      -webkit-transform: scale(0);
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      -webkit-transform: scale(1.5);
+    }
+  }
+  @-o-keyframes out-glow {
+    0% {
+      opacity: 0;
+      -o-transform: scale(0);
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      -o-transform: scale(1.5);
+    }
+  }
+  @-ms-keyframes out-glow {
+    0% {
+      opacity: 0;
+      -ms-transform: scale(0);
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      -ms-transform: scale(1.5);
+    }
+  }
+}
+
+%gray {
+  /*全站变成灰色（去色）*/
+  filter: grayscale(10%);
+  -moz-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  -webkit-filter: grayscale(1);
+}
+
+// 滚动条样式________________________
+@include scrollbar(white, #cfcfcf, #aaa, 0);
