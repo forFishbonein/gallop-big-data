@@ -1,7 +1,11 @@
 import pandas as pd
-import Connnection
+from pymongo import MongoClient
+import Connection
+from fancyimpute import KNN
+
+
 def fillnaCity():
-    table = Connnection.getTable('city')
+    table = Connection.getTable('city')
     collection = list(table.find())
     data = pd.DataFrame(collection)
     df = pd.DataFrame(list(data))
@@ -9,7 +13,7 @@ def fillnaCity():
     return df
 
 def fillnaCountry():
-    table = Connnection.getTable('country')
+    table = Connection.getTable('country')
     collection = list(table.find())
     data = pd.DataFrame(collection)
     df = pd.DataFrame(list(data))
@@ -17,11 +21,24 @@ def fillnaCountry():
     return df
 
 def fillnaProvince():
-    table = Connnection.getTable('province')
+    table = Connection.getTable('province')
     collection = list(table.find())
     data = pd.DataFrame(collection)
     df = pd.DataFrame(list(data))
     df = df.interpolate()
     return df
 
+def test():
 
+    table = Connection.getTable('province')
+    collection = list(table.find())
+    df = pd.DataFrame(collection)
+    df = df.iloc[:, 4:]
+    cols = list(df.loc[0:1])
+
+    data = pd.DataFrame(KNN(k=6).fit_transform(df))
+    data.columns = cols
+    return data
+
+data = test()
+print(data)
