@@ -30,10 +30,10 @@ def fillnaProvince():
 
 def test():
 
-    table = Connection.getTable('province')
+    table = Connection.getTable('city')
     collection = list(table.find())
     df = pd.DataFrame(collection)
-    df = df.iloc[:, 4:]
+    df = df.iloc[:, 5:]
     cols = list(df.loc[0:1])
 
     data = pd.DataFrame(KNN(k=6).fit_transform(df))

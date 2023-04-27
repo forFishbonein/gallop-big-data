@@ -1,18 +1,14 @@
 import pandas as pd
-import Connnection
+import Connection
+
+# from pyspark.sql.functions import col
 
 def YearAndProData(indicator):
-    table = Connnection.getTable('province')
-    collection = list(table.find())
-    data = pd.DataFrame(collection)
-    indi = data[["地区",'年份',indicator]].dropna()
-    indi = indi.reset_index()
-    del indi[indi.keys()[0]]
-    res = []
-    for i in range(len(indi)):
-        row_dict = indi.loc[i].to_dict()
-        res.append(row_dict)
-    return res
+    # province = spark.sql("select * from province")
+    indi = province.select("地区", "年份", indicator).na.drop()
+    indi = indi.withColumn('index', col('index').cast('integer')).dropna()
+    indi = indi.toPandas().reset_index().to_dict('records')
+    return indi
 
 def selectProvince(indicator,province):
     table = Connnection.getTable('province')
