@@ -1,5 +1,4 @@
 import pandas as pd
-from pymongo import MongoClient
 import Connection
 from fancyimpute import KNN
 

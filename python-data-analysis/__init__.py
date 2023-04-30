@@ -1,10 +1,11 @@
 # from bottle import route
-from flask import Flask, make_response
+from urllib import request
+
+from flask import Flask
 from flask_cors import CORS
-from google.protobuf.api_pb2 import Api
-from  datapreprocessor import IndicatorQuery as dsq
-from dataanalysis import EveryEvaluation ,ContrastAnalysis
+from dataanalysis import ContrastAnalysis
 # from dataanalysis import ContrastAnalysis
+from dataquery import IndicatorQuery
 app = Flask(__name__)
 # r'/*' 是通配符，让本服务器所有的 URL 都允许跨域请求
 # api = Api(app)
@@ -17,13 +18,7 @@ app = Flask(__name__)
 #     res.headers['Access-Control-Allow-Headers'] = 'x-requested-with,content-type'
 #     return res
 
-# @app.route('/sd/<indicatorName>', methods=["GET","OPTIONS"])
-# def indYearAndProvince(indicatorName):
-#     # print(usrNo)
-#     resData = dsq.YearAndProData(indicatorName)
-#     print(resData)
-#     return resData
-#
+
 # @app.route('evalution/yearToPro', methods=["GET","OPTIONS"])
 # def ProvinceEvaluation(yearToPro):
 #     provinceEvalRes = EveryEvaluation.demo(yearToPro)
@@ -36,10 +31,22 @@ app = Flask(__name__)
 #     print(yearEvalRes)
 #     return yearEvalRes
 
+@app.route('/singlequery/<indicator>/<year>/<province>',methods=["GET","POST"])
+def getIndictorData(indicator,year,province):
+    if indicator is None:
+        return IndicatorQuery.getIndicatorAllData("北京市")
+    elif year is None and province is None:
+        return IndicatorQuery.getIndicatorAllData(indicator),IndicatorQuery.averageYear(indicator)
+    elif province is None:
+        return IndicatorQuery.getProvinceData(indicator,year)
+    elif year is None:
+        return IndicatorQuery.getYearData(indicator,province)
+
 @app.route('/contrast/province')
 def ProvinceAvgGdp():
     print(ContrastAnalysis.getJsonPro())
     return ContrastAnalysis.getJsonPro()
+
 @app.route('/contrast/time')
 def TimeAvgGdp():
     print(ContrastAnalysis.TimeContrast())

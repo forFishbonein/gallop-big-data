@@ -112,9 +112,9 @@ def getJsonPro():
     # print(resDict)
     return resDict
 
-# if __name__ == '__main__':
-#     data = getJsonPro()
+if __name__ == '__main__':
+    # data = getJsonPro()
     #
     # print(data)
-    # print(TimeContrast())
+    print(TimeContrast())
 
