@@ -1,5 +1,5 @@
 import numpy as np
-# import pandas as pd
+import pandas as pd
 # import matplotlib.pyplot as plt
 # import BPNN
 # from sklearn import metrics
@@ -12,6 +12,8 @@ from pyspark.sql.types import *
 from pyspark.sql.functions import *
 import json
 from pyspark.sql.functions import array
+import Connection
+
 
 # 定义DataFrame的schema
 schema = StructType([
@@ -20,15 +22,21 @@ schema = StructType([
     StructField("gdp", FloatType(), True)])
 
 def readDataframe():
-    spark = SparkSession.builder.appName("GDP Average").getOrCreate()
-    df = spark.read.csv(r"D:\肖红娇\项目\大数据实训\data\province.csv", header=False, inferSchema=True)
-    return df
+    collection = Connection.getCity()
+    data = []
+    for doc in collection.find({},{"_id":0,"地区":1,"年份":1,"地区生产总值":1}):
+        # print(doc)
+        data.append(doc)
+    data = pd.DataFrame(data).dropna()
+    # spark = SparkSession.builder.appName("GDP Average").getOrCreate()
+    data.columns = ["province","year","gdp"]
+    return data
 
 def TimeContrast():
     # spark = SparkSession.builder.appName("GDP Average").getOrCreate()
     df = readDataframe()
-    df = df.selectExpr("_c1 as province", "_c2 as year", "_c51 as gdp")
-    df = df.orderBy(["province", "year"], ascending=[True, True])
+    # df = df.selectExpr("_c1 as province", "_c2 as year", "_c51 as gdp")
+    df = df.orderBy(["provrince", "year"], ascending=[True, True])
     eastern_provinces = ["上海市", "江苏省", "浙江省", "福建省", "山东省", "广东省", "海南省"]
     central_provinces = ["河南省", "湖北省", "湖南省", "江西省", "安徽省"]
     western_provinces = ["陕西省", "甘肃省", "青海省", "宁夏回族自治区", "新疆维吾尔自治区", "西藏自治区", "四川省",
@@ -83,8 +91,9 @@ def ProvinceContrast():
     df = readDataframe()
     # print(df)
     # 转换列名
-    df = df.selectExpr("_c1 as province", "_c2 as year", "_c51 as gdp")
+    # df = df.selectExpr("_c1 as province", "_c2 as year", "_c51 as gdp")
     # result = df.groupBy("province").agg(round(avg("gdp"), 2).alias("average_gdp"))
+
     result = df.groupBy("province").agg(avg(col("gdp").cast("int")).alias("average_gdp"))
 
     result_array = result.collect()
@@ -113,8 +122,8 @@ def getJsonPro():
     return resDict
 
 if __name__ == '__main__':
-    # data = getJsonPro()
-    #
-    # print(data)
-    print(TimeContrast())
+    data = getJsonPro()
+
+    print(data)
+    # print(TimeContrast())
 

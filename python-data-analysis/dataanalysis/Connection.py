@@ -14,14 +14,9 @@ def getCity():
 
 def getProvince():
     db = getDB()
-    #限定数据库表，plan#
-    # client = MongoClient('mongodb://admin:12345678@47.93.250.53:27017/?authMechanism=DEFAULT&authSource=admin')
-    # db = client.fastdata
-    mycol = db["province"]
-    data = mycol.find({},{"_id":0,"行政区划代码":1,"年份":1,"地区生产总值":1})
-    df = pd.DataFrame(list(data))
-    print(df)
-    return df
+    ##限定数据库表，plan
+    myTable =  db.provincce
+    return myTable
 
 def getCountry():
     db = getDB()
@@ -32,26 +27,14 @@ def getCountry():
 #     myTable = getTable(tableName)
 #     colData = myTable.distinct(colName)
 #     return colData
-# client = MongoClient('mongodb://admin:12345678@47.93.250.53:27017/?authMechanism=DEFAULT&authSource=admin')
-# db = client.fastdata
-# mycol = db["province"]
-# data = mycol.find({},{"_id":0,"年份":1})
-# df = pd.DataFrame(list(data))
-# print(df)
-getProvince()
+
 # 读取其中的几列，并将其转化为dataframe对象
-# collection = getProvince()
+# collection = getCity()
 # data = []
 # for doc in collection.find({},{"_id":0,"年份":1}):
 #     # print(doc)
 #     data.append(doc)
-# print(data)
-
-# for doc in collection.find({},{"_id":0,"年份":1}):
-#     print(doc)
-#     print("--------------")
-#     data.append(doc)
-# print(data)
+#     # print(data)
 #     # break
 # df = pd.DataFrame(data)
 # # print(list(table.find()))

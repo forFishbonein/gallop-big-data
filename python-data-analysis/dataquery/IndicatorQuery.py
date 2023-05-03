@@ -17,10 +17,7 @@ from pyspark.sql import SparkSession
 
 # 读取Excel文件
 
-def readDataframe():
-    spark = SparkSession.builder.appName("GDP Average").getOrCreate()
-    df = spark.read.csv(r"D:\肖红娇\项目\大数据实训\data\province.csv", header=False, inferSchema=True)
-    return df
+
 def getYearData(indicator,province):
     collection = Connection.getCity()
     data = []

@@ -7,6 +7,7 @@ import string
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import pandas as pd
+import Connection
 #random.seed(0)  #当我们设置相同的seed，每次生成的随机数相同。如果不设置seed，则每次会生成不同的随机数
 #参考https://blog.csdn.net/jiangjiang_jian/article/details/79031788
 
@@ -227,13 +228,21 @@ def demo(yr,inputData,outputData):
     dataF = n.test(patt)
     return dataF
     #测试神经网络
+def readDataframe():
+    collection = Connection.getCity()
+    data = []
+    for doc in collection.find({},{"_id":0,"地区":1,"年份":1,"居民消费价格指数(上年=100)":1,"全体居民人均消费支出":1,"规模以上工业企业出口交货值":1,"地区生产总值":1}):
+        # print(doc)
+        data.append(doc)
+    data = pd.DataFrame(data).dropna()
+    # spark = SparkSession.builder.appName("GDP Average").getOrCreate()
+    return data
 
 def EveryProvinceEvalution(pro):
-    provinceData = pd.read_csv(r"D:\肖红娇\项目\大数据实训\data\province.csv")
+    provinceData = readDataframe()
+
     cols = ['居民消费价格指数(上年=100)','全体居民人均消费支出','规模以上工业企业出口交货值','规模以上工业企业主营业务收入']
-
     inputData = provinceData[provinceData['地区']==pro][cols]
-
     outputData = provinceData[provinceData['地区']==pro]['地区生产总值']
 
     year = provinceData[provinceData['地区']==pro]['年份']
@@ -252,7 +261,7 @@ def EveryProvinceEvalution(pro):
     return dataF
 
 def EveryYearEvalution(yr):
-    provinceData = pd.read_csv(r"D:\肖红娇\项目\大数据实训\data\province.csv")
+    provinceData = readDataframe()
     cols = ['居民消费价格指数(上年=100)','全体居民人均消费支出','规模以上工业企业出口交货值','规模以上工业企业主营业务收入']
 
     inputData = provinceData[provinceData['年份']==yr][cols]
