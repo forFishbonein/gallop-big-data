@@ -22,4 +22,4 @@ def GetProvinceName():
     dictProvinceName ={
         "values":provinceNameList
     }
-    return dictProvinceName
+    return json.dumps(dictProvinceName)

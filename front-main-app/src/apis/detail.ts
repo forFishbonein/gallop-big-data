@@ -13,3 +13,11 @@ export function getLineInfoApi(str) {
     // loading: false,
   });
 }
+
+export function getAllProvinces() {
+  return httpRequest({
+    url: "/query/provincelist",
+    method: "get",
+    // loading: false,
+  });
+}

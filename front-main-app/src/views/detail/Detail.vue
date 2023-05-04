@@ -1,8 +1,12 @@
 <script setup lang="ts">
-import { ref, onMounted, inject } from "vue";
+import { ref, onMounted, inject, onBeforeMount } from "vue";
 import { onBeforeRouteLeave } from "vue-router";
 import { utilStore } from "@/store/util";
-import { getBubbleInfoApi, getLineInfoApi } from "@/apis/detail";
+import {
+  getBubbleInfoApi,
+  getLineInfoApi,
+  getAllProvinces,
+} from "@/apis/detail";
 import { keywordStore } from "@/store/keyword";
 // const props = defineProps<{
 //   keyword: string;
@@ -81,6 +85,24 @@ const getLineInfo = async () => {
     });
   initLine();
 };
+// @ts-ignore
+let provincesName = [];
+const getAllProvincesName = () => {
+  getAllProvinces()
+    .then((res) => {
+      // @ts-ignore
+      provincesName = res.values;
+      console.log(provincesName);
+    })
+    .catch((error) => {
+      // @ts-ignore
+      ElMessage({ type: "error", message: error.message });
+    });
+};
+onBeforeMount(() => {
+  getAllProvincesName();
+});
+
 /*
 提取标签：
 const data = [
@@ -435,6 +457,18 @@ refresh(); //调用刷新方法
 const province = ref("");
 const year = ref("");
 const selectOptions = () => {
+  if (province.value !== "" && year.value === "") {
+    displayFlag.value = 2;
+  } else if (province.value === "" && year.value !== "") {
+    // @ts-ignore
+    ElMessage({ type: "error", message: "请先选择省份" });
+  } else if (province.value !== "" && year.value !== "") {
+    displayFlag.value = 3;
+  } else if (province.value === "" && year.value === "") {
+    // @ts-ignore
+    ElMessage({ type: "error", message: "请先选择内容" });
+  }
+
   alert(province.value);
   alert(year.value);
 };
@@ -466,15 +500,56 @@ onBeforeRouteLeave((to, from, next) => {
         v-model="province"
       >
         <option data-tokens="ketchup mustard" value="">选择省份</option>
-        <option data-tokens="ketchup mustard" value="Hot Dog, Fries and a Soda">
-          Hot Dog, Fries and a Soda
+        <option data-tokens="ketchup mustard" value="北京市">北京市</option>
+        <option data-tokens="ketchup mustard" value="天津市">天津市</option>
+        <option data-tokens="ketchup mustard" value="河北省">河北省</option>
+        <option data-tokens="ketchup mustard" value="山西省">山西省</option>
+        <option data-tokens="ketchup mustard" value="内蒙古自治区">
+          内蒙古自治区
         </option>
-        <option data-tokens="mustard" value="Burger, Shake and a Smile">
-          Burger, Shake and a Smile
+        <option data-tokens="ketchup mustard" value="辽宁省">辽宁省</option>
+        <option data-tokens="ketchup mustard" value="吉林省">吉林省</option>
+        <option data-tokens="ketchup mustard" value="黑龙江省">黑龙江省</option>
+        <option data-tokens="ketchup mustard" value="上海市">上海市</option>
+        <option data-tokens="ketchup mustard" value="江苏省">江苏省</option>
+        <option data-tokens="ketchup mustard" value="浙江省">浙江省</option>
+        <option data-tokens="ketchup mustard" value="安徽省">安徽省</option>
+        <option data-tokens="ketchup mustard" value="福建省">福建省</option>
+        <option data-tokens="ketchup mustard" value="江西省">江西省</option>
+        <option data-tokens="ketchup mustard" value="山东省">山东省</option>
+        <option data-tokens="ketchup mustard" value="河南省">河南省</option>
+        <option data-tokens="ketchup mustard" value="湖北省">湖北省</option>
+        <option data-tokens="ketchup mustard" value="湖南省">湖南省</option>
+        <option data-tokens="ketchup mustard" value="广东省">广东省</option>
+        <option data-tokens="ketchup mustard" value="广西壮族自治区">
+          广西壮族自治区
         </option>
-        <option data-tokens="frosting" value="Sugar, Spice and all things nice">
-          Sugar, Spice and all things nice
+        <option data-tokens="ketchup mustard" value="海南省">海南省</option>
+        <option data-tokens="ketchup mustard" value="重庆市">重庆市</option>
+        <option data-tokens="ketchup mustard" value="四川省">四川省</option>
+        <option data-tokens="ketchup mustard" value="贵州省">贵州省</option>
+        <option data-tokens="ketchup mustard" value="云南省">云南省</option>
+        <option data-tokens="ketchup mustard" value="西藏自治区">
+          西藏自治区
         </option>
+        <option data-tokens="ketchup mustard" value="四川省">四川省</option>
+        <option data-tokens="ketchup mustard" value="陕西省">陕西省</option>
+        <option data-tokens="ketchup mustard" value="甘肃省">甘肃省</option>
+        <option data-tokens="ketchup mustard" value="青海省">青海省</option>
+        <option data-tokens="ketchup mustard" value="宁夏回族自治区">
+          宁夏回族自治区
+        </option>
+        <option data-tokens="ketchup mustard" value="新疆维吾尔自治区">
+          新疆维吾尔自治区
+        </option>
+        <!-- <option
+          data-tokens="ketchup mustard"
+          :value="i"
+          v-for="(i, k) in provincesName"
+          :key="k"
+        >
+          {{ i }}
+        </option> -->
       </select>
       <select
         class="selectpicker"
@@ -482,15 +557,27 @@ onBeforeRouteLeave((to, from, next) => {
         v-model="year"
       >
         <option data-tokens="ketchup mustard" value="">选择年份</option>
-        <option data-tokens="ketchup mustard" value="Hot Dog, Fries and a Soda">
-          Hot Dog, Fries and a Soda
-        </option>
-        <option data-tokens="mustard" value="Hot Dog, Fries and a Soda">
-          Burger, Shake and a Smile
-        </option>
-        <option data-tokens="frosting" value="Hot Dog, Fries and a Soda">
-          Sugar, Spice and all things nice
-        </option>
+        <option data-tokens="ketchup mustard" value="2000">2000</option>
+        <option data-tokens="ketchup mustard" value="2001">2001</option>
+        <option data-tokens="ketchup mustard" value="2002">2002</option>
+        <option data-tokens="ketchup mustard" value="2003">2003</option>
+        <option data-tokens="ketchup mustard" value="2004">2004</option>
+        <option data-tokens="ketchup mustard" value="2005">2005</option>
+        <option data-tokens="ketchup mustard" value="2006">2006</option>
+        <option data-tokens="ketchup mustard" value="2007">2007</option>
+        <option data-tokens="ketchup mustard" value="2008">2008</option>
+        <option data-tokens="ketchup mustard" value="2009">2009</option>
+        <option data-tokens="ketchup mustard" value="2010">2010</option>
+        <option data-tokens="ketchup mustard" value="2011">2011</option>
+        <option data-tokens="ketchup mustard" value="2012">2012</option>
+        <option data-tokens="ketchup mustard" value="2013">2013</option>
+        <option data-tokens="ketchup mustard" value="2014">2014</option>
+        <option data-tokens="ketchup mustard" value="2015">2015</option>
+        <option data-tokens="ketchup mustard" value="2016">2016</option>
+        <option data-tokens="ketchup mustard" value="2017">2017</option>
+        <option data-tokens="ketchup mustard" value="2018">2018</option>
+        <option data-tokens="ketchup mustard" value="2019">2019</option>
+        <option data-tokens="ketchup mustard" value="2020">2020</option>
       </select>
       <button
         class="btn btn-primary btn-outline fancy-button btn-0"
