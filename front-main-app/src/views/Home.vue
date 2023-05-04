@@ -451,6 +451,7 @@ onMounted(() => {
   testEcharts();
   // initEcharts();
   getPeopleSex();
+  initEcharts2();
   /*****Resize function start*****/
   var sparkResize, echartResize;
   // @ts-ignore

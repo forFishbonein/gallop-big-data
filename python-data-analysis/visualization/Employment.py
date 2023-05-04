@@ -1,3 +1,5 @@
+import json
+
 import pandas as pd
 import Connection
 #就业人口
@@ -25,7 +27,7 @@ def getEmployment():
         "countryEmployment":countryEmploymentData
 
     }
-    return dicEmployment
+    return json.dumps(dicEmployment)
 
 #失业人口
 def getUnemployment():
