@@ -6,7 +6,7 @@ from flask import Flask
 from flask_cors import CORS
 from dataanalysis import ContrastAnalysis,EveryEvaluation,ProvinceGdpPredict,CityGdpPredict,EveryIncaditorPredict
 # from dataanalysis import ContrastAnalysis
-from dataquery import IndicatorQuery
+from dataquery import IndicatorQuery,ProvinceNameQuery
 from visualization import People,Financial,Employment,ForeignTrade
 # import sys
 
@@ -149,6 +149,11 @@ def getForegintrade(pro,year):
     return ForeignTrade.getForegintrade(pro,year)
 
 #数据可视化大屏部分----第一产业发展情况
+
+
+@app.route('/query/provincelist')
+def GetProvinceList():
+    return ProvinceNameQuery.GetProvinceName()
 
 CORS(app, resources=r'/*')
 if __name__ == "__main__":
