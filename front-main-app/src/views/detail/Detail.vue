@@ -2,7 +2,7 @@
 import { ref, onMounted, inject } from "vue";
 import { onBeforeRouteLeave } from "vue-router";
 import { utilStore } from "@/store/util";
-import { getBubbleInfoApi } from "@/apis/detail";
+import { getBubbleInfoApi, getLineInfoApi } from "@/apis/detail";
 import { keywordStore } from "@/store/keyword";
 // const props = defineProps<{
 //   keyword: string;
@@ -61,6 +61,26 @@ const getBubbleInfo = async () => {
     });
   initEcharts2();
 };
+let data2 = [];
+const getLineInfo = async () => {
+  await getLineInfoApi(kstore.keyword)
+    .then((res) => {
+      // @ts-ignore
+      let temple = res.values;
+      temple.forEach((e) => {
+        // @ts-ignore
+        data2.push({
+          name: Math.floor(e[0]) + "年",
+          value: e[1].toFixed(2),
+        });
+      });
+    })
+    .catch((error) => {
+      // @ts-ignore
+      ElMessage({ type: "error", message: error.message });
+    });
+  initLine();
+};
 /*
 提取标签：
 const data = [
@@ -71,7 +91,7 @@ const data = [
 
 const labels = data.map(item => item.label)
  */
-/* 折线图 */
+/* 折线图2 */
 const initEcharts = () => {
   // @ts-ignore
   if ($("#e_chart_1").length > 0) {
@@ -323,6 +343,38 @@ const initEcharts2 = () => {
     eChart_2.resize();
   }
 };
+const initLine = () => {
+  // @ts-ignore
+  if ($("#morris_line_chart").length > 0)
+    // Line Chart
+    // @ts-ignore
+    Morris.Line({
+      // ID of the element in which to draw the chart.
+      element: "morris_line_chart",
+      // Chart data records -- each entry in this array corresponds to a point on
+      // the chart.
+      data: data2,
+      // The name of the data record attribute that contains x-visitss.
+      xkey: "name",
+      // A list of names of data record attributes that contain y-visitss.
+      ykeys: ["value"],
+      // Labels for the ykeys -- will be displayed when you hover over the
+      // chart.
+      labels: ["均值"],
+      // Disables line smoothing
+      pointSize: 1,
+      pointStrokeColors: ["#4aa23c"],
+      behaveLikeLine: true,
+      grid: false,
+      gridTextColor: "#878787",
+      lineWidth: 2,
+      smooth: true,
+      hideHover: "auto",
+      lineColors: ["#4aa23c"],
+      resize: true,
+      gridTextFamily: "Roboto",
+    });
+};
 const initMap = () => {
   // @ts-ignore
   $(function () {
@@ -391,6 +443,7 @@ onMounted(() => {
   if (kstore.keyword.length > 0) {
     // alert("开始查询");
     getBubbleInfo();
+    getLineInfo();
   }
   // initEcharts2();
   initMap();
@@ -458,6 +511,23 @@ onBeforeRouteLeave((to, from, next) => {
           <div class="panel-wrapper collapse in">
             <div class="panel-body">
               <div id="e_chart_2" style="height: 450px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row row-center" v-if="displayFlag === 1">
+      <div class="col-lg-10">
+        <div class="panel panel-default card-view">
+          <div class="panel-heading">
+            <div class="pull-left">
+              <h6 class="panel-title txt-dark">折线图</h6>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="panel-wrapper collapse in">
+            <div class="panel-body">
+              <div id="morris_line_chart" class="morris-chart"></div>
             </div>
           </div>
         </div>

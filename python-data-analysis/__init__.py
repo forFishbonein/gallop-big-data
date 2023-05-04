@@ -1,7 +1,7 @@
 # from bottle import route
 from urllib import request
 
-from ahocorasick import unicode
+# from ahocorasick import unicode
 from flask import Flask
 from flask_cors import CORS
 from dataanalysis import ContrastAnalysis,EveryEvaluation,ProvinceGdpPredict,CityGdpPredict,EveryIncaditorPredict
@@ -15,9 +15,9 @@ app = Flask(__name__)
 # r'/*' 是通配符，让本服务器所有的 URL 都允许跨域请求
 
 
-def receive_chinese_data(chinese_data):
-    u_data = unicode(chinese_data, "utf-8")
-    utf8_data = u_data.encode("utf-8")
+# def receive_chinese_data(chinese_data):
+#     u_data = unicode(chinese_data, "utf-8")
+#     utf8_data = u_data.encode("utf-8")
 
 # @app.route('evalution/yearToPro', methods=["GET","OPTIONS"])
 # def ProvinceEvaluation(yearToPro):
@@ -59,8 +59,8 @@ def IndicatorPredict(indicator):
 # 具体指标查询
 @app.route('/singlequery/alldata/<indicator>',methods=["GET","POST"])
 def IndictorData(indicator):
-    u_data = unicode(indicator, "utf-8")
-    indicator = u_data.encode("utf-8")
+    # u_data = unicode(indicator, "utf-8")
+    # indicator = u_data.encode("utf-8")
     return IndicatorQuery.getIndicatorAllData(indicator)
 
 @app.route('/singlequery/avgdata/<indicator>',methods=["GET","POST"])

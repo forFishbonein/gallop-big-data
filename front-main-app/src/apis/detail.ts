@@ -6,3 +6,10 @@ export function getBubbleInfoApi(str) {
     // loading: false,
   });
 }
+export function getLineInfoApi(str) {
+  return httpRequest({
+    url: "/singlequery/avgdata/" + str,
+    method: "get",
+    // loading: false,
+  });
+}
