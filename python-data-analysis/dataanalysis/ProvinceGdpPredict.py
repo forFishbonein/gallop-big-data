@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 #导入必要的库
+import json
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -43,13 +45,13 @@ def read_check_data(pro):
     data1 = pd.DataFrame(list(data1))
 
     data1 = data1[data1["地区"]==pro]
-    print(data1)
+
     # # 输出每个列丢失值
     data = data_before[["地区","年份","房地产开发投资额","经营单位所在地进出口总额","地方财政一般预算收入","地区生产总值"]].dropna()
     # print(data)
     # data = readDataframe()
     data = data[data["地区"]==pro]
-    print(data)
+
     x_first_train = np.array(data['房地产开发投资额'].loc[:15])
 
     x_second_train = np.array(data['经营单位所在地进出口总额'].loc[:15])
@@ -87,7 +89,7 @@ def multiple_regression(x_first_train,x_second_train,x_third_train, x_first_pred
     plt.plot(x1, y_income, '*', label='国内生产总值(万亿元)')
     plt.plot(x2, y_predict, '.', label='预测值')
     plt.legend()
-    plt.show()
+    # plt.show()
     return x1,x2,X, B, y_predict
 
 
@@ -117,8 +119,8 @@ def check(y_real, y_predict, X, B):
     plt.figure()
     plt.axhline(y=1.9818, ls="-", c="green")
     plt.plot(np.abs(T), '.')
-    plt.show()
-    print(y_predict[-1])
+    # plt.show()
+    # print(y_predict[-1])
 
 def getPredictData(pro):
     x_first_train, x_second_train, x_third_train, x_first_predict, x_second_predict, x_third_predict, y_income = read_check_data(
@@ -132,7 +134,7 @@ def getPredictData(pro):
         "realGdp": realData,
         "predictGdp":predictData
     }
-    return dictPrediction
+    return  json.dumps(dictPrediction)
 
 if __name__ == '__main__':
     pro = "北京市"

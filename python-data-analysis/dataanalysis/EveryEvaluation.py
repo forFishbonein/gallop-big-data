@@ -246,7 +246,7 @@ def readDataframe():
 
 def EveryProvinceEvalution(pro):
     # provinceData = readDataframe()
-    provinceData = pd.read_csv("data\province.csv")
+    provinceData = pd.read_csv("../data\province.csv")
     cols = ['居民消费价格指数(上年=100)','全体居民人均消费支出','规模以上工业企业出口交货值','规模以上工业企业主营业务收入']
     inputData = provinceData[provinceData['地区']==pro][cols]
     outputData = provinceData[provinceData['地区']==pro]['地区生产总值']
