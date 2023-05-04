@@ -118,6 +118,9 @@ export default {
       border: 1px $theme-color solid;
       border-radius: 0 18px 18px 0;
       letter-spacing: 2px;
+      transition: all 0.3s linear;
+      caret-color: $theme-color; /* 光标颜色 */
+      // text-indent: 2px; /* 光标宽度 */
     }
     // input:focus {
     //   outline: none !important;

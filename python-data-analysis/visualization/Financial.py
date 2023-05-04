@@ -1,5 +1,7 @@
 import pandas as pd
 import Connection
+import json
+
 #国家经济支出
 def getFinancialpay():
     collection = Connection.getProvince()
@@ -56,6 +58,6 @@ def getConsumption():
         "tianjin":tjConsumptionData,
         "chongqing":cqConsumptionData
     }
-    return dictConsumption
+    return json.dumps(dictConsumption)
 
 print(getFinancialtax("河北省"))

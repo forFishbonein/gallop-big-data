@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, inject } from "vue";
 import { useRouter } from "vue-router";
+import { getPeopleSexApi } from "@/apis/home";
 import "echarts-liquidfill";
-/* echarts地图 */
 let echarts = inject("ec"); //引入
 const testEcharts = () => {
   // @ts-ignore
@@ -243,8 +243,183 @@ const testEcharts = () => {
     eChart_3.resize();
   }
 };
+let peopleSexInfo = {};
+let xData = [];
+let yData1 = [];
+let yData2 = [];
+const getPeopleSex = async () => {
+  await getPeopleSexApi()
+    .then((res) => {
+      console.log(res);
+      peopleSexInfo = res;
+      for (var key in peopleSexInfo) {
+        // @ts-ignore
+        xData.push(decodeURI(encodeURIComponent(peopleSexInfo[key][0][0])));
+        // @ts-ignore
+        yData1.push(peopleSexInfo[key][0][3]);
+        // @ts-ignore
+        yData2.push(peopleSexInfo[key][0][2]);
+      }
+    })
+    .catch((error) => {
+      // @ts-ignore
+      ElMessage({ type: "error", message: error.message });
+    });
+  initEcharts();
+};
+/* 男女性别数量 */
+const initEcharts = () => {
+  // @ts-ignore
+  if ($("#e_chart_5").length > 0) {
+    // @ts-ignore
+    var eChart_5 = echarts.init(document.getElementById("e_chart_5"));
+    // var xData = (function () {
+    //   var data = [];
+    //   for (var i = 1; i < 6; i++) {
+    //     // @ts-ignore
+    //     data.push(i);
+    //   }
+    //   return data;
+    // })();
+
+    var option5 = {
+      tooltip: {
+        trigger: "axis",
+        backgroundColor: "rgba(33,33,33,1)",
+        borderRadius: 0,
+        padding: 10,
+        axisPointer: {
+          type: "cross",
+          label: {
+            backgroundColor: "rgba(33,33,33,1)",
+          },
+        },
+        textStyle: {
+          color: "#fff",
+          fontStyle: "normal",
+          fontWeight: "normal",
+          fontFamily: "'Roboto', sans-serif",
+          fontSize: 12,
+        },
+      },
+      grid: {
+        show: false,
+        top: 30,
+        bottom: 10,
+        containLabel: true,
+      },
+      legend: {
+        x: "right",
+        data: [],
+      },
+      calculable: true,
+      xAxis: [
+        {
+          type: "category",
+          splitLine: {
+            show: false,
+          },
+          axisLine: {
+            show: false,
+          },
+          axisLabel: {
+            textStyle: {
+              color: "#878787",
+              fontStyle: "normal",
+              fontWeight: "normal",
+              fontFamily: "'Roboto', sans-serif",
+              fontSize: 12,
+            },
+          },
+          axisTick: {
+            show: false,
+          },
+          splitArea: {
+            show: false,
+          },
+          data: xData,
+        },
+      ],
+      yAxis: [
+        {
+          type: "value",
+          splitLine: {
+            show: false,
+          },
+          axisLine: {
+            show: false,
+          },
+          axisLabel: {
+            textStyle: {
+              color: "#878787",
+              fontStyle: "normal",
+              fontWeight: "normal",
+              fontFamily: "'Roboto', sans-serif",
+              fontSize: 12,
+            },
+          },
+          axisTick: {
+            show: false,
+          },
+          splitArea: {
+            show: false,
+          },
+        },
+      ],
+      series: [
+        {
+          name: "女性",
+          type: "bar",
+          stack: "split",
+          barMaxWidth: 50,
+          barGap: "10%",
+          itemStyle: {
+            normal: {
+              barBorderRadius: 0,
+              color: "#667add",
+              label: {
+                show: true,
+                textStyle: {
+                  color: "#fff",
+                },
+                position: "insideTop",
+                formatter: function (p) {
+                  return p.value > 0 ? p.value : "";
+                },
+              },
+            },
+          },
+          data: yData1,
+        },
+        {
+          name: "男性",
+          type: "bar",
+          stack: "split",
+          itemStyle: {
+            normal: {
+              color: "#119dd2",
+              barBorderRadius: 0,
+              label: {
+                show: true,
+                position: "top",
+                formatter: function (p) {
+                  return p.value > 0 ? "▼" + p.value + "" : "";
+                },
+              },
+            },
+          },
+          data: yData2,
+        },
+      ],
+    };
+    eChart_5.setOption(option5);
+    eChart_5.resize();
+  }
+};
 onMounted(() => {
   testEcharts();
+  // initEcharts();
+  getPeopleSex();
   /*****Resize function start*****/
   var sparkResize, echartResize;
   // @ts-ignore
@@ -463,7 +638,97 @@ onMounted(() => {
         </div>
       </div>
       <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-        <div class="panel panel-default card-view">
+        <div class="panel panel-default card-view panel-refresh">
+          <div class="refresh-container">
+            <div class="la-anim-1"></div>
+          </div>
+          <div class="panel-heading">
+            <div class="pull-left">
+              <h6 class="panel-title txt-dark">Gender Split</h6>
+            </div>
+            <div class="pull-right">
+              <a href="#" class="pull-left inline-block refresh mr-15">
+                <i class="zmdi zmdi-replay"></i>
+              </a>
+              <div class="pull-left inline-block dropdown">
+                <a
+                  class="dropdown-toggle"
+                  data-toggle="dropdown"
+                  href="#"
+                  aria-expanded="false"
+                  role="button"
+                  ><i class="zmdi zmdi-more-vert"></i
+                ></a>
+                <ul
+                  class="dropdown-menu bullet dropdown-menu-right"
+                  role="menu"
+                >
+                  <li role="presentation">
+                    <a href="javascript:void(0)" role="menuitem"
+                      ><i class="icon wb-reply" aria-hidden="true"></i>option
+                      1</a
+                    >
+                  </li>
+                  <li role="presentation">
+                    <a href="javascript:void(0)" role="menuitem"
+                      ><i class="icon wb-share" aria-hidden="true"></i>option
+                      2</a
+                    >
+                  </li>
+                  <li role="presentation">
+                    <a href="javascript:void(0)" role="menuitem"
+                      ><i class="icon wb-trash" aria-hidden="true"></i>option
+                      3</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="panel-wrapper collapse in">
+            <div class="panel-body">
+              <div id="e_chart_5" class="" style="height: 260px"></div>
+              <hr class="light-grey-hr row mt-10 mb-15" />
+              <div class="label-chatrs">
+                <div class="">
+                  <span
+                    class="clabels clabels-lg inline-block bg-blue mr-10 pull-left"
+                  ></span>
+                  <span
+                    class="clabels-text font-12 inline-block txt-dark capitalize-font pull-left"
+                    ><span class="block font-16 weight-500 mb-5"
+                      ><span class="counter-anim">30</span>%</span
+                    ><span class="block txt-grey">Male</span></span
+                  >
+                  <i
+                    class="big-rpsn-icon zmdi zmdi-male-alt pull-right txt-primary"
+                  ></i>
+                  <div class="clearfix"></div>
+                </div>
+              </div>
+              <hr class="light-grey-hr row mt-10 mb-15" />
+              <div class="label-chatrs">
+                <div class="">
+                  <span
+                    class="clabels clabels-lg inline-block bg-skyblue mr-10 pull-left"
+                  ></span>
+                  <span
+                    class="clabels-text font-12 inline-block txt-dark capitalize-font pull-left"
+                    ><span class="block font-16 weight-500 mb-5"
+                      ><span class="counter-anim">70</span>%</span
+                    ><span class="block txt-grey">Female</span></span
+                  >
+                  <i
+                    class="big-rpsn-icon zmdi zmdi-female pull-right txt-skyblue"
+                  ></i>
+                  <div class="clearfix"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="panel panel-default card-view">
           <div class="panel-heading">
             <div class="pull-left">
               <h6 class="panel-title txt-dark">browser stats</h6>
@@ -511,8 +776,8 @@ onMounted(() => {
               </div>
             </div>
           </div>
-        </div>
-        <div class="panel panel-default card-view">
+        </div> -->
+        <!-- <div class="panel panel-default card-view">
           <div class="panel-wrapper collapse in">
             <div class="panel-body sm-data-box-1">
               <span
@@ -551,7 +816,7 @@ onMounted(() => {
               </ul>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <!-- /Row -->

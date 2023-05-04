@@ -48,60 +48,7 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
   (response) => {
-    //@ts-ignore //并不会创建一个新的loading
-    // const loading = ElLoading.service({
-    //   lock: true,
-    //   text: "Loading",
-    //   background: "rgba(0, 0, 0, 0.05)",
-    // });
-    // loading.close();
-
-    // session过期？
-    // if (response.headers["session_time_out"] == "timeout") {
-    //   store.fedLogOut();
-    // }
-
-    const res = response.data; //返回数据就是Promise的data，即整个后端返回的对象
-    if (res.code !== 2000) {
-      console.log(response);
-      console.log(res);
-      console.log("code不为2000,默认报错!!!!要加一下code");
-      // token 过期
-      if (res.code === 401) {
-        // 警告提示窗
-        Message({
-          type: "warning",
-          message: res.msg,
-        });
-        return;
-      }
-      if (res.code == 403) {
-        Message({
-          type: "warning",
-          message: res.msg,
-        });
-        return;
-      }
-      if (res.code == 500204) {
-        Message({
-          type: "error",
-          message: res.msg,
-        });
-        return;
-      }
-      if (res.code == 500202) {
-        Message({
-          type: "error",
-          message: res.msg,
-        });
-        return;
-      }
-      // 若后台返回错误值，此处返回对应错误对象，下面 error 就会接收
-      return Promise.reject(new Error(res.msg || "Error"));
-    } else {
-      // 注意返回值
-      return response.data;
-    }
+    return response.data;
   },
   (error: any) => {
     if (error && error.response) {

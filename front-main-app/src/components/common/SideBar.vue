@@ -99,18 +99,18 @@
         </a>
         <ul id="ecom_dr" class="collapse collapse-level-1">
           <li>
-            <a href="e-commerce.html">行业对比</a>
+            <router-link to="/compare/industry">行业对比</router-link>
           </li>
           <li>
-            <a href="product.html">地区对比</a>
+            <router-link to="/compare/area">地区对比</router-link>
           </li>
           <li>
-            <a href="product-detail.html">时间对比</a>
+            <router-link to="/compare/time">时间对比</router-link>
           </li>
         </ul>
       </li>
       <li>
-        <a href="widgets.html">
+        <router-link to="/predict">
           <div class="pull-left">
             <i class="zmdi zmdi-flag mr-20"></i
             ><span class="right-nav-text">预见未来</span>
@@ -119,7 +119,7 @@
             <span class="label label-warning">8</span>
           </div> -->
           <div class="clearfix"></div>
-        </a>
+        </router-link>
       </li>
       <li>
         <a

@@ -1,5 +1,6 @@
 import pandas as pd
 import Connection
+import json
 
 def getProvinceTable():
     collection = Connection.getProvince()
@@ -61,7 +62,7 @@ def getPeopleSex():
         "xinjiang":xjPeopleSexData
     }
 
-    return dictPeopleSex
+    return json.dumps(dictPeopleSex)
 
 #城乡人口
 def getPeopleUrban():
