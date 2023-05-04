@@ -132,7 +132,7 @@ def getJsonPro():
     # msg="内存溢出"
     resDict={"code":0,"msg":"","data":res}
     # print(resDict)
-    return resDict
+    return json.dumps(resDict)
 
 def PrimaryContrast():
     db = Connection.getDB()

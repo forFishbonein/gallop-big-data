@@ -6,143 +6,6 @@ import "echarts-liquidfill";
 let echarts = inject("ec"); //引入
 const testEcharts = () => {
   // @ts-ignore
-  if ($("#e_chart_1").length > 0) {
-    // alert(111)
-    // @ts-ignore
-    var eChart_1 = echarts.init(document.getElementById("e_chart_1"));
-    var option = {
-      tooltip: {
-        trigger: "axis",
-        backgroundColor: "rgba(33,33,33,1)",
-        borderRadius: 0,
-        padding: 10,
-        axisPointer: {
-          type: "cross",
-          label: {
-            backgroundColor: "rgba(33,33,33,1)",
-          },
-        },
-        textStyle: {
-          color: "#fff",
-          fontStyle: "normal",
-          fontWeight: "normal",
-          fontFamily: "'Roboto', sans-serif",
-          fontSize: 12,
-        },
-      },
-      grid: {
-        show: false,
-      },
-
-      legend: {
-        show: false,
-      },
-
-      singleAxis: {
-        top: 0,
-        bottom: 20,
-        axisTick: {
-          show: false,
-        },
-        type: "time",
-        axisPointer: {
-          animation: true,
-          label: {
-            show: true,
-          },
-        },
-        axisLabel: {
-          textStyle: {
-            color: "#878787",
-            fontStyle: "normal",
-            fontWeight: "normal",
-            fontFamily: "'Roboto', sans-serif",
-            fontSize: 12,
-          },
-        },
-        axisLine: {
-          show: false,
-        },
-        splitLine: {
-          show: false,
-        },
-      },
-
-      series: [
-        {
-          type: "themeRiver",
-          color: ["#d36ee8", "#119dd2", "#667add"],
-          label: {
-            normal: {
-              show: false,
-            },
-          },
-          itemStyle: {
-            emphasis: {
-              shadowBlur: 5,
-              shadowColor: "rgba(0, 0, 0, 0.5)",
-            },
-          },
-          data: [
-            ["2015/11/08", 10, "DQ"],
-            ["2015/11/09", 15, "DQ"],
-            ["2015/11/10", 35, "DQ"],
-            ["2015/11/14", 7, "DQ"],
-            ["2015/11/15", 2, "DQ"],
-            ["2015/11/16", 17, "DQ"],
-            ["2015/11/17", 33, "DQ"],
-            ["2015/11/18", 40, "DQ"],
-            ["2015/11/19", 32, "DQ"],
-            ["2015/11/20", 26, "DQ"],
-            ["2015/11/21", 35, "DQ"],
-            ["2015/11/22", 40, "DQ"],
-            ["2015/11/23", 32, "DQ"],
-            ["2015/11/24", 26, "DQ"],
-            ["2015/11/25", 22, "DQ"],
-            ["2015/11/08", 35, "TY"],
-            ["2015/11/09", 36, "TY"],
-            ["2015/11/10", 37, "TY"],
-            ["2015/11/11", 22, "TY"],
-            ["2015/11/12", 24, "TY"],
-            ["2015/11/13", 26, "TY"],
-            ["2015/11/14", 34, "TY"],
-            ["2015/11/15", 21, "TY"],
-            ["2015/11/16", 18, "TY"],
-            ["2015/11/17", 45, "TY"],
-            ["2015/11/18", 32, "TY"],
-            ["2015/11/19", 35, "TY"],
-            ["2015/11/20", 30, "TY"],
-            ["2015/11/21", 28, "TY"],
-            ["2015/11/22", 27, "TY"],
-            ["2015/11/23", 26, "TY"],
-            ["2015/11/24", 15, "TY"],
-            ["2015/11/25", 30, "TY"],
-            ["2015/11/26", 35, "TY"],
-            ["2015/11/27", 42, "TY"],
-            ["2015/11/28", 42, "TY"],
-            ["2015/11/08", 21, "SS"],
-            ["2015/11/09", 25, "SS"],
-            ["2015/11/10", 27, "SS"],
-            ["2015/11/11", 23, "SS"],
-            ["2015/11/12", 24, "SS"],
-            ["2015/11/13", 21, "SS"],
-            ["2015/11/14", 35, "SS"],
-            ["2015/11/15", 39, "SS"],
-            ["2015/11/16", 40, "SS"],
-            ["2015/11/17", 36, "SS"],
-            ["2015/11/18", 33, "SS"],
-            ["2015/11/19", 43, "SS"],
-            ["2015/11/20", 40, "SS"],
-            ["2015/11/21", 34, "SS"],
-            ["2015/11/22", 28, "SS"],
-          ],
-        },
-      ],
-    };
-    eChart_1.setOption(option);
-    eChart_1.resize();
-  }
-  // @ts-ignore
   if ($("#e_chart_2").length > 0) {
     // @ts-ignore
     var eChart_2 = echarts.init(document.getElementById("e_chart_2"));
@@ -414,6 +277,174 @@ const initEcharts = () => {
     };
     eChart_5.setOption(option5);
     eChart_5.resize();
+  }
+};
+let fourCityInfo = {};
+// let data1 = [];
+// const getFourCityInfo = async () => {
+//   await getPeopleSexApi()
+//     .then((res) => {
+//       console.log(res);
+//       fourCityInfo = res;
+//       for (var key in fourCityInfo) {
+//         let temList = [];
+//         // @ts-ignore
+//         temList.push(decodeURI(encodeURIComponent(peopleSexInfo[key][0][0])));
+//         // @ts-ignore
+//         yData1.push(peopleSexInfo[key][0][3]);
+//         // @ts-ignore
+//         yData2.push(peopleSexInfo[key][0][2]);
+//       }
+//     })
+//     .catch((error) => {
+//       // @ts-ignore
+//       ElMessage({ type: "error", message: error.message });
+//     });
+//   initEcharts2();
+// };
+/* 四个直辖市维度对比 */
+const initEcharts2 = () => {
+  // @ts-ignore
+  if ($("#e_chart_1").length > 0) {
+    // alert(111)
+    // @ts-ignore
+    var eChart_1 = echarts.init(document.getElementById("e_chart_1"));
+    var option = {
+      tooltip: {
+        trigger: "axis",
+        backgroundColor: "rgba(33,33,33,1)",
+        borderRadius: 0,
+        padding: 10,
+        axisPointer: {
+          type: "cross",
+          label: {
+            backgroundColor: "rgba(33,33,33,1)",
+          },
+        },
+        textStyle: {
+          color: "#fff",
+          fontStyle: "normal",
+          fontWeight: "normal",
+          fontFamily: "'Roboto', sans-serif",
+          fontSize: 12,
+        },
+      },
+      grid: {
+        show: false,
+      },
+
+      legend: {
+        show: false,
+      },
+
+      singleAxis: {
+        top: 0,
+        bottom: 20,
+        axisTick: {
+          show: false,
+        },
+        type: "time",
+        axisPointer: {
+          animation: true,
+          label: {
+            show: true,
+          },
+        },
+        axisLabel: {
+          textStyle: {
+            color: "#878787",
+            fontStyle: "normal",
+            fontWeight: "normal",
+            fontFamily: "'Roboto', sans-serif",
+            fontSize: 12,
+          },
+        },
+        axisLine: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+      },
+
+      series: [
+        {
+          type: "themeRiver",
+          color: ["#d36ee8", "#119dd2", "#667add"],
+          label: {
+            normal: {
+              show: false,
+            },
+          },
+          itemStyle: {
+            emphasis: {
+              shadowBlur: 5,
+              shadowColor: "rgba(0, 0, 0, 0.5)",
+            },
+          },
+          data: [
+            // ["北京", 15, "政府消费"],
+            // ["北京", 15, "政府消费"],
+            // ["北京", 15, "政府消费"],
+            // ["北京", 15, "政府消费"],
+            // ["北京", 15, "政府消费"],
+            // ["北京", 15, "政府消费"],
+            // ["北京", 15, "政府消费"],
+            // ["上海", 35, "政府消费"],
+            // ["上海", 7, "政府消费"],
+            // ["上海", 2, "政府消费"],
+            // ["上海", 17, "农村居民消费"],
+            // ["上海", 33, "农村居民消费"],
+            // ["上海", 40, "农村居民消费"],
+            // ["上海", 32, "农村居民消费"],
+            // ["上海", 26, "农村居民消费"],
+            ["2015/11/21", 35, "DQ"],
+            ["2015/11/22", 40, "DQ"],
+            ["2015/11/23", 32, "DQ"],
+            ["2015/11/24", 26, "DQ"],
+            ["2015/11/25", 22, "DQ"],
+            ["2015/11/08", 35, "TY"],
+            ["2015/11/09", 36, "TY"],
+            ["2015/11/10", 37, "TY"],
+            ["2015/11/11", 22, "TY"],
+            ["2015/11/12", 24, "TY"],
+            ["2015/11/13", 26, "TY"],
+            ["2015/11/14", 34, "TY"],
+            ["2015/11/15", 21, "TY"],
+            ["2015/11/16", 18, "TY"],
+            ["2015/11/17", 45, "TY"],
+            ["2015/11/18", 32, "TY"],
+            ["2015/11/19", 35, "TY"],
+            ["2015/11/20", 30, "TY"],
+            ["2015/11/21", 28, "TY"],
+            ["2015/11/22", 27, "TY"],
+            ["2015/11/23", 26, "TY"],
+            ["2015/11/24", 15, "TY"],
+            ["2015/11/25", 30, "TY"],
+            ["2015/11/26", 35, "TY"],
+            ["2015/11/27", 42, "TY"],
+            ["2015/11/28", 42, "TY"],
+            ["2015/11/08", 21, "SS"],
+            ["2015/11/09", 25, "SS"],
+            ["2015/11/10", 27, "SS"],
+            ["2015/11/11", 23, "SS"],
+            ["2015/11/12", 24, "SS"],
+            ["2015/11/13", 21, "SS"],
+            ["2015/11/14", 35, "SS"],
+            ["2015/11/15", 39, "SS"],
+            ["2015/11/16", 40, "SS"],
+            ["2015/11/17", 36, "SS"],
+            ["2015/11/18", 33, "SS"],
+            ["2015/11/19", 43, "SS"],
+            ["2015/11/20", 40, "SS"],
+            ["2015/11/21", 34, "SS"],
+            ["2015/11/22", 28, "SS"],
+          ],
+        },
+      ],
+    };
+    eChart_1.setOption(option);
+    eChart_1.resize();
   }
 };
 onMounted(() => {

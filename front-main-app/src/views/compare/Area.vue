@@ -1,167 +1,231 @@
 <script setup lang="ts">
 import { onMounted, inject, ref } from "vue";
 import chinaJson from "@/assets/json/map/china.json";
+import { getAreaInfoApi } from "@/apis/compare";
 let echarts = inject("ec"); //引入
 let mapOption = {};
 let barOption = {};
 let currentOption = {};
 let myChart;
 const modelName = ref("");
-const initEcharts = () => {
+let areaInfo = [];
+let dataA = [];
+let max = 0;
+let min = 0;
+const top7Items = ref([]);
+const remainPercent = ref("");
+const getAreaInfo = async () => {
+  await getAreaInfoApi()
+    .then((res) => {
+      console.log(res);
+      areaInfo = res.data;
+      areaInfo.forEach((e) => {
+        let str = "";
+        if (
+          decodeURI(encodeURIComponent(e.province)).substring(0, 3) ==
+            "内蒙古" ||
+          decodeURI(encodeURIComponent(e.province)).substring(0, 3) == "黑龙江"
+        ) {
+          str = decodeURI(encodeURIComponent(e.province)).substring(0, 3);
+        } else {
+          str = decodeURI(encodeURIComponent(e.province)).substring(0, 2);
+        }
+        // if (str.endsWith("市") || str.endsWith("省")) {
+        //   str = str.slice(0, -1);
+        // }
+        if (max == 0 || min == 0) {
+          max = parseInt(e.GDP);
+          min = parseInt(e.GDP);
+        } else if (parseInt(e.GDP) > max) {
+          max = parseInt(e.GDP);
+        } else if (parseInt(e.GDP) < min) {
+          min = parseInt(e.GDP);
+        }
+        dataA.push({
+          name: str,
+          value: parseInt(e.GDP),
+        });
+      });
+    })
+    .catch((error) => {
+      // @ts-ignore
+      ElMessage({ type: "error", message: error.message });
+    });
+  initEcharts1();
+  // 计算总和
+  const total = dataA.reduce((acc, curr) => acc + curr.value, 0);
+
+  // 按数值大小对数组进行排序，并加入所占百分比字段
+  dataA
+    .sort((a, b) => b.value - a.value)
+    .forEach((item) => {
+      item.percent = ((item.value / total) * 100).toFixed(2) + "%";
+    });
+
+  // 取前7项
+  top7Items.value = dataA.slice(0, 7);
+
+  // 计算剩下项的百分比
+  const top7Sum = top7Items.value.reduce((acc, curr) => acc + curr.value, 0);
+  remainPercent.value = (((total - top7Sum) / total) * 100).toFixed(2) + "%";
+};
+const initEcharts1 = () => {
+  console.log(max);
+  console.log(min);
   // @ts-ignore
   myChart = echarts.init(document.getElementById("map-container"));
   // @ts-ignore
   echarts.registerMap("china", chinaJson);
-  let dataList = [
-    {
-      name: "北京",
-      value: 54,
-    },
-    {
-      name: "南海诸岛",
-      value: 0,
-    },
-    {
-      name: "天津",
-      value: 13,
-    },
-    {
-      name: "上海",
-      value: 40,
-    },
-    {
-      name: "重庆",
-      value: 75,
-    },
-    {
-      name: "河北",
-      value: 13,
-    },
-    {
-      name: "河南",
-      value: 83,
-    },
-    {
-      name: "云南",
-      value: 11,
-    },
-    {
-      name: "辽宁",
-      value: 19,
-    },
-    {
-      name: "黑龙江",
-      value: 15,
-    },
-    {
-      name: "湖南",
-      value: 69,
-    },
-    {
-      name: "安徽",
-      value: 60,
-    },
-    {
-      name: "山东",
-      value: 39,
-    },
-    {
-      name: "新疆",
-      value: 4,
-    },
-    {
-      name: "江苏",
-      value: 31,
-    },
-    {
-      name: "浙江",
-      value: 104,
-    },
-    {
-      name: "江西",
-      value: 36,
-    },
-    {
-      name: "湖北",
-      value: 1052,
-    },
-    {
-      name: "广西",
-      value: 33,
-    },
-    {
-      name: "甘肃",
-      value: 7,
-    },
-    {
-      name: "山西",
-      value: 9,
-    },
-    {
-      name: "内蒙古",
-      value: 7,
-    },
-    {
-      name: "陕西",
-      value: 22,
-    },
-    {
-      name: "吉林",
-      value: 4,
-    },
-    {
-      name: "福建",
-      value: 18,
-    },
-    {
-      name: "贵州",
-      value: 5,
-    },
-    {
-      name: "广东",
-      value: 98,
-    },
-    {
-      name: "青海",
-      value: 1,
-    },
-    {
-      name: "西藏",
-      value: 0,
-    },
-    {
-      name: "四川",
-      value: 44,
-    },
-    {
-      name: "宁夏",
-      value: 4,
-    },
-    {
-      name: "海南",
-      value: 22,
-    },
-    {
-      name: "台湾",
-      value: 3,
-    },
-    {
-      name: "香港",
-      value: 5,
-    },
-    {
-      name: "澳门",
-      value: 5,
-    },
-  ];
-  dataList.sort(function (a, b) {
+  // let dataList = [
+  //   {
+  //     name: "北京",
+  //     value: 54,
+  //   },
+  //   {
+  //     name: "南海诸岛",
+  //     value: 0,
+  //   },
+  //   {
+  //     name: "天津",
+  //     value: 13,
+  //   },
+  //   {
+  //     name: "上海",
+  //     value: 40,
+  //   },
+  //   {
+  //     name: "重庆",
+  //     value: 75,
+  //   },
+  //   {
+  //     name: "河北",
+  //     value: 13,
+  //   },
+  //   {
+  //     name: "河南",
+  //     value: 83,
+  //   },
+  //   {
+  //     name: "云南",
+  //     value: 11,
+  //   },
+  //   {
+  //     name: "辽宁",
+  //     value: 19,
+  //   },
+  //   {
+  //     name: "黑龙江",
+  //     value: 15,
+  //   },
+  //   {
+  //     name: "湖南",
+  //     value: 69,
+  //   },
+  //   {
+  //     name: "安徽",
+  //     value: 60,
+  //   },
+  //   {
+  //     name: "山东",
+  //     value: 39,
+  //   },
+  //   {
+  //     name: "新疆",
+  //     value: 4,
+  //   },
+  //   {
+  //     name: "江苏",
+  //     value: 31,
+  //   },
+  //   {
+  //     name: "浙江",
+  //     value: 104,
+  //   },
+  //   {
+  //     name: "江西",
+  //     value: 36,
+  //   },
+  //   {
+  //     name: "湖北",
+  //     value: 1052,
+  //   },
+  //   {
+  //     name: "广西",
+  //     value: 33,
+  //   },
+  //   {
+  //     name: "甘肃",
+  //     value: 7,
+  //   },
+  //   {
+  //     name: "山西",
+  //     value: 9,
+  //   },
+  //   {
+  //     name: "内蒙古",
+  //     value: 7,
+  //   },
+  //   {
+  //     name: "陕西",
+  //     value: 22,
+  //   },
+  //   {
+  //     name: "吉林",
+  //     value: 4,
+  //   },
+  //   {
+  //     name: "福建",
+  //     value: 18,
+  //   },
+  //   {
+  //     name: "贵州",
+  //     value: 5,
+  //   },
+  //   {
+  //     name: "广东",
+  //     value: 98,
+  //   },
+  //   {
+  //     name: "青海",
+  //     value: 1,
+  //   },
+  //   {
+  //     name: "西藏",
+  //     value: 0,
+  //   },
+  //   {
+  //     name: "四川",
+  //     value: 44,
+  //   },
+  //   {
+  //     name: "宁夏",
+  //     value: 4,
+  //   },
+  //   {
+  //     name: "海南",
+  //     value: 22,
+  //   },
+  //   {
+  //     name: "台湾",
+  //     value: 3,
+  //   },
+  //   {
+  //     name: "香港",
+  //     value: 5,
+  //   },
+  //   {
+  //     name: "澳门",
+  //     value: 5,
+  //   },
+  // ];
+  dataA.sort(function (a, b) {
     return a.value - b.value;
   });
   mapOption = {
     visualMap: {
       left: "right",
-      min: 0,
-      max: 100,
+      min: min,
+      max: max,
       inRange: {
         // prettier-ignore
         color: ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026'],
@@ -177,7 +241,7 @@ const initEcharts = () => {
         map: "china",
         animationDurationUpdate: 1000,
         universalTransition: true,
-        data: dataList,
+        data: dataA,
       },
     ],
   };
@@ -190,7 +254,7 @@ const initEcharts = () => {
       axisLabel: {
         rotate: 30,
       },
-      data: dataList.map(function (item) {
+      data: dataA.map(function (item) {
         return item.name;
       }),
     },
@@ -198,7 +262,7 @@ const initEcharts = () => {
     series: {
       type: "bar",
       id: "population",
-      data: dataList.map(function (item) {
+      data: dataA.map(function (item) {
         return item.value;
       }),
       universalTransition: true,
@@ -221,7 +285,7 @@ const changeModel = () => {
   myChart.setOption(currentOption, true);
 };
 onMounted(() => {
-  initEcharts();
+  getAreaInfo();
   // @ts-ignore
   $(document).ready(function () {
     /* Switchery Init*/
@@ -246,7 +310,7 @@ onMounted(() => {
         </div>
         <div class="panel-heading">
           <div class="pull-left pull-left2">
-            <h6 class="panel-title txt-dark">Line Chart</h6>
+            <h6 class="panel-title txt-dark">全国各省市GDP</h6>
             <div @click="changeModel" class="change-button">
               <input
                 type="checkbox"
@@ -269,7 +333,7 @@ onMounted(() => {
       <div class="panel panel-default card-view">
         <div class="panel-heading">
           <div class="pull-left pull-left2">
-            <h6 class="panel-title txt-dark">browser stats</h6>
+            <h6 class="panel-title txt-dark">排行榜</h6>
           </div>
           <div class="pull-right">
             <a href="#" class="pull-left inline-block mr-15">
@@ -291,104 +355,26 @@ onMounted(() => {
               <div class="table-responsive">
                 <table class="table top-countries mb-0">
                   <tbody>
-                    <tr>
+                    <tr v-for="(item, index) in top7Items" :key="index">
                       <td>
-                        <img src="/picture/01-flag.png" alt="country" />
-                        <span class="country-name txt-dark pl-15">Aland</span>
+                        <span class="country-name txt-dark pl-15">{{
+                          item.name
+                        }}</span>
                       </td>
                       <td class="text-right">
                         <span
                           class="badge badge-warning transparent-badge weight-500"
-                          >57%</span
+                          >{{ item.percent }}</span
                         >
                       </td>
                     </tr>
                     <tr>
-                      <td>
-                        <img src="/picture/02-flag.png" alt="country" />
-                        <span class="country-name txt-dark pl-15">Angola</span>
-                      </td>
-                      <td class="text-right">
-                        <span
-                          class="badge badge-danger transparent-badge weight-500"
-                          >17%</span
-                        >
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <img src="/picture/03-flag.png" alt="country" />
-                        <span class="country-name txt-dark pl-15"
-                          >Anguilla</span
-                        >
-                      </td>
-
-                      <td class="text-right">
-                        <span
-                          class="badge badge-info transparent-badge weight-500"
-                          >27%</span
-                        >
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <img src="/picture/04-flag.png" alt="country" />
-                        <span class="country-name txt-dark pl-15">Bahrain</span>
-                      </td>
-                      <td class="text-right">
-                        <span
-                          class="badge badge-danger transparent-badge weight-500"
-                          >17%</span
-                        >
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <img src="/picture/05-flag.png" alt="country" />
-                        <span class="country-name txt-dark pl-15"
-                          >Australia</span
-                        >
-                      </td>
-                      <td class="text-right">
-                        <span
-                          class="badge badge-primary transparent-badge weight-500"
-                          >51%</span
-                        >
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td>
-                        <img src="/picture/06-flag.png" alt="country" />
-                        <span class="country-name txt-dark pl-15">Austria</span>
-                      </td>
+                      <td class="txt-dark">其他</td>
 
                       <td class="text-right">
                         <span
                           class="badge badge-warning transparent-badge weight-500"
-                          >10%</span
-                        >
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <img src="/picture/07-flag.png" alt="country" />
-                        <span class="country-name txt-dark pl-15">Belgium</span>
-                      </td>
-                      <td class="text-right">
-                        <span
-                          class="badge badge-success transparent-badge weight-500"
-                          >27%</span
-                        >
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="txt-dark">Other</td>
-
-                      <td class="text-right">
-                        <span
-                          class="badge badge-warning transparent-badge weight-500"
-                          >10%</span
+                          >{{ remainPercent }}</span
                         >
                       </td>
                     </tr>
@@ -420,7 +406,7 @@ onMounted(() => {
 }
 #map-container {
   width: 100%;
-  height: 370px;
+  height: 400px;
   //   margin: 0px auto;
   //   margin-top: 10px;
   //   background: linear-gradient(
