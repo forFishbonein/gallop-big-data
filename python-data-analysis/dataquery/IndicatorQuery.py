@@ -1,3 +1,5 @@
+import json
+
 import numpy as np
 
 import pandas as pd
@@ -19,17 +21,22 @@ from pyspark.sql import SparkSession
 
 
 def getYearData(indicator,province):
-    collection = Connection.getCity()
-    data = []
-    for doc in collection.find({},{"_id":0,"地区":1,"年份":1,indicator:1}):
-        # print(doc)
-        data.append(doc)
-    data = pd.DataFrame(data).dropna()
+    # collection = Connection.getCity()
+    # data = []
+    # for doc in collection.find({},{"_id":0,"地区":1,"年份":1,indicator:1}):
+    #     # print(doc)
+    #     data.append(doc)
+    db = Connection.getDB()
+    mycol = db["province"]
+    data = mycol.find({},{"_id": 0, '地区': 1, '年份': 1,indicator:1})
+
+    data = pd.DataFrame(list(data)).dropna()
+    # data = pd.DataFrame(data).dropna()
     provinceList = data[data['地区'] == province]
     # provinceList = yearList.dropna()
     provinceList = provinceList.reset_index()
     del provinceList[provinceList.keys()[0]]
-    del provinceList[provinceList.keys()[1]]
+    del provinceList[provinceList.keys()[0]]
     resList = []
     for i in range(len(provinceList)):
         resList.append(list(provinceList.loc[i]))
@@ -57,18 +64,22 @@ def getProvinceData(indicator,year):
     dictProvince={
         "values":resList
     }
-    return dictProvince
+    return json.dump(dictProvince)
 
 
 def averageYear(indicator):
-    collection = Connection.getCity()
-    data = []
-    for doc in collection.find({},{"_id":0,"地区":1,"年份":1,indicator:1}):
-        # print(doc)
-        data.append(doc)
-        # print(data)
-        # break
-    indi = pd.DataFrame(data).dropna()
+    # collection = Connection.getCity()
+    # data = []
+    # for doc in collection.find({},{"_id":0,"地区":1,"年份":1,indicator:1}):
+    #     # print(doc)
+    #     data.append(doc)
+    #     # print(data)
+    #     # break
+    db = Connection.getDB()
+    mycol = db["province"]
+    data = mycol.find({},{"_id": 0, '地区': 1, '年份': 1,indicator:1})
+
+    indi = pd.DataFrame(list(data)).dropna()
     provincelist = indi.groupby(['年份']).mean()
     provincelist = provincelist.reset_index()
     # print(type(provincelist))
@@ -79,25 +90,32 @@ def averageYear(indicator):
         "values":resList
     }
 
-    return dictYear
+    return json.dumps(dictYear)
 
 def getIndicatorAllData(indicator):
-    collection = Connection.getCity()
-    data = []
-    for doc in collection.find({}, {"_id": 0, "地区": 1, "年份": 1, indicator: 1}):
-        data.append(doc)
-    indicatorlist = pd.DataFrame(data).dropna()
-    indicatorlist = indicatorlist.reset_index()
-    del indicatorlist[indicatorlist.keys()[0]]
-    resList = []
-    for i in range(len(indicatorlist)):
-        resList.append(list(indicatorlist.loc[i]))
+    # collection = Connection.getCity()
+    # data = []
+    # for doc in collection.find({}, {"_id": 0, "地区": 1, "年份": 1, indicator: 1}):
+    #     data.append(doc)
+    db = Connection.getDB()
+    mycol = db["province"]
+    data = mycol.find({},{"_id": 0, '地区': 1, '年份': 1,indicator:1})
+
+    indicatorlist = pd.DataFrame(list(data)).dropna()
+    # del indicatorlist[indicatorlist.keys()[0]]
+    resList = indicatorlist.values.tolist()
+    # indicatorlist = pd.DataFrame(data).dropna()
+    # indicatorlist = indicatorlist.reset_index()
+    # del indicatorlist[indicatorlist.keys()[0]]
+    # resList = []
+    # for i in range(len(indicatorlist)):
+    #     resList.append(list(indicatorlist.loc[i]))
     dictIndicator={
         "values":resList
     }
-    return dictIndicator
+    return json.dumps(dictIndicator)
 
-# if __name__ == "__main__":
+if __name__ == "__main__":
 
-    # re  = getIndicatorAllData("地区生产总值(万元)")
-    # print(re)
+    re  = getYearData("地区生产总值","北京市")
+    print(re)

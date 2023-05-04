@@ -44,16 +44,31 @@ def getPredictResult(province):
 #     return ProvinceGdpPredict.getPredictData(province)
 
 # 具体指标查询
-@app.route('/singlequery/<indicator>/<year>/<province>',methods=["GET","POST"])
-def getIndictorData(indicator,year,province):
-    if indicator is None:
-        return IndicatorQuery.getIndicatorAllData("北京市")
-    elif year is None and province is None:
-        return IndicatorQuery.getIndicatorAllData(indicator),IndicatorQuery.averageYear(indicator)
-    elif province is None:
-        return IndicatorQuery.getProvinceData(indicator,year)
-    elif year is None:
-        return IndicatorQuery.getYearData(indicator,province)
+@app.route('/singlequery/alldata/<indicator>',methods=["GET","POST"])
+def IndictorData(indicator):
+    return IndicatorQuery.getIndicatorAllData(indicator), IndicatorQuery.averageYear(indicator)
+
+@app.route('/singlequery/avgdata/<indicator>',methods=["GET","POST"])
+def IndictorAvgData(indicator):
+    return IndicatorQuery.averageYear(indicator)
+
+@app.route('/singlequery/<indicator>/<province>',methods=["GET","POST"])
+def IndictorProvinceData(indicator,year):
+    return IndicatorQuery.getProvinceData(indicator,year)
+
+@app.route('/singlequery/<indicator>/<province>',methods=["GET","POST"])
+def IndictorYearData(indicator,province):
+    return IndicatorQuery.getYearData(indicator, province)
+# @app.route('/singlequery/<indicator>/<year>/<province>',methods=["GET","POST"])
+# def getIndictorData(indicator,year,province):
+#     if indicator is None:
+#         return IndicatorQuery.getIndicatorAllData("北京市")
+#     elif year is None and province is None:
+#
+#     elif province is None:
+#         return IndicatorQuery.getProvinceData(indicator,year)
+#     elif year is None:
+#
 
 # 对比部分--地区，行业，时间对比
 @app.route('/contrast/province')
@@ -115,7 +130,7 @@ def getEmployment():
 #     return Employment.getUnemployment()
 
 #数据可视化大屏部分----外贸交易情况
-@app.route('/visualization/foregintrade/<pro><city>')
+@app.route('/visualization/foregintrade/<pro>/<city>')
 def getForegintrade(pro,year):
     return ForeignTrade.getForegintrade(pro,year)
 
