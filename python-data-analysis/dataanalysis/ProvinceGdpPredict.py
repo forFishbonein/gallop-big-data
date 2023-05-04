@@ -37,7 +37,7 @@ def read_check_data(pro):
     db = Connection.getDB()
     mycol = db["province"]
     data1 = mycol.find({},{"_id": 0, '地区': 1, '年份': 1,
-                                    '房地产开发投资额': 1,'经营单位所在地出口总额':1,"地方财政一般预算收入":1,"地区生产总值":1})
+                                    '房地产开发投资额': 1,'经营单位所在地进出口总额':1,"地方财政一般预算收入":1,"地区生产总值":1})
 
     data1 = pd.DataFrame(list(data1))
 

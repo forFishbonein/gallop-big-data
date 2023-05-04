@@ -22,12 +22,18 @@ schema = StructType([
     StructField("gdp", FloatType(), True)])
 
 def readDataframe():
-    collection = Connection.getCity()
-    data = []
-    for doc in collection.find({},{"_id":0,"地区":1,"年份":1,"地区生产总值":1}):
-        # print(doc)
-        data.append(doc)
-    data = pd.DataFrame(data).dropna()
+    # collection = Connection.getCity()
+    # data = []
+    # for doc in collection.find({},{"_id":0,"地区":1,"年份":1,"地区生产总值":1}):
+    #     # print(doc)
+    #     data.append(doc)
+    # data = pd.DataFrame(data).dropna()
+    db = Connection.getDB()
+    mycol = db["province"]
+    data = mycol.find({},{"_id": 0, '地区': 1, '年份': 1,
+                                    '地区生产总值': 1})
+
+    data = pd.DataFrame(list(data)).dropna()
     # spark = SparkSession.builder.appName("GDP Average").getOrCreate()
     data.columns = ["province","year","gdp"]
     return data
@@ -142,7 +148,7 @@ def IndustryContrast():
     db = Connection.getDB()
     mycol = db["province"]
     data = mycol.find({},{"_id": 0, '地区': 1, '年份': 1,
-                                    '第一产业增加值': 1,'第二产业增加值':1,"第三产业增加值":1})
+                                    '农林牧渔业增加值': 1,'工业增加值':1,"建筑业增加值":1,"":1})
 
     PrimaryData = pd.DataFrame(list(data)).dropna()
     firstPrimaryList = PrimaryData[["地区","年份","第一产业增加值"]].values.tolist()
@@ -156,8 +162,8 @@ def IndustryContrast():
     return dictPrimary
 
 if __name__ == '__main__':
-    data = PrimaryContrast()
+    # data = PrimaryContrast()
 
-    print(data)
+    print(readDataframe())
     # print(TimeContrast())
 
