@@ -73,6 +73,11 @@ export const routes: Array<RouteRecordRaw> = [
         name: "Detail",
         component: Detail,
         meta: { title: "指标详情页", keepAlive: true, showTab: true },
+        props(route) {
+          return {
+            keyword: route.params.keyword,
+          };
+        },
       },
       {
         path: "compare",

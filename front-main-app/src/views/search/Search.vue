@@ -13,8 +13,8 @@ onMounted(() => {
             text: "Child 1",
             nodes: [
               {
-                text: "Grandchild 1",
-                href: "#/search/result/111",
+                text: "地区生产总值",
+                href: "#/search/result/地区生产总值",
                 tags: ["0"],
               },
               {

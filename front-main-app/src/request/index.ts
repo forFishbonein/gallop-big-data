@@ -13,7 +13,7 @@ const service = axios.create({
   // withCredentials: true, // 异步请求携带cookie
   headers: {
     // 设置后端需要的传参类型
-    "Content-Type": "application/json",
+    "Content-Type": "application/json; charset=UTF-8",
     // token: "your token",
     "X-Requested-With": "XMLHttpRequest",
   },
@@ -51,6 +51,7 @@ service.interceptors.response.use(
     return response.data;
   },
   (error: any) => {
+    alert(111);
     if (error && error.response) {
       switch (error.response.status) {
         case 400:

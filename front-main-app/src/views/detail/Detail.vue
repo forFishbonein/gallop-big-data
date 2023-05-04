@@ -1,9 +1,66 @@
 <script setup lang="ts">
 import { ref, onMounted, inject } from "vue";
+import { onBeforeRouteLeave } from "vue-router";
 import { utilStore } from "@/store/util";
+import { getBubbleInfoApi } from "@/apis/detail";
+import { keywordStore } from "@/store/keyword";
+// const props = defineProps<{
+//   keyword: string;
+// }>();
+// const keyword = props.keyword;
+// console.log(keyword);
 const store = utilStore();
+const kstore = keywordStore();
 const timeFlag = ref(false);
 let echarts = inject("ec"); //引入
+let data1 = [];
+let allProvinces = [];
+let allYears = [];
+const getBubbleInfo = async () => {
+  await getBubbleInfoApi(kstore.keyword)
+    .then((res) => {
+      // @ts-ignore
+      data1 = res.values;
+      console.log(data1);
+      // @ts-ignore
+      data1 = data1.map(function (subArr) {
+        return [
+          decodeURI(encodeURIComponent(subArr[0])),
+          // @ts-ignore
+          subArr[1].toString(),
+          subArr[2],
+        ];
+      });
+      console.log(data1);
+      allProvinces = data1
+        .map(function (subArr) {
+          return subArr[0]; // 返回子数组的第一项
+        })
+        .reduce(function (acc, value) {
+          if (!acc.includes(value)) {
+            acc.push(value); // 将不重复的子数组第一项放入结果数组中
+          }
+          return acc;
+        }, []);
+      allYears = data1
+        .map(function (subArr) {
+          return subArr[1]; // 返回子数组的第一项
+        })
+        .reduce(function (acc, value) {
+          if (!acc.includes(value)) {
+            acc.push(value); // 将不重复的子数组第一项放入结果数组中
+          }
+          return acc;
+        }, []);
+      console.log(allProvinces);
+      console.log(allYears);
+    })
+    .catch((error) => {
+      // @ts-ignore
+      ElMessage({ type: "error", message: error.message });
+    });
+  initEcharts2();
+};
 /*
 提取标签：
 const data = [
@@ -14,6 +71,7 @@ const data = [
 
 const labels = data.map(item => item.label)
  */
+/* 折线图 */
 const initEcharts = () => {
   // @ts-ignore
   if ($("#e_chart_1").length > 0) {
@@ -120,41 +178,42 @@ const initEcharts = () => {
     eChart_1.resize();
   }
 };
+/* 气泡图 */
 const initEcharts2 = () => {
   // @ts-ignore
   if ($("#e_chart_2").length > 0) {
     // @ts-ignore
     var eChart_2 = echarts.init(document.getElementById("e_chart_2"));
-    const data = [
-      // [
-      //   [28604, 77, 17096869, "Australia"],
-      //   [31163, 77.4, 27662440, "Canada"],
-      //   [1516, 68, 1154605773, "China"],
-      //   [13670, 74.7, 10582082, "Cuba"],
-      //   [28599, 75, 4986705, "Finland"],
-      //   [29476, 77.1, 56943299, "France"],
-      //   [31476, 75.4, 78958237, "Germany"],
-      //   [28666, 78.1, 254830, "Iceland"],
-      //   [1777, 57.7, 870601776, "India"],
-      //   [29550, 79.1, 122249285, "Japan"],
-      //   [2076, 67.9, 20194354, "North Korea"],
-      //   [12087, 72, 42972254, "South Korea"],
-      //   [24021, 75.4, 3397534, "New Zealand"],
-      //   [43296, 76.8, 4240375, "Norway"],
-      //   [10088, 70.8, 38195258, "Poland"],
-      //   [19349, 69.6, 147568552, "Russia"],
-      //   [10670, 67.3, 53994605, "Turkey"],
-      //   [26424, 75.7, 57110117, "United Kingdom"],
-      //   [37062, 75.4, 252847810, "United States"],
-      // ],
-      [
-        ["A", "Jan", 17096869],
-        ["B", "Feb", 27662440],
-        ["C", "Mar", 1154605773],
-        ["D", "Apr", 10582082],
-        ["E", "May", 4986705],
-      ],
-    ];
+    // const data = [
+    //   // [
+    //   //   [28604, 77, 17096869, "Australia"],
+    //   //   [31163, 77.4, 27662440, "Canada"],
+    //   //   [1516, 68, 1154605773, "China"],
+    //   //   [13670, 74.7, 10582082, "Cuba"],
+    //   //   [28599, 75, 4986705, "Finland"],
+    //   //   [29476, 77.1, 56943299, "France"],
+    //   //   [31476, 75.4, 78958237, "Germany"],
+    //   //   [28666, 78.1, 254830, "Iceland"],
+    //   //   [1777, 57.7, 870601776, "India"],
+    //   //   [29550, 79.1, 122249285, "Japan"],
+    //   //   [2076, 67.9, 20194354, "North Korea"],
+    //   //   [12087, 72, 42972254, "South Korea"],
+    //   //   [24021, 75.4, 3397534, "New Zealand"],
+    //   //   [43296, 76.8, 4240375, "Norway"],
+    //   //   [10088, 70.8, 38195258, "Poland"],
+    //   //   [19349, 69.6, 147568552, "Russia"],
+    //   //   [10670, 67.3, 53994605, "Turkey"],
+    //   //   [26424, 75.7, 57110117, "United Kingdom"],
+    //   //   [37062, 75.4, 252847810, "United States"],
+    //   // ],
+    //   [
+    //     ["A", "Jan", 17096869],
+    //     ["B", "Feb", 27662440],
+    //     ["C", "Mar", 1154605773],
+    //     ["D", "Apr", 10582082],
+    //     ["E", "May", 4986705],
+    //   ],
+    // ];
     // @ts-ignore
     var option2 = {
       // @ts-ignore
@@ -169,7 +228,7 @@ const initEcharts2 = () => {
       //   },
       // ]),
       title: {
-        text: "Life Expectancy and GDP by Country",
+        text: `各地区各年份${kstore.keyword}情况`,
         left: "5%",
         top: "3%",
       },
@@ -203,7 +262,8 @@ const initEcharts2 = () => {
       },
       xAxis: {
         type: "category",
-        data: ["A", "B", "C", "D", "E"],
+        data: allProvinces,
+        // data: ["A", "B", "C", "D", "E"],
         splitLine: {
           lineStyle: {
             type: "dashed",
@@ -212,7 +272,8 @@ const initEcharts2 = () => {
       },
       yAxis: {
         type: "category",
-        data: ["Jan", "Feb", "Mar", "Apr", "May"],
+        data: allYears,
+        // data: ["Jan", "Feb", "Mar", "Apr", "May"],
         splitLine: {
           lineStyle: {
             type: "dashed",
@@ -223,10 +284,11 @@ const initEcharts2 = () => {
       series: [
         {
           name: "1990",
-          data: data[0],
+          data: data1,
           type: "scatter",
           symbolSize: function (data) {
-            return Math.sqrt(data[2]) / 5e2;
+            // return Math.sqrt(data[2]) / 5e2;
+            return Math.sqrt(data[2]) / 10;
           },
           emphasis: {
             focus: "series",
@@ -261,38 +323,7 @@ const initEcharts2 = () => {
     eChart_2.resize();
   }
 };
-const displayFlag = ref(1);
-// 保证每次进入该页面都会刷新一次的工具方法：
-const refresh = () => {
-  //refreshFlag为true代表刷新过
-  if (!store.refreshFlag) {
-    // alert("刷新");
-    //还没刷新过
-    store.refreshFlag = true; //表示已经刷新了
-    // console.log(store.refreshFlag);
-    location.reload(); //那就刷新一下
-    // setTimeout(function () {
-    //   location.reload();
-    // }, 1000);
-    return;
-  } else {
-    //已经刷新过了
-    store.refreshFlag = false; //表示还没有刷新
-    // console.log(store.refreshFlag);
-
-    return; //那就不刷新了
-  }
-};
-refresh(); //调用刷新方法
-const province = ref("");
-const year = ref("");
-const selectOptions = () => {
-  alert(province.value);
-  alert(year.value);
-};
-onMounted(() => {
-  initEcharts();
-  initEcharts2();
+const initMap = () => {
   // @ts-ignore
   $(function () {
     // @ts-ignore
@@ -325,6 +356,51 @@ onMounted(() => {
       // .vectorMap("set", "focus", { region: "CN-44" });
     }
   });
+};
+const displayFlag = ref(1);
+// 保证每次进入该页面都会刷新一次的工具方法：
+const refresh = () => {
+  //refreshFlag为true代表刷新过
+  if (!store.refreshFlag) {
+    // alert("刷新");
+    //还没刷新过
+    store.refreshFlag = true; //表示已经刷新了
+    // console.log(store.refreshFlag);
+    location.reload(); //那就刷新一下
+    // setTimeout(function () {
+    //   location.reload();
+    // }, 1000);
+    return;
+  } else {
+    //已经刷新过了
+    store.refreshFlag = false; //表示还没有刷新
+    // console.log(store.refreshFlag);
+
+    return; //那就不刷新了
+  }
+};
+refresh(); //调用刷新方法
+const province = ref("");
+const year = ref("");
+const selectOptions = () => {
+  alert(province.value);
+  alert(year.value);
+};
+onMounted(() => {
+  initEcharts();
+  if (kstore.keyword.length > 0) {
+    // alert("开始查询");
+    getBubbleInfo();
+  }
+  // initEcharts2();
+  initMap();
+});
+onBeforeRouteLeave((to, from, next) => {
+  // 在此处执行你的逻辑
+  // 可以进行清理操作或者弹出确认提示框
+  kstore.keyword = "";
+  // 继续路由导航
+  next();
 });
 </script>
 

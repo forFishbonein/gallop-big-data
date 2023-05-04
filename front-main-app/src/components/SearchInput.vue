@@ -32,18 +32,18 @@ export default {
       this.searchKey = "";
     },
     clickSearch() {
-      alert(1);
+      // alert(1);
       let param = {
         moduleCode: "xmzl_zxjd",
         keyword: this.searchKey.trim(),
       };
       //搜索
-      //   alert(param.keyword);
+      // alert(param.keyword);
       //   navPage(param).then((res) => {
       //     if (res.data && res.data.success) {
       //       let searchData = res.data.responData.part3[0].items;
       //       // 将多个参数传给父组件
-      this.$emit("onSearch", "123", this.searchKey);
+      this.$emit("onSearch", this.searchKey);
       //     }
       //   });
     },

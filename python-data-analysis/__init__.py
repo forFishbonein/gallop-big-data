@@ -1,6 +1,9 @@
 # from bottle import route
 from urllib import request
 
+import urllib.parse
+from urllib.parse import unquote
+from appdirs import unicode
 from flask import Flask
 from flask_cors import CORS
 from dataanalysis import ContrastAnalysis,EveryEvaluation,ProvinceGdpPredict
@@ -46,6 +49,11 @@ def getPredictResult(province):
 # 具体指标查询
 @app.route('/singlequery/alldata/<indicator>',methods=["GET","POST"])
 def IndictorData(indicator):
+    print(indicator)
+    print(type(indicator))
+    print(unquote(indicator))
+    # u_data = unicode(indicator, "utf-8")
+    # indicator2 = indicator.encode("utf-8")
     return IndicatorQuery.getIndicatorAllData(indicator), IndicatorQuery.averageYear(indicator)
 
 @app.route('/singlequery/avgdata/<indicator>',methods=["GET","POST"])

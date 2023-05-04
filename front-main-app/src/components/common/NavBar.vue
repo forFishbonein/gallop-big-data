@@ -1,13 +1,24 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import SearchInput from "@/components/SearchInput.vue";
-let searchKey2 = ref("");
-let searchData2 = ref("");
+import { useRouter } from "vue-router";
+import { keywordStore } from "@/store/keyword";
+const router = useRouter();
+// let searchKey2 = ref("");
+const kstore = keywordStore();
+// let searchData2 = ref("");
 //获取子组件传过来的值
-const onSearch = (searchData, searchKey) => {
-  searchKey2.value = searchKey;
-  searchData2.value = searchData;
-  alert(111);
+const onSearch = (searchKey) => {
+  alert(searchKey);
+  // searchKey2.value = searchKey;
+  // searchData2.value = searchData;
+  kstore.keyword = searchKey;
+  router.push({
+    name: "Detail",
+    // params: {
+    //   keyword: searchKey2.value,
+    // },
+  });
 };
 </script>
 

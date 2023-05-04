@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 from pymongo import MongoClient
 import Connection
+import urllib.parse as urlparse
 
 
 from pyspark.sql.functions import col
@@ -99,6 +100,7 @@ def getIndicatorAllData(indicator):
     #     data.append(doc)
     db = Connection.getDB()
     mycol = db["province"]
+    print(indicator)
     data = mycol.find({},{"_id": 0, '地区': 1, '年份': 1,indicator:1})
 
     indicatorlist = pd.DataFrame(list(data)).dropna()
@@ -113,6 +115,7 @@ def getIndicatorAllData(indicator):
     dictIndicator={
         "values":resList
     }
+    print(dictIndicator)
     return json.dumps(dictIndicator)
 
 if __name__ == "__main__":
