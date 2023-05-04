@@ -1,19 +1,23 @@
 # from bottle import route
 from urllib import request
 
-import urllib.parse
-from urllib.parse import unquote
-from appdirs import unicode
+from ahocorasick import unicode
 from flask import Flask
 from flask_cors import CORS
-from dataanalysis import ContrastAnalysis,EveryEvaluation,ProvinceGdpPredict
+from dataanalysis import ContrastAnalysis,EveryEvaluation,ProvinceGdpPredict,CityGdpPredict,EveryIncaditorPredict
 # from dataanalysis import ContrastAnalysis
 from dataquery import IndicatorQuery
 from visualization import People,Financial,Employment,ForeignTrade
+# import sys
+
 
 app = Flask(__name__)
 # r'/*' 是通配符，让本服务器所有的 URL 都允许跨域请求
 
+
+def receive_chinese_data(chinese_data):
+    u_data = unicode(chinese_data, "utf-8")
+    utf8_data = u_data.encode("utf-8")
 
 # @app.route('evalution/yearToPro', methods=["GET","OPTIONS"])
 # def ProvinceEvaluation(yearToPro):
@@ -41,30 +45,34 @@ def evalutionProvince(province):
 @app.route('/prediction/prvincegdp/<province>',methods=["GET","POST"])
 def getPredictResult(province):
     return ProvinceGdpPredict.getPredictData(province)
-#预测板块---根据具体指标预测GDP（年份＋省份）
-# @app.route('/prediction/prvincegdp/<province>',methods=["GET","POST"])
-# def getPredictResult(province):
-#     return ProvinceGdpPredict.getPredictData(province)
+
+#预测板块---根据城市预测GDP
+@app.route('/prediction/citygdp/<city>',methods=["GET","POST"])
+def CityPredictResult(city):
+    return CityGdpPredict.getPredictData(city)
+
+#预测板块---预测具体指标后10年的值：
+@app.route('/prediction/indicator/<indicator>',methods=["GET","POST"])
+def IndicatorPredict(indicator):
+        return EveryIncaditorPredict.IndicatorPrediction(indicator)
 
 # 具体指标查询
 @app.route('/singlequery/alldata/<indicator>',methods=["GET","POST"])
 def IndictorData(indicator):
-    print(indicator)
-    print(type(indicator))
-    print(unquote(indicator))
-    # u_data = unicode(indicator, "utf-8")
-    # indicator2 = indicator.encode("utf-8")
-    return IndicatorQuery.getIndicatorAllData(indicator), IndicatorQuery.averageYear(indicator)
+    u_data = unicode(indicator, "utf-8")
+    indicator = u_data.encode("utf-8")
+    return IndicatorQuery.getIndicatorAllData(indicator)
 
 @app.route('/singlequery/avgdata/<indicator>',methods=["GET","POST"])
 def IndictorAvgData(indicator):
     return IndicatorQuery.averageYear(indicator)
 
-@app.route('/singlequery/<indicator>/<province>',methods=["GET","POST"])
+@app.route('/singlequery/year/<indicator>/<year>',methods=["GET","POST"])
 def IndictorProvinceData(indicator,year):
+    year = int(year)
     return IndicatorQuery.getProvinceData(indicator,year)
 
-@app.route('/singlequery/<indicator>/<province>',methods=["GET","POST"])
+@app.route('/singlequery/pro/<indicator>/<province>',methods=["GET","POST"])
 def IndictorYearData(indicator,province):
     return IndicatorQuery.getYearData(indicator, province)
 # @app.route('/singlequery/<indicator>/<year>/<province>',methods=["GET","POST"])
@@ -76,7 +84,6 @@ def IndictorYearData(indicator,province):
 #     elif province is None:
 #         return IndicatorQuery.getProvinceData(indicator,year)
 #     elif year is None:
-#
 
 # 对比部分--地区，行业，时间对比
 @app.route('/contrast/province')
@@ -118,7 +125,6 @@ def getPeopleEducation():
 def getConsumption():
     return Financial.getConsumption()
 #  数据可视化大屏部分----财政情况
-
 
 # @app.route('/visualization/financial/financialpay')
 # def getFinancialPay():
