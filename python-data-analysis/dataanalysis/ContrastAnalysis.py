@@ -155,16 +155,30 @@ def IndustryContrast():
     db = Connection.getDB()
     mycol = db["province"]
     data = mycol.find({},{"_id": 0, '地区': 1, '年份': 1,
-                                    '农林牧渔业增加值': 1,'工业增加值':1,"建筑业增加值":1,"":1})
+                                    '农林牧渔业增加值': 1,'工业增加值':1,"建筑业增加值":1,"批发和零售业增加值":1,"交通运输、仓储和邮政业增加值":1,"住宿和餐饮业增加值":1,
+                          "金融业增加值":1,"房地产业增加值":1,"其他行业增加值":1})
 
-    PrimaryData = pd.DataFrame(list(data)).dropna()
-    firstPrimaryList = PrimaryData[["地区","年份","第一产业增加值"]].values.tolist()
-    secondPrimaryList = PrimaryData[["地区","年份","第二产业增加值"]].values.tolist()
-    thirdPrimaryList = PrimaryData[["地区", "年份", "第三产业增加值"]].values.tolist()
+    industryData = pd.DataFrame(list(data)).dropna()
+    agricultureList = industryData[["地区","年份","农林牧渔业增加值"]].values.tolist()
+    industryList = industryData[["地区","年份","工业增加值"]].values.tolist()
+    constructionList = industryData[["地区", "年份", "建筑业增加值"]].values.tolist()
+    retailList = industryData[["地区", "年份", "批发和零售业增加值"]].values.tolist()
+    transportationList = industryData[["地区", "年份", "交通运输、仓储和邮政业增加值"]].values.tolist()
+    restaurantList = industryData[["地区", "年份", "住宿和餐饮业增加值"]].values.tolist()
+    financeList = industryData[["地区", "年份", "金融业增加值"]].values.tolist()
+    realEstateList = industryData[["地区", "年份", "房地产业增加值"]].values.tolist()
+    otherList = industryData[["地区", "年份", "其他行业增加值"]].values.tolist()
+
     dictPrimary = {
-        "firstPrimary":firstPrimaryList,
-        "secondPrimary":secondPrimaryList,
-        "thirdPrimary":thirdPrimaryList
+        "agriculture":agricultureList,
+        "industry":industryList,
+        "construction":constructionList,
+        "retail": retailList,
+        "transportation": transportationList,
+        "restaurant": restaurantList,
+        "finance": financeList,
+        "realEstate": realEstateList,
+        "other": otherList,
     }
     return json.dumps(dictPrimary)
 

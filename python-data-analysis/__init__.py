@@ -68,9 +68,9 @@ def TimeAvgGdp():
 @app.route('/contrast/primary')
 def PrimaryContrast():
     return ContrastAnalysis.PrimaryContrast()
-# @app.route('/contrast/industry')
-# def PrimaryContrast():
-#     return ContrastAnalysis.PrimaryContrast()
+@app.route('/contrast/industry')
+def IndustryContrast():
+    return ContrastAnalysis.IndustryContrast()
 
 
 # 数据可视化大屏部分----人口情况
