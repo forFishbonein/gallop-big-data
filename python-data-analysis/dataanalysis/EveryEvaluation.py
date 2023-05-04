@@ -282,6 +282,6 @@ def EveryYearEvalution(yr):
 
     dataF = dataF[['省份'],['评价指数']]
     return dataF
-# if __name__ == '__main__':
-#     dataF = demo(2016)
-#     EvaluationRes = dataF.values
+if __name__ == '__main__':
+    dataF = demo(2016)
+    EvaluationRes = dataF.values

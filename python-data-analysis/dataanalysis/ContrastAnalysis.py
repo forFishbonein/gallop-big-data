@@ -121,8 +121,42 @@ def getJsonPro():
     # print(resDict)
     return resDict
 
+def PrimaryContrast():
+    db = Connection.getDB()
+    mycol = db["province"]
+    data = mycol.find({},{"_id": 0, '地区': 1, '年份': 1,
+                                    '第一产业增加值': 1,'第二产业增加值':1,"第三产业增加值":1})
+
+    PrimaryData = pd.DataFrame(list(data)).dropna()
+    firstPrimaryList = PrimaryData[["地区","年份","第一产业增加值"]].values.tolist()
+    secondPrimaryList = PrimaryData[["地区","年份","第二产业增加值"]].values.tolist()
+    thirdPrimaryList = PrimaryData[["地区", "年份", "第三产业增加值"]].values.tolist()
+    dictPrimary = {
+        "firstPrimary":firstPrimaryList,
+        "secondPrimary":secondPrimaryList,
+        "thirdPrimary":thirdPrimaryList
+    }
+    return dictPrimary
+
+def IndustryContrast():
+    db = Connection.getDB()
+    mycol = db["province"]
+    data = mycol.find({},{"_id": 0, '地区': 1, '年份': 1,
+                                    '第一产业增加值': 1,'第二产业增加值':1,"第三产业增加值":1})
+
+    PrimaryData = pd.DataFrame(list(data)).dropna()
+    firstPrimaryList = PrimaryData[["地区","年份","第一产业增加值"]].values.tolist()
+    secondPrimaryList = PrimaryData[["地区","年份","第二产业增加值"]].values.tolist()
+    thirdPrimaryList = PrimaryData[["地区", "年份", "第三产业增加值"]].values.tolist()
+    dictPrimary = {
+        "firstPrimary":firstPrimaryList,
+        "secondPrimary":secondPrimaryList,
+        "thirdPrimary":thirdPrimaryList
+    }
+    return dictPrimary
+
 if __name__ == '__main__':
-    data = getJsonPro()
+    data = PrimaryContrast()
 
     print(data)
     # print(TimeContrast())

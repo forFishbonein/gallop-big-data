@@ -19,6 +19,9 @@ def inverse_transform_col(scaler,y,n_col):
     y -= scaler.min_[n_col]
     y /= scaler.scale_[n_col]
     return y
+    #
+
+
 
 def readDataframe():
     db = Connection.getDB()

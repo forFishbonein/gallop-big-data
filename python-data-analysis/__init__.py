@@ -23,8 +23,9 @@ app = Flask(__name__)
 def evalutionYear(year):
     print(EveryEvaluation.EveryYearEvalution(year))
     return EveryEvaluation.EveryYearEvalution(year)
+
 @app.route('/evaluation/<province>',methods=["GET","POST"])
-def evalutionYear(province):
+def evalutionProvince(province):
     print(EveryEvaluation.EveryProvinceEvalution(province))
     return EveryEvaluation.EveryProvinceEvalution(province)
 # @app.route('evalution/proToYear', methods=["GET","OPTIONS"])
@@ -64,6 +65,13 @@ def ProvinceAvgGdp():
 def TimeAvgGdp():
     print(ContrastAnalysis.TimeContrast())
     return ContrastAnalysis.TimeContrast()
+@app.route('/contrast/primary')
+def PrimaryContrast():
+    return ContrastAnalysis.PrimaryContrast()
+# @app.route('/contrast/industry')
+# def PrimaryContrast():
+#     return ContrastAnalysis.PrimaryContrast()
+
 
 # 数据可视化大屏部分----人口情况
 @app.route('/visualization/people/peoplebirth')
