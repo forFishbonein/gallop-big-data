@@ -6,7 +6,8 @@ from flask import Flask
 from flask_cors import CORS
 from dataanalysis import ContrastAnalysis,EveryEvaluation,ProvinceGdpPredict,CityGdpPredict,EveryIncaditorPredict
 # from dataanalysis import ContrastAnalysis
-from dataquery import IndicatorQuery,ProvinceNameQuery,ProvinceDict
+from dataquery import IndicatorQuery,ProvinceNameQuery
+# from dataquery import IndicatorQuery,ProvinceNameQuery,ProvinceDict
 from visualization import People,Financial,Employment,ForeignTrade
 # import sys
 
