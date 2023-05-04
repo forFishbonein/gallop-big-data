@@ -19,3 +19,7 @@ input {
 a:hover {
     color: #667add;
 } */
+
+:root {
+    --el-color-primary: #667add
+}

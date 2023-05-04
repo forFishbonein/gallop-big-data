@@ -9,7 +9,13 @@ import Compare from "@/views/compare/CompareContainer.vue";
 import Industry from "@/views/compare/Industry.vue";
 import Area from "@/views/compare/Area.vue";
 import Time from "@/views/compare/Time.vue";
-import Predict from "@/views/predict/Predict.vue";
+import Predict from "@/views/predict/PredictContainer.vue";
+import City from "@/views/predict/City.vue";
+import Province from "@/views/predict/Province.vue";
+import Indicator from "@/views/predict/Indicator.vue";
+import Evaluate from "@/views/evaluate/EvaluateContainer.vue";
+import Position from "@/views/evaluate/Position.vue";
+import Year from "@/views/evaluate/Year.vue";
 import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
 import NotFound from "@/views/error/NotFound.vue";
@@ -124,6 +130,68 @@ export const routes: Array<RouteRecordRaw> = [
         name: "Predict",
         component: Predict,
         meta: { title: "预测页面", keepAlive: true, showTab: true },
+        redirect: "/predict/indicator",
+        children: [
+          {
+            path: "indicator",
+            name: "Indicator",
+            component: Indicator,
+            meta: {
+              title: "根据指标预测",
+              keepAlive: false,
+              showTab: true,
+            },
+          },
+          {
+            path: "city",
+            name: "City",
+            component: City,
+            meta: {
+              title: "根据城市预测",
+              keepAlive: false,
+              showTab: true,
+            },
+          },
+          {
+            path: "province",
+            name: "Province",
+            component: Province,
+            meta: {
+              title: "根据省份预测",
+              keepAlive: false,
+              showTab: true,
+            },
+          },
+        ],
+      },
+      {
+        path: "evaluate",
+        name: "Evaluate",
+        component: Evaluate,
+        meta: { title: "评价页面", keepAlive: true, showTab: true },
+        redirect: "/evaluate/position",
+        children: [
+          {
+            path: "position",
+            name: "Position",
+            component: Position,
+            meta: {
+              title: "按照地区评价",
+              keepAlive: false,
+              showTab: true,
+            },
+          },
+          {
+            path: "year",
+            name: "Year",
+            component: Year,
+            meta: {
+              title: "按照年份评价",
+              keepAlive: false,
+              showTab: true,
+            },
+          },
+        ],
       },
     ],
   },

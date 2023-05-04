@@ -9,7 +9,7 @@ const kstore = keywordStore();
 // let searchData2 = ref("");
 //获取子组件传过来的值
 const onSearch = (searchKey) => {
-  alert(searchKey);
+  // alert(searchKey);
   // searchKey2.value = searchKey;
   // searchData2.value = searchData;
   kstore.keyword = searchKey;

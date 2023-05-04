@@ -21,3 +21,17 @@ export function getAllProvinces() {
     // loading: false,
   });
 }
+export function getMapInfoApi(str, year) {
+  return httpRequest({
+    url: "/singlequery/year/" + str + "/" + year,
+    method: "get",
+    // loading: false,
+  });
+}
+export function getLineInfoByAreaApi(str, area) {
+  return httpRequest({
+    url: "/singlequery/pro/" + str + "/" + area,
+    method: "get",
+    // loading: false,
+  });
+}

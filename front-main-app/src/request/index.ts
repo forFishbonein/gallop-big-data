@@ -9,7 +9,7 @@ import axios, { AxiosResponse, AxiosRequestConfig } from "axios";
 
 const service = axios.create({
   baseURL: config.baseApi, // 所有的请求地址前缀部分
-  timeout: 20000, // 请求超时时间毫秒
+  timeout: 20000000, // 请求超时时间毫秒
   // withCredentials: true, // 异步请求携带cookie
   headers: {
     // 设置后端需要的传参类型
@@ -25,12 +25,12 @@ service.interceptors.request.use(
     // alert(store.pinia); //最早在这里可以获取
     // 加载动画
     // if (config.loading) {
-    //   //@ts-ignore
-    //   ElLoading.service({
-    //     lock: true,
-    //     text: "Loading...",
-    //     background: "rgba(0, 0, 0, 0.05)",
-    //   });
+    //@ts-ignore
+    ElLoading.service({
+      lock: true,
+      text: "Loading...",
+      background: "rgba(0, 0, 0, 0.5)",
+    });
     // }
 
     // 在此处添加请求头等，如添加 token，这样登录之后每次请求都会自动带上token，实际上在apis中就不需要写token了
@@ -48,10 +48,17 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
   (response) => {
+    //@ts-ignore //并不会创建一个新的loading
+    const loading = ElLoading.service({
+      lock: true,
+      text: "Loading",
+      background: "rgba(0, 0, 0, 0.5)",
+    });
+    loading.close();
     return response.data;
   },
   (error: any) => {
-    alert(111);
+    // alert(111);
     if (error && error.response) {
       switch (error.response.status) {
         case 400:

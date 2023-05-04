@@ -110,16 +110,55 @@
         </ul>
       </li>
       <li>
-        <router-link to="/predict">
+        <a
+          href="javascript:void(0);"
+          data-toggle="collapse"
+          data-target="#ecom_dr2"
+        >
           <div class="pull-left">
-            <i class="zmdi zmdi-flag mr-20"></i
+            <i class="zmdi zmdi-shopping-basket mr-20"></i
             ><span class="right-nav-text">预见未来</span>
           </div>
           <!-- <div class="pull-right">
-            <span class="label label-warning">8</span>
+            <span class="label label-primary">hot</span>
           </div> -->
           <div class="clearfix"></div>
-        </router-link>
+        </a>
+        <ul id="ecom_dr2" class="collapse collapse-level-1">
+          <li>
+            <router-link to="/predict/indicator">基于指标预测</router-link>
+          </li>
+          <li>
+            <router-link to="/predict/city">基于城市预测</router-link>
+          </li>
+          <li>
+            <router-link to="/predict/province">基于省份预测</router-link>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a
+          href="javascript:void(0);"
+          data-toggle="collapse"
+          data-target="#ecom_dr3"
+        >
+          <div class="pull-left">
+            <i class="zmdi zmdi-shopping-basket mr-20"></i
+            ><span class="right-nav-text">评价</span>
+          </div>
+          <!-- <div class="pull-right">
+            <span class="label label-primary">hot</span>
+          </div> -->
+          <div class="clearfix"></div>
+        </a>
+        <ul id="ecom_dr3" class="collapse collapse-level-1">
+          <li>
+            <router-link to="/evaluate/position">按照省份评价</router-link>
+          </li>
+          <li>
+            <router-link to="/evaluate/year">按照年份评价</router-link>
+          </li>
+        </ul>
       </li>
       <li>
         <a

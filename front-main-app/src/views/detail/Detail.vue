@@ -6,6 +6,8 @@ import {
   getBubbleInfoApi,
   getLineInfoApi,
   getAllProvinces,
+  getMapInfoApi,
+  getLineInfoByAreaApi,
 } from "@/apis/detail";
 import { keywordStore } from "@/store/keyword";
 // const props = defineProps<{
@@ -86,23 +88,99 @@ const getLineInfo = async () => {
   initLine();
 };
 // @ts-ignore
-let provincesName = [];
-const getAllProvincesName = () => {
-  getAllProvinces()
+// let provincesName = [];
+// const getAllProvincesName = () => {
+//   getAllProvinces()
+//     .then((res) => {
+//       // @ts-ignore
+//       provincesName = res.values;
+//       console.log(provincesName);
+//     })
+//     .catch((error) => {
+//       // @ts-ignore
+//       ElMessage({ type: "error", message: error.message });
+//     });
+// };
+// onBeforeMount(() => {
+//   getAllProvincesName();
+// });
+let mapList = [];
+let dictList = [
+  ["江苏省", "CN-32"],
+  ["贵州省", "CN-52"],
+  ["云南省", "CN-53"],
+  ["重庆市", "CN-50"],
+  ["四川省", "CN-51"],
+  ["上海市", "CN-31"],
+  ["西藏自治区", "CN-54"],
+  ["浙江省", "CN-33"],
+  ["内蒙古自治区", "CN-15"],
+  ["山西省", "CN-14"],
+  ["福建省", "CN-"],
+  ["天津市", "CN-12"],
+  ["河北省", "CN-13"],
+  ["北京市", "CN-11"],
+  ["安徽省", "CN-34"],
+  ["江西省", "CN-36"],
+  ["山东省", "CN-37"],
+  ["河南省", "CN-41"],
+  ["湖南省", "CN-43"],
+  ["湖北省", "CN-42"],
+  ["广西壮族自治区", "CN-45"],
+  ["广东省", "CN-44"],
+  ["海南省", "CN-46"],
+  ["新疆维吾尔自治区", "CN-65"],
+  ["宁夏回族自治区", "CN-64"],
+  ["青海省", "CN-63"],
+  ["甘肃省", "CN-62"],
+  ["陕西省", "CN-61"],
+  ["黑龙江省", "CN-23"],
+  ["吉林省", "CN-22"],
+  ["辽宁省", "CN-21"],
+];
+let data3 = {};
+const getMapInfo = async () => {
+  await getMapInfoApi(kstore.keyword, year.value)
     .then((res) => {
       // @ts-ignore
-      provincesName = res.values;
-      console.log(provincesName);
+      mapList = res.values;
+      // @ts-ignore
+      mapList = mapList.map(function (subArr) {
+        return [decodeURI(encodeURIComponent(subArr[0])), subArr[1]];
+      });
+      mapList.forEach((e) => {
+        for (let i = 0; i < dictList.length; i++) {
+          if (e[0] == dictList[i][0]) {
+            data3[dictList[i][1]] = e[1];
+          }
+        }
+      });
     })
     .catch((error) => {
       // @ts-ignore
       ElMessage({ type: "error", message: error.message });
     });
+  initMap();
 };
-onBeforeMount(() => {
-  getAllProvincesName();
-});
-
+let data4 = [];
+let xAxis = [];
+const getLineInfo2 = async () => {
+  await getLineInfoByAreaApi(kstore.keyword, province.value)
+    .then((res) => {
+      // @ts-ignore
+      res.values.forEach((e) => {
+        // @ts-ignore
+        xAxis.push(Math.floor(e[0]) + "");
+        // @ts-ignore
+        data4.push(e[1]);
+      });
+    })
+    .catch((error) => {
+      // @ts-ignore
+      ElMessage({ type: "error", message: error.message });
+    });
+  initLine2();
+};
 /*
 提取标签：
 const data = [
@@ -114,13 +192,13 @@ const data = [
 const labels = data.map(item => item.label)
  */
 /* 折线图2 */
-const initEcharts = () => {
+const initLine2 = () => {
   // @ts-ignore
   if ($("#e_chart_1").length > 0) {
     // @ts-ignore
     var eChart_1 = echarts.init(document.getElementById("e_chart_1"));
     //data
-    var data = [220, 182, 191, 234, 190, 330, 310];
+    var data = data4;
     var markLineData = [];
     for (var i = 1; i < data.length; i++) {
       // @ts-ignore
@@ -166,7 +244,7 @@ const initEcharts = () => {
         containLabel: true,
       },
       xAxis: {
-        data: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        data: xAxis,
         axisLine: {
           show: false,
         },
@@ -270,14 +348,14 @@ const initEcharts2 = () => {
       //   },
       // ]),
       title: {
-        text: `各地区各年份${kstore.keyword}情况`,
+        text: `各地区各年份 ${kstore.keyword} 情况`,
         left: "5%",
         top: "3%",
       },
       legend: {
         right: "10%",
         top: "3%",
-        data: ["1990"],
+        data: [kstore.keyword],
       },
       tooltip: {
         trigger: "axis",
@@ -325,7 +403,7 @@ const initEcharts2 = () => {
       },
       series: [
         {
-          name: "1990",
+          name: kstore.keyword,
           data: data1,
           type: "scatter",
           symbolSize: function (data) {
@@ -398,15 +476,19 @@ const initLine = () => {
     });
 };
 const initMap = () => {
+  // let dictList = [
+  //   ["江苏省", "CN-32"],
+  //   ["北京市", "CN-32"],
+  // ];
   // @ts-ignore
   $(function () {
     // @ts-ignore
     if ($("#china_map").length > 0) {
-      var mapData = {
-        "CN-32": 500, // 北京市
-        "CN-52": 200, // 天津市
-        "CN-53": 800, // 河北省
-      };
+      // var mapData = {
+      //   "CN-32": 500, // 北京市
+      //   "CN-52": 200, // 天津市
+      //   "CN-53": 800, // 河北省
+      // };
       // @ts-ignore
       $("#china_map").vectorMap({
         map: "cn_mill",
@@ -415,7 +497,7 @@ const initMap = () => {
         series: {
           regions: [
             {
-              values: mapData,
+              values: data3,
               scale: ["#C8EEFF", "#FFA500"],
               normalizeFunction: "polynomial",
             },
@@ -424,7 +506,7 @@ const initMap = () => {
         onRegionTipShow: function (e, el, code) {
           // console.log(mapData[code + ""]);
           // console.log(code);
-          el.html(el.html() + " (Value: " + mapData[code] + ")");
+          el.html(el.html() + " (Value: " + data3[code] + ")");
         },
       });
       // .vectorMap("set", "focus", { region: "CN-44" });
@@ -457,30 +539,53 @@ refresh(); //调用刷新方法
 const province = ref("");
 const year = ref("");
 const selectOptions = () => {
-  if (province.value !== "" && year.value === "") {
-    displayFlag.value = 2;
-  } else if (province.value === "" && year.value !== "") {
+  if (kstore.keyword.length > 0) {
+    if (province.value !== "" && year.value === "") {
+      displayFlag.value = 3;
+      data4 = [];
+      xAxis = [];
+      getLineInfo2();
+    }
+    // else if (province.value === "" && year.value !== "") {
+    //   // @ts-ignore
+    //   ElMessage({ type: "error", message: "请先选择省份" });
+    // }
+    else if (province.value === "" && year.value !== "") {
+      displayFlag.value = 2;
+      /* 地图 */
+      data3 = {};
+      getMapInfo();
+    } else if (province.value === "" && year.value === "") {
+      displayFlag.value = 1;
+      data1 = [];
+      // data2 = [];
+      // @ts-ignore
+      ElMessage({ type: "error", message: "请先选择内容！" });
+      // alert("开始查询");
+      getBubbleInfo();
+      // getLineInfo();
+    } else if (province.value !== "" && year.value !== "") {
+      // @ts-ignore
+      ElMessage({ type: "error", message: "只能选择二者之一！" });
+    }
+    // alert(province.value);
+    // alert(year.value);
+  } else {
     // @ts-ignore
-    ElMessage({ type: "error", message: "请先选择省份" });
-  } else if (province.value !== "" && year.value !== "") {
-    displayFlag.value = 3;
-  } else if (province.value === "" && year.value === "") {
-    // @ts-ignore
-    ElMessage({ type: "error", message: "请先选择内容" });
+    ElMessage({ type: "error", message: "请先搜索指标！" });
   }
-
-  alert(province.value);
-  alert(year.value);
 };
 onMounted(() => {
-  initEcharts();
   if (kstore.keyword.length > 0) {
     // alert("开始查询");
     getBubbleInfo();
     getLineInfo();
+  } else {
+    // @ts-ignore
+    ElMessage({ type: "error", message: "请先搜索指标！" });
   }
   // initEcharts2();
-  initMap();
+  // initMap();
 });
 onBeforeRouteLeave((to, from, next) => {
   // 在此处执行你的逻辑
@@ -583,7 +688,7 @@ onBeforeRouteLeave((to, from, next) => {
         class="btn btn-primary btn-outline fancy-button btn-0"
         @click="selectOptions"
       >
-        primary
+        确认
       </button>
     </div>
     <div class="row row-center" v-if="displayFlag === 1">
