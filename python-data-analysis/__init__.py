@@ -6,7 +6,7 @@ from flask import Flask
 from flask_cors import CORS
 from dataanalysis import ContrastAnalysis,EveryEvaluation,ProvinceGdpPredict,CityGdpPredict,EveryIncaditorPredict
 # from dataanalysis import ContrastAnalysis
-from dataquery import IndicatorQuery,ProvinceNameQuery
+from dataquery import IndicatorQuery,ProvinceNameQuery,ProvinceDict
 from visualization import People,Financial,Employment,ForeignTrade
 # import sys
 
@@ -28,6 +28,7 @@ app = Flask(__name__)
 #基于BP神经网络的综合评价：
 @app.route('/evaluation/<year>',methods=["GET","POST"])
 def evalutionYear(year):
+    year = int(year)
     print(EveryEvaluation.EveryYearEvalution(year))
     return EveryEvaluation.EveryYearEvalution(year)
 
@@ -154,6 +155,10 @@ def getForegintrade(pro,year):
 @app.route('/query/provincelist')
 def GetProvinceList():
     return ProvinceNameQuery.GetProvinceName()
+
+@app.route('/query/provinceinterpreter')
+def GetProvinceDict():
+    return ProvinceDict.GetProvinceDict()
 
 CORS(app, resources=r'/*')
 if __name__ == "__main__":
