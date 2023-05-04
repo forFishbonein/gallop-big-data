@@ -149,7 +149,7 @@ def PrimaryContrast():
         "secondPrimary":secondPrimaryList,
         "thirdPrimary":thirdPrimaryList
     }
-    return dictPrimary
+    return json.dumps(dictPrimary)
 
 def IndustryContrast():
     db = Connection.getDB()
@@ -166,7 +166,7 @@ def IndustryContrast():
         "secondPrimary":secondPrimaryList,
         "thirdPrimary":thirdPrimaryList
     }
-    return dictPrimary
+    return json.dumps(dictPrimary)
 
 if __name__ == '__main__':
     # data = PrimaryContrast()

@@ -33,7 +33,8 @@ def readDataframe():
 
     # 读取数据 进行数据预处理
 def read_check_data(pro):
-    data_before = pd.read_csv(r"D:\肖红娇\项目\大数据实训\data\province.csv")
+    data_before = pd.read_csv("data\province.csv")
+
     db = Connection.getDB()
     mycol = db["province"]
     data1 = mycol.find({},{"_id": 0, '地区': 1, '年份': 1,
