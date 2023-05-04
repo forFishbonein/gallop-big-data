@@ -23,8 +23,8 @@ schema = StructType([
 
 def readData():
     spark = SparkSession.builder.appName("GDP Average").getOrCreate()
-
-
+    df = spark.read.csv("data\province.csv", header=False, inferSchema=True)
+    return df
 def readDataframe():
     # collection = Connection.getCity()
     # data = []
@@ -44,10 +44,10 @@ def readDataframe():
 
 def TimeContrast():
     # spark = SparkSession.builder.appName("GDP Average").getOrCreate()
-    df = readDataframe()
-
+    df = readData()
     df = df.selectExpr("_c1 as province", "_c2 as year", "_c51 as gdp")
-    df = df.orderBy(["provrince", "year"], ascending=[True, True])
+    # df = df.orderBy(["provrince", "year"], ascending=[True, True])
+    # df = df.groupBy("province").agg(avg("gdp").alias("average_gdp"))
     eastern_provinces = ["上海市", "江苏省", "浙江省", "福建省", "山东省", "广东省", "海南省"]
     central_provinces = ["河南省", "湖北省", "湖南省", "江西省", "安徽省"]
     western_provinces = ["陕西省", "甘肃省", "青海省", "宁夏回族自治区", "新疆维吾尔自治区", "西藏自治区", "四川省",
@@ -57,9 +57,11 @@ def TimeContrast():
             .groupBy("province", "year") \
             .agg(avg(col("gdp")).alias("gdp_avg")) \
             .orderBy("year")
+
+        # disdata = df.filter(col("province").isin(province_list)) \
+        #     .groupBy("province") \
+        #     .agg(collect_list(col("average_gdp")).alias("gdp_array"))
         gdp_sum = disdata.groupBy("year").agg(sum("gdp_avg").alias("gdp_sum"))
-
-
         # 将 column1 和 column2 合并为一个数组列
         array_col = array("year", "gdp_sum")
         # 将数组列拆分为两列
@@ -98,13 +100,14 @@ def ProvinceContrast():
 # 创建SparkSession
 #     spark = SparkSession.builder.appName("GDP Average").getOrCreate()
     # 读取CSV文件
-    df = readDataframe()
+    # df = readDataframe()
     # print(df)
     # 转换列名
-    # df = df.selectExpr("_c1 as province", "_c2 as year", "_c51 as gdp")
-    # result = df.groupBy("province").agg(round(avg("gdp"), 2).alias("average_gdp"))
+    df = readData()
+    df = df.selectExpr("_c1 as province", "_c2 as year", "_c51 as gdp")
+    result = df.groupBy("province").agg(round(avg("gdp"), 2).alias("average_gdp"))
 
-    result = df.groupby("province").agg(avg(col("gdp").cast("int")).alias("average_gdp"))
+    # result = df.groupby("province").agg(avg(col("gdp").cast("int")).alias("average_gdp"))
 
     result_array = result.collect()
 
@@ -167,7 +170,7 @@ def IndustryContrast():
 
 if __name__ == '__main__':
     # data = PrimaryContrast()
+    # print(ProvinceContrast())
+    print(TimeContrast())
 
-    print(ProvinceContrast())
-    # print(TimeContrast())
 
