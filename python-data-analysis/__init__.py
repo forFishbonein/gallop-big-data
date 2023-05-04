@@ -26,13 +26,13 @@ app = Flask(__name__)
 #     return provinceEvalRes
 
 #基于BP神经网络的综合评价：
-@app.route('/evaluation/<year>',methods=["GET","POST"])
+@app.route('/evaluation/year/<year>',methods=["GET","POST"])
 def evalutionYear(year):
     year = int(year)
     print(EveryEvaluation.EveryYearEvalution(year))
     return EveryEvaluation.EveryYearEvalution(year)
 
-@app.route('/evaluation/<province>',methods=["GET","POST"])
+@app.route('/evaluation/pro/<province>',methods=["GET","POST"])
 def evalutionProvince(province):
     print(EveryEvaluation.EveryProvinceEvalution(province))
     return EveryEvaluation.EveryProvinceEvalution(province)
