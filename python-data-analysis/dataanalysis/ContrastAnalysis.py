@@ -135,20 +135,30 @@ def getJsonPro():
     return json.dumps(resDict)
 
 def PrimaryContrast():
-    db = Connection.getDB()
-    mycol = db["province"]
-    data = mycol.find({},{"_id": 0, '地区': 1, '年份': 1,
-                                    '第一产业增加值': 1,'第二产业增加值':1,"第三产业增加值":1})
+    # db = Connection.getDB()
+    # mycol = db["province"]
+    # data = mycol.find({},{"_id": 0, '地区': 1, '年份': 1,
+    #                                 '第一产业增加值': 1,'第二产业增加值':1,"第三产业增加值":1})
+    PrimaryData = pd.read_csv("data\province.csv")
+    # PrimaryData = pd.DataFrame(list(data)).dropna()
+    firstPrimaryList = PrimaryData[["地区","年份","第一产业增加值"]].dropna()
 
-    PrimaryData = pd.DataFrame(list(data)).dropna()
-    firstPrimaryList = PrimaryData[["地区","年份","第一产业增加值"]].values.tolist()
-    secondPrimaryList = PrimaryData[["地区","年份","第二产业增加值"]].values.tolist()
-    thirdPrimaryList = PrimaryData[["地区", "年份", "第三产业增加值"]].values.tolist()
+    # firstPrimaryList = PrimaryData[["地区","年份","第一产业增加值"]]
+    firstPrimaryList = firstPrimaryList[firstPrimaryList["年份"] >= 2010].values.tolist()
+    print(firstPrimaryList)
+    secondPrimaryList = PrimaryData[["地区","年份","第二产业增加值"]].dropna()
+    secondPrimaryList = secondPrimaryList[secondPrimaryList["年份"] >= 2010].values.tolist()
+    print(secondPrimaryList)
+    # thirdPrimaryData = PrimaryData[["地区", "年份", "第三产业增加值"]].values.tolist()
+    thirdPrimaryList = PrimaryData[["地区", "年份", "第三产业增加值"]].dropna()
+    thirdPrimaryList = thirdPrimaryList[thirdPrimaryList["年份"] >= 2010].values.tolist()
+    print(thirdPrimaryList)
     dictPrimary = {
         "firstPrimary":firstPrimaryList,
         "secondPrimary":secondPrimaryList,
         "thirdPrimary":thirdPrimaryList
     }
+    # print(dictPrimary)
     return json.dumps(dictPrimary)
 
 def IndustryContrast():
@@ -184,7 +194,7 @@ def IndustryContrast():
 
 if __name__ == '__main__':
     # data = PrimaryContrast()
-    # print(ProvinceContrast())
-    print(TimeContrast())
+    print(PrimaryContrast())
+    # print(TimeContrast())
 
 

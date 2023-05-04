@@ -263,9 +263,12 @@ def EveryProvinceEvalution(pro):
     # print(dataF)
     dataF['年份'] = year['年份']
     # dataF['省份'] = pro['地区']
-
     dataF = dataF[['年份','评价指数']]
-    return dataF
+    dataList = dataF.values.tolist()
+    dictData = {
+        "values":dataList
+    }
+    return json.dumps(dictData)
 
 def EveryYearEvalution(yr):
     # provinceData = readDataframe()
