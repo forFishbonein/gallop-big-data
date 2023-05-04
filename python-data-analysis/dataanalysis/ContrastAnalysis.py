@@ -21,6 +21,10 @@ schema = StructType([
     StructField("year", IntegerType(), True),
     StructField("gdp", FloatType(), True)])
 
+def readData():
+    spark = SparkSession.builder.appName("GDP Average").getOrCreate()
+
+
 def readDataframe():
     # collection = Connection.getCity()
     # data = []
@@ -41,7 +45,8 @@ def readDataframe():
 def TimeContrast():
     # spark = SparkSession.builder.appName("GDP Average").getOrCreate()
     df = readDataframe()
-    # df = df.selectExpr("_c1 as province", "_c2 as year", "_c51 as gdp")
+
+    df = df.selectExpr("_c1 as province", "_c2 as year", "_c51 as gdp")
     df = df.orderBy(["provrince", "year"], ascending=[True, True])
     eastern_provinces = ["上海市", "江苏省", "浙江省", "福建省", "山东省", "广东省", "海南省"]
     central_provinces = ["河南省", "湖北省", "湖南省", "江西省", "安徽省"]
@@ -90,7 +95,6 @@ def TimeContrast():
 
 
 def ProvinceContrast():
-
 # 创建SparkSession
 #     spark = SparkSession.builder.appName("GDP Average").getOrCreate()
     # 读取CSV文件
@@ -100,7 +104,7 @@ def ProvinceContrast():
     # df = df.selectExpr("_c1 as province", "_c2 as year", "_c51 as gdp")
     # result = df.groupBy("province").agg(round(avg("gdp"), 2).alias("average_gdp"))
 
-    result = df.groupBy("province").agg(avg(col("gdp").cast("int")).alias("average_gdp"))
+    result = df.groupby("province").agg(avg(col("gdp").cast("int")).alias("average_gdp"))
 
     result_array = result.collect()
 
@@ -164,6 +168,6 @@ def IndustryContrast():
 if __name__ == '__main__':
     # data = PrimaryContrast()
 
-    print(readDataframe())
+    print(ProvinceContrast())
     # print(TimeContrast())
 

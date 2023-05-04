@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import json
 
 import numpy as np
 import math
@@ -136,13 +137,13 @@ class BPNN:
             dfData.iloc[i,0] = (self.update(list(patt)[i][0]))[0]
         return dfData
     #权重
-    def weights(self):
-        print("输入层权重")
-        for i in range(self.num_in):
-            print(self.wight_in[i])
-        print("输出层权重")
-        for i in range(self.num_hidden):
-            print(self.wight_out[i])
+    # def weights(self):
+    #     print("输入层权重")
+    #     for i in range(self.num_in):
+    #         print(self.wight_in[i])
+    #     print("输出层权重")
+    #     for i in range(self.num_hidden):
+    #         print(self.wight_out[i])
 
     def train(self, pattern, itera=10000, lr = 0.1, m=0.1):
         for i in range(itera):
@@ -185,7 +186,7 @@ def mal(x,ymin=0.0001,ymax=0.9999):
     n=len(x)
     Y = np.zeros(n)
     Y[:] = MinMaxNormalized(x[:].reshape(-1,1),1,ymin,ymax).flatten()
-    print(Y)
+    # print(Y)
     return Y
 
 def Normalization(x,ind,ymin=0.0001,ymax=0.9999):
@@ -229,59 +230,75 @@ def demo(yr,inputData,outputData):
     return dataF
     #测试神经网络
 def readDataframe():
-    collection = Connection.getCity()
-    data = []
-    for doc in collection.find({},{"_id":0,"地区":1,"年份":1,"居民消费价格指数(上年=100)":1,"全体居民人均消费支出":1,"规模以上工业企业出口交货值":1,"地区生产总值":1}):
-        # print(doc)
-        data.append(doc)
-    data = pd.DataFrame(data).dropna()
-    # spark = SparkSession.builder.appName("GDP Average").getOrCreate()
+    # collection = Connection.getCity()
+    # data = []
+    # for doc in collection.find({},{"_id":0,"地区":1,"年份":1,"居民消费价格指数(上年=100)":1,"全体居民人均消费支出":1,"规模以上工业企业出口交货值":1,"地区生产总值":1}):
+    #     # print(doc)
+    #     data.append(doc)
+    # data = pd.DataFrame(data).dropna()
+    db = Connection.getDB()
+    mycol = db["province"]
+    data = mycol.find({},{"_id": 0, '地区': 1, '年份': 1,
+                                    '居民消费价格指数(上年=100)': 1,'全体居民人均消费支出':1,"规模以上工业企业出口交货值":1,"规模以上工业企业主营业务收入":1,"地区生产总值":1})
+
+    data = pd.DataFrame(list(data)).dropna()
     return data
 
 def EveryProvinceEvalution(pro):
-    provinceData = readDataframe()
-
+    # provinceData = readDataframe()
+    provinceData = pd.read_csv(r"D:\肖红娇\项目\大数据实训\data\province.csv")
     cols = ['居民消费价格指数(上年=100)','全体居民人均消费支出','规模以上工业企业出口交货值','规模以上工业企业主营业务收入']
     inputData = provinceData[provinceData['地区']==pro][cols]
     outputData = provinceData[provinceData['地区']==pro]['地区生产总值']
 
     year = provinceData[provinceData['地区']==pro]['年份']
     year = year.reset_index()
-    print(year)
+    # print(year)
     dataF = demo(pro,inputData,outputData)
     pro = provinceData[provinceData['地区']==pro]['地区']
     pro = pro.reset_index()
 
     dataF['年份'] = ''
     #查阅权重值
+    # print(dataF)
     dataF['年份'] = year['年份']
-    dataF['省份'] = pro['地区']
+    # dataF['省份'] = pro['地区']
 
-    dataF = dataF[['年份'],['评价指数']]
+    dataF = dataF[['年份','评价指数']]
     return dataF
 
 def EveryYearEvalution(yr):
-    provinceData = readDataframe()
+    # provinceData = readDataframe()
+    provinceData = pd.read_csv(r"D:\肖红娇\项目\大数据实训\data\province.csv")
+
     cols = ['居民消费价格指数(上年=100)','全体居民人均消费支出','规模以上工业企业出口交货值','规模以上工业企业主营业务收入']
 
     inputData = provinceData[provinceData['年份']==yr][cols]
 
     outputData = provinceData[provinceData['年份']==yr]['地区生产总值']
     dataF = demo(yr,inputData,outputData)
+
     year = provinceData[provinceData['年份']==yr]['年份']
     year = year.reset_index()
-    print(year)
+    # print(year)
 
     pro = provinceData[provinceData['年份']==yr]['地区']
     pro = pro.reset_index()
 
     dataF['省份'] = ''
     #查阅权重值
-    dataF['年份'] = year['年份']
+    # dataF['年份'] = year['年份']
     dataF['省份'] = pro['地区']
+    # print(dataF)
+    dataF = dataF[['省份','评价指数']].values.tolist()
+    dictYearEvaluation={
+        "values":dataF
+    }
+    return json.dumps(dictYearEvaluation)
 
-    dataF = dataF[['省份'],['评价指数']]
-    return dataF
 if __name__ == '__main__':
-    dataF = demo(2016)
-    EvaluationRes = dataF.values
+    # dataF = EveryYearEvalution(2016)
+    # EvaluationRes = dataF.values
+    # print(readDataframe())
+    # print(EveryProvinceEvalution("北京市"))
+    print(EveryYearEvalution(2016))
