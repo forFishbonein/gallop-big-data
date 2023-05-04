@@ -52,11 +52,12 @@ def IndictorData(indicator):
 def IndictorAvgData(indicator):
     return IndicatorQuery.averageYear(indicator)
 
-@app.route('/singlequery/<indicator>/<province>',methods=["GET","POST"])
+@app.route('/singlequery/year/<indicator>/<year>',methods=["GET","POST"])
 def IndictorProvinceData(indicator,year):
+    year = int(year)
     return IndicatorQuery.getProvinceData(indicator,year)
 
-@app.route('/singlequery/<indicator>/<province>',methods=["GET","POST"])
+@app.route('/singlequery/pro/<indicator>/<province>',methods=["GET","POST"])
 def IndictorYearData(indicator,province):
     return IndicatorQuery.getYearData(indicator, province)
 # @app.route('/singlequery/<indicator>/<year>/<province>',methods=["GET","POST"])

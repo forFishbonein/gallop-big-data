@@ -43,28 +43,32 @@ def getYearData(indicator,province):
     dictYear={
         "values":resList
     }
-    return dictYear
+    return json.dumps(dictYear)
 
 def getProvinceData(indicator,year):
-    collection = Connection.getCity()
-    data = []
-    for doc in collection.find({},{"_id":0,"地区":1,"年份":1,indicator:1}):
-        # print(doc)
-        data.append(doc)
+    # collection = Connection.getCity()
+    # data = []
+    # for doc in collection.find({},{"_id":0,"地区":1,"年份":1,indicator:1}):
+    #     # print(doc)
+    #     data.append(doc)
+    db = Connection.getDB()
+    mycol = db["province"]
+    data = mycol.find({}, {"_id": 0, '地区': 1, '年份': 1, indicator: 1})
 
     data = pd.DataFrame(data).dropna()
     yearList = data[data['年份']==year]
     # print(yearList)
     yearList = yearList.reset_index()
     del yearList[yearList.keys()[0]]
-    del yearList[yearList.keys()[0]]
+    del yearList[yearList.keys()[1]]
+    print(yearList)
     resList = []
     for i in range(len(yearList)):
         resList.append(list(yearList.loc[i]))
     dictProvince={
         "values":resList
     }
-    return json.dump(dictProvince)
+    return json.dumps(dictProvince)
 
 
 def averageYear(indicator):
@@ -115,7 +119,7 @@ def getIndicatorAllData(indicator):
     }
     return json.dumps(dictIndicator)
 
-if __name__ == "__main__":
-
-    re  = getYearData("地区生产总值","北京市")
-    print(re)
+# if __name__ == "__main__":
+    #
+    # re  = getProvinceData("地区生产总值",2018)
+    # print(re)
