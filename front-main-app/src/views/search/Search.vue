@@ -1088,7 +1088,7 @@ onMounted(() => {
         <!-- </div> -->
       </div>
       <div class="col-lg-8 col-md-7 col-sm-12 col-xs-12">
-        <router-view></router-view>
+        <router-view :key="$route.fullPath"></router-view>
       </div>
     </div>
     <!-- /Row -->

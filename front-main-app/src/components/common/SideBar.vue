@@ -5,10 +5,10 @@
   <div class="fixed-sidebar-left">
     <ul class="nav navbar-nav side-nav nicescroll-bar">
       <li class="navigation-header">
-        <span>Main</span>
+        <span>菜单</span>
         <i class="zmdi zmdi-more"></i>
       </li>
-      <li>
+      <!-- <li>
         <a
           class="active"
           href="javascript:void(0);"
@@ -45,7 +45,7 @@
             <a href="profile.html">profile</a>
           </li>
         </ul>
-      </li>
+      </li> -->
       <li>
         <router-link to="/home">
           <div class="pull-left">
@@ -89,7 +89,7 @@
           data-target="#ecom_dr"
         >
           <div class="pull-left">
-            <i class="zmdi zmdi-shopping-basket mr-20"></i
+            <i class="zmdi zmdi-flag mr-20"></i
             ><span class="right-nav-text">对比分析</span>
           </div>
           <div class="pull-right">
@@ -116,7 +116,7 @@
           data-target="#ecom_dr2"
         >
           <div class="pull-left">
-            <i class="zmdi zmdi-shopping-basket mr-20"></i
+            <i class="zmdi zmdi-flag mr-20"></i
             ><span class="right-nav-text">预见未来</span>
           </div>
           <!-- <div class="pull-right">
@@ -143,7 +143,7 @@
           data-target="#ecom_dr3"
         >
           <div class="pull-left">
-            <i class="zmdi zmdi-shopping-basket mr-20"></i
+            <i class="zmdi zmdi-flag mr-20"></i
             ><span class="right-nav-text">评价</span>
           </div>
           <!-- <div class="pull-right">
@@ -160,7 +160,7 @@
           </li>
         </ul>
       </li>
-      <li>
+      <!-- <li>
         <a
           href="javascript:void(0);"
           data-toggle="collapse"
@@ -645,9 +645,9 @@
                 <a href="#">Item level 2</a>
               </li>
             </ul>
-          </li>
-        </ul>
-      </li>
+          </li> -->
+      <!-- </ul>
+      </li> -->
     </ul>
   </div>
   <!-- /Left Sidebar Menu -->

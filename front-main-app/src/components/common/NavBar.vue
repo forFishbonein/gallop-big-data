@@ -30,7 +30,7 @@ const onSearch = (searchKey) => {
         <div class="logo-wrap">
           <a href="javascript:;">
             <img class="brand-img" src="/picture/logo.png" alt="brand" />
-            <span class="brand-text">Elmer</span>
+            <span class="brand-text">飞驰大数据</span>
           </a>
         </div>
       </div>
@@ -82,7 +82,7 @@ const onSearch = (searchKey) => {
         </div> -->
       </form>
     </div>
-    <div id="mobile_only_nav" class="mobile-only-nav pull-right">
+    <!-- <div id="mobile_only_nav" class="mobile-only-nav pull-right">
       <ul class="nav navbar-right top-nav pull-right">
         <li>
           <a id="open_right_sidebar" href="#"
@@ -494,7 +494,7 @@ const onSearch = (searchKey) => {
           </ul>
         </li>
       </ul>
-    </div>
+    </div> -->
   </nav>
   <!-- /Top Menu Items -->
 </template>
