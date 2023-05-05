@@ -49,7 +49,7 @@ const initCharts = () => {
           // ipad: 150,
           // itouch: 200,
         },
-         {
+        {
           period: "2007",
           easterngdp: 122527,
           // ipad: 150,
@@ -61,7 +61,7 @@ const initCharts = () => {
           ipad: 150,
           itouch: 200,
         },
-         {
+        {
           period: "2009",
           easterngdp: 156091,
           ipad: 150,
@@ -197,7 +197,7 @@ const initCharts = () => {
           // ipad: 150,
           // itouch: 200,
         },
-         {
+        {
           period: "2007",
           centralgdp: 47280,
           // ipad: 150,
@@ -209,7 +209,7 @@ const initCharts = () => {
           // ipad: 150,
           // itouch: 200,
         },
-         {
+        {
           period: "2009",
           centralgdp: 63640,
           // ipad: 150,
@@ -288,7 +288,7 @@ const initCharts = () => {
       pointSize: 2,
       fillOpacity: 0,
       lineWidth: 2,
-      pointStrokeColors: [ "#f8b32d"],
+      pointStrokeColors: ["#f8b32d"],
       behaveLikeLine: true,
       grid: false,
       hideHover: "auto",
@@ -345,7 +345,7 @@ const initCharts = () => {
           // ipad: 150,
           // itouch: 200,
         },
-         {
+        {
           period: "2007",
           westerngdp: 37056,
           // ipad: 150,
@@ -357,7 +357,7 @@ const initCharts = () => {
           // ipad: 150,
           // itouch: 200,
         },
-         {
+        {
           period: "2009",
           westerngdp: 49428,
           // ipad: 150,
@@ -440,7 +440,7 @@ const initCharts = () => {
       behaveLikeLine: true,
       grid: false,
       hideHover: "auto",
-      lineColors: [ "#f33923"],
+      lineColors: ["#f33923"],
       resize: true,
       gridTextColor: "#878787",
       gridTextFamily: "Roboto",
@@ -457,7 +457,7 @@ onMounted(() => {
       <div class="panel panel-default card-view">
         <div class="panel-heading">
           <div class="pull-left">
-            <h6 class="panel-title txt-dark">line Chart</h6>
+            <h6 class="panel-title txt-dark">东部地区</h6>
           </div>
           <div class="clearfix"></div>
         </div>
@@ -470,7 +470,7 @@ onMounted(() => {
       <div class="panel panel-default card-view">
         <div class="panel-heading">
           <div class="pull-left">
-            <h6 class="panel-title txt-dark">line Chart</h6>
+            <h6 class="panel-title txt-dark">中部地区</h6>
           </div>
           <div class="clearfix"></div>
         </div>
@@ -483,7 +483,7 @@ onMounted(() => {
       <div class="panel panel-default card-view">
         <div class="panel-heading">
           <div class="pull-left">
-            <h6 class="panel-title txt-dark">line Chart</h6>
+            <h6 class="panel-title txt-dark">西部地区</h6>
           </div>
           <div class="clearfix"></div>
         </div>
