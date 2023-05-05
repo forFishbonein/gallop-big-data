@@ -167,7 +167,7 @@ def GetIndicatorListPage(indicator,page_size,page_number):
     page_number = int(page_number)
     return indicatorClassification.getProvinceByIndicatorPage(indicator,page_size,page_number)
 
-@app.route('/query/listpage/<indicator>')
+@app.route('/query/list/<indicator>')
 def GetIndicatorList(indicator):
     return indicatorClassification.getProvinceByIndicator(indicator)
 
