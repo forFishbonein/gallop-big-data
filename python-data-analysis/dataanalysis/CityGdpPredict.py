@@ -43,8 +43,8 @@ def read_check_data(pro):
 
     data = pd.DataFrame(list(data))
 
-    data = data[data["地区"]==pro]
-
+    data = data[data["地区"]==pro].reset_index()
+    del data[data.keys()[0]]
     # # 输出每个列丢失值
     # data = data_before[["地区","年份","房地产开发投资额","经营单位所在地进出口总额","地方财政一般预算收入","地区生产总值"]].dropna()
     # print(data)

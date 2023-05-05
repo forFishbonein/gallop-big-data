@@ -6,7 +6,7 @@ from flask import Flask
 from flask_cors import CORS
 from dataanalysis import ContrastAnalysis,EveryEvaluation,ProvinceGdpPredict,CityGdpPredict,EveryIncaditorPredict
 # from dataanalysis import ContrastAnalysis
-from dataquery import IndicatorQuery,ProvinceNameQuery
+from dataquery import IndicatorQuery,ProvinceNameQuery,indicatorClassification
 # from dataquery import IndicatorQuery,ProvinceNameQuery,ProvinceDict
 from visualization import People,Financial,Employment,ForeignTrade
 # import sys
@@ -160,6 +160,16 @@ def GetProvinceList():
 @app.route('/query/provinceinterpreter')
 def GetProvinceDict():
     return ProvinceDict.GetProvinceDict()
+
+@app.route('/query/listpage/<indicator>/<page_size>/<page_number>')
+def GetIndicatorListPage(indicator,page_size,page_number):
+    page_size = int(page_size)
+    page_number = int(page_number)
+    return indicatorClassification.getProvinceByIndicatorPage(indicator,page_size,page_number)
+
+@app.route('/query/list/<indicator>')
+def GetIndicatorList(indicator):
+    return indicatorClassification.getProvinceByIndicator(indicator)
 
 CORS(app, resources=r'/*')
 if __name__ == "__main__":
