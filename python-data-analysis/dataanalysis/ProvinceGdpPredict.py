@@ -36,20 +36,21 @@ def readDataframe():
     # 读取数据 进行数据预处理
 def read_check_data(pro):
     data_before = pd.read_csv("data\province.csv")
-    db = Connection.getDB()
-    mycol = db["province"]
-    data1 = mycol.find({},{"_id": 0, '地区': 1, '年份': 1,
-                                    '房地产开发投资额': 1,'经营单位所在地进出口总额':1,"地方财政一般预算收入":1,"地区生产总值":1})
-
-    data1 = pd.DataFrame(list(data1))
-
-    data1 = data1[data1["地区"]==pro]
+    # db = Connection.getDB()
+    # mycol = db["province"]
+    # data1 = mycol.find({},{"_id": 0, '地区': 1, '年份': 1,
+    #                                 '房地产开发投资额': 1,'经营单位所在地进出口总额':1,"地方财政一般预算收入":1,"地区生产总值":1})
+    #
+    # data1 = pd.DataFrame(list(data1))
+    #
+    # data1 = data1[data1["地区"]==pro]
 
     # # 输出每个列丢失值
     data = data_before[["地区","年份","房地产开发投资额","经营单位所在地进出口总额","地方财政一般预算收入","地区生产总值"]].dropna()
     # print(data)
     # data = readDataframe()
-    data = data[data["地区"]==pro]
+    data = data[data["地区"]==pro].reset_index()
+    del data[data.keys()[0]]
 
     x_first_train = np.array(data['房地产开发投资额'].loc[:15])
 
@@ -136,7 +137,7 @@ def getPredictData(pro):
     return  json.dumps(dictPrediction)
 
 if __name__ == '__main__':
-    pro = "北京市"
+    pro = "湖北省"
     # x_first_train,x_second_train,x_third_train, x_first_predict,x_second_predict, x_third_predict, y_income = read_check_data(pro)
     # X, B, y_predict = multiple_regression(x_first_train,x_second_train,x_third_train, x_first_predict,x_second_predict, x_third_predict, y_income)
     print(getPredictData(pro))

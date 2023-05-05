@@ -255,9 +255,9 @@ def EveryProvinceEvalution(pro):
     year = year.reset_index()
     # print(year)
     dataF = demo(pro,inputData,outputData)
-    pro = provinceData[provinceData['地区']==pro]['地区']
-    pro = pro.reset_index()
-
+    # pro = provinceData[provinceData['地区']==pro]['地区']
+    # pro = pro.reset_index()
+    print(dataF)
     dataF['年份'] = ''
     #查阅权重值
     # print(dataF)
@@ -303,5 +303,5 @@ if __name__ == '__main__':
     # dataF = EveryYearEvalution(2016)
     # EvaluationRes = dataF.values
     # print(readDataframe())
-    # print(EveryProvinceEvalution("北京市"))
-    print(EveryYearEvalution(2016))
+    print(EveryProvinceEvalution("湖北省"))
+    # print(EveryYearEvalution(2016))
