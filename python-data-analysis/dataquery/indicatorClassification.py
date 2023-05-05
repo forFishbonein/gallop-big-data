@@ -20,7 +20,7 @@ def getProvinceByIndicator(indicator):
     skip_number = (page_number - 1) * page_size
     db = Connection.getDB()
     mycol = db["province"]
-    data = mycol.find({}, {"_id": 0, '地区': 1, '年份': 1, indicator: 1}).skip(skip_number).limit(page_size)
+    data = mycol.find({}, {"_id": 0, '地区': 1, '年份': 1, indicator: 1})
 
     indicatorlist = pd.DataFrame(list(data)).dropna()
     resList = indicatorlist.values.tolist()
