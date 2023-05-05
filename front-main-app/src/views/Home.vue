@@ -88,9 +88,12 @@ const testEcharts = () => {
             },
           },
           data: [
-            { value: 335, name: "Active" },
-            { value: 310, name: "Closed" },
-            { value: 274, name: "Hold" },
+            { value: 8265207754, name: "第一产业生产总值" },
+//46003416813
+            { value: 44030132010, name: "第二产业生产总值" },
+//2961858143
+            { value: 44060986406, name: "第三产业生产总值" },
+//19386245233
           ].sort(function (a, b) {
             return a.value - b.value;
           }),
@@ -398,47 +401,47 @@ const initEcharts2 = () => {
             // ["上海", 40, "农村居民消费"],
             // ["上海", 32, "农村居民消费"],
             // ["上海", 26, "农村居民消费"],
-            ["2015/11/21", 35, "DQ"],
-            ["2015/11/22", 40, "DQ"],
-            ["2015/11/23", 32, "DQ"],
-            ["2015/11/24", 26, "DQ"],
-            ["2015/11/25", 22, "DQ"],
-            ["2015/11/08", 35, "TY"],
-            ["2015/11/09", 36, "TY"],
-            ["2015/11/10", 37, "TY"],
-            ["2015/11/11", 22, "TY"],
-            ["2015/11/12", 24, "TY"],
-            ["2015/11/13", 26, "TY"],
-            ["2015/11/14", 34, "TY"],
-            ["2015/11/15", 21, "TY"],
-            ["2015/11/16", 18, "TY"],
-            ["2015/11/17", 45, "TY"],
-            ["2015/11/18", 32, "TY"],
-            ["2015/11/19", 35, "TY"],
-            ["2015/11/20", 30, "TY"],
-            ["2015/11/21", 28, "TY"],
-            ["2015/11/22", 27, "TY"],
-            ["2015/11/23", 26, "TY"],
-            ["2015/11/24", 15, "TY"],
-            ["2015/11/25", 30, "TY"],
-            ["2015/11/26", 35, "TY"],
-            ["2015/11/27", 42, "TY"],
-            ["2015/11/28", 42, "TY"],
-            ["2015/11/08", 21, "SS"],
-            ["2015/11/09", 25, "SS"],
-            ["2015/11/10", 27, "SS"],
-            ["2015/11/11", 23, "SS"],
-            ["2015/11/12", 24, "SS"],
-            ["2015/11/13", 21, "SS"],
-            ["2015/11/14", 35, "SS"],
-            ["2015/11/15", 39, "SS"],
-            ["2015/11/16", 40, "SS"],
-            ["2015/11/17", 36, "SS"],
-            ["2015/11/18", 33, "SS"],
-            ["2015/11/19", 43, "SS"],
-            ["2015/11/20", 40, "SS"],
-            ["2015/11/21", 34, "SS"],
-            ["2015/11/22", 28, "SS"],
+            ["2020/11/21", 35, "农村居民消费"],
+            ["2020/11/22", 40, "农村居民消费"],
+            ["2020/11/23", 32, "农村居民消费"],
+            ["2020/11/24", 26, "农村居民消费"],
+            ["2020/11/25", 22, "农村居民消费"],
+            ["2020/11/08", 35, "城镇居民消费"],
+            ["2020/11/09", 36, "城镇居民消费"],
+            ["2020/11/10", 37, "城镇居民消费"],
+            ["2020/11/11", 22, "城镇居民消费"],
+            ["2020/11/12", 24, "城镇居民消费"],
+            ["2020/11/13", 26, "城镇居民消费"],
+            ["2020/11/14", 34, "城镇居民消费"],
+            ["2020/11/15", 21, "城镇居民消费"],
+            ["2020/11/16", 18, "城镇居民消费"],
+            ["2020/11/17", 45, "城镇居民消费"],
+            ["2020/11/18", 32, "城镇居民消费"],
+            ["2020/11/19", 35, "城镇居民消费"],
+            ["2020/11/20", 30, "城镇居民消费"],
+            ["2020/11/21", 28, "城镇居民消费"],
+            ["2020/11/22", 27, "城镇居民消费"],
+            ["2020/11/23", 26, "城镇居民消费"],
+            ["2020/11/24", 15, "城镇居民消费"],
+            ["2020/11/25", 30, "城镇居民消费"],
+            ["2020/11/26", 35, "城镇居民消费"],
+            ["2020/11/27", 42, "城镇居民消费"],
+            ["2020/11/28", 42, "城镇居民消费"],
+            ["2020/11/08", 21, "政府消费"],
+            ["2020/11/09", 25, "政府消费"],
+            ["2020/11/10", 27, "政府消费"],
+            ["2020/11/11", 23, "政府消费"],
+            ["2020/11/12", 24, "政府消费"],
+            ["2020/11/13", 21, "政府消费"],
+            ["2020/11/14", 35, "政府消费"],
+            ["2020/11/15", 39, "政府消费"],
+            ["2020/11/16", 40, "政府消费"],
+            ["2020/11/17", 36, "政府消费"],
+            ["2020/11/18", 33, "政府消费"],
+            ["2020/11/19", 43, "政府消费"],
+            ["2020/11/20", 40, "政府消费"],
+            ["2020/11/21", 34, "政府消费"],
+            ["2020/11/22", 28, "政府消费"],
           ],
         },
       ],
@@ -482,7 +485,7 @@ onMounted(() => {
           </div>
           <div class="panel-heading">
             <div class="pull-left">
-              <h6 class="panel-title txt-dark">Visit by Traffic Types</h6>
+              <h6 class="panel-title txt-dark">国内生产总值</h6>
             </div>
             <div class="pull-right">
               <a href="#" class="pull-left inline-block refresh mr-15">
@@ -536,8 +539,8 @@ onMounted(() => {
                   <span
                     class="clabels-text font-12 inline-block txt-dark capitalize-font pull-left"
                     ><span class="block font-15 weight-500 mb-5"
-                      >44.46% organic</span
-                    ><span class="block txt-grey">356 visits</span></span
+                      >45.73%</span
+                    ><span class="block txt-grey">第三产业生产总值</span></span
                   >
                   <div
                     id="sparkline_1"
@@ -556,8 +559,8 @@ onMounted(() => {
                   <span
                     class="clabels-text font-12 inline-block txt-dark capitalize-font pull-left"
                     ><span class="block font-15 weight-500 mb-5"
-                      >5.54% Refrral</span
-                    ><span class="block txt-grey">36 visits</span></span
+                      >45.69%</span
+                    ><span class="block txt-grey">第二产业生产总值</span></span
                   >
                   <div
                     id="sparkline_2"
@@ -575,8 +578,8 @@ onMounted(() => {
                   ></span>
                   <span
                     class="clabels-text font-12 inline-block txt-dark capitalize-font pull-left"
-                    ><span class="block font-15 weight-500 mb-5">50% Other</span
-                    ><span class="block txt-grey">245 visits</span></span
+                    ><span class="block font-15 weight-500 mb-5">8.58%</span
+                    ><span class="block txt-grey">第一产业生产总值</span></span
                   >
                   <div
                     id="sparkline_3"
@@ -597,7 +600,7 @@ onMounted(() => {
           </div>
           <div class="panel-heading">
             <div class="pull-left">
-              <h6 class="panel-title txt-dark">user statistics</h6>
+              <h6 class="panel-title txt-dark">国内消费水平</h6>
             </div>
             <div class="pull-right">
               <a href="#" class="pull-left inline-block refresh mr-15">
@@ -647,19 +650,19 @@ onMounted(() => {
               <div id="e_chart_1" class="" style="height: 313px"></div>
               <ul class="flex-stat mt-40">
                 <li>
-                  <span class="block">Weekly Users</span>
+                  <span class="block">政府消费水平</span>
                   <span class="block txt-dark weight-500 font-18"
-                    ><span class="counter-anim">3,24,222</span></span
+                    ><span class="counter-anim">111667.6（亿元）</span></span
                   >
                 </li>
                 <li>
-                  <span class="block">Monthly Users</span>
+                  <span class="block">居民消费水平</span>
                   <span class="block txt-dark weight-500 font-18"
-                    ><span class="counter-anim">1,23,432</span></span
+                    ><span class="counter-anim">325216（亿元)</span></span
                   >
                 </li>
                 <li>
-                  <span class="block">Trend</span>
+                  <span class="block">增长</span>
                   <span class="block">
                     <i class="zmdi zmdi-trending-up txt-success font-24"></i>
                   </span>
@@ -676,7 +679,7 @@ onMounted(() => {
           </div>
           <div class="panel-heading">
             <div class="pull-left">
-              <h6 class="panel-title txt-dark">Gender Split</h6>
+              <h6 class="panel-title txt-dark">国内男女人口对比分析</h6>
             </div>
             <div class="pull-right">
               <a href="#" class="pull-left inline-block refresh mr-15">
@@ -730,7 +733,7 @@ onMounted(() => {
                   <span
                     class="clabels-text font-12 inline-block txt-dark capitalize-font pull-left"
                     ><span class="block font-16 weight-500 mb-5"
-                      ><span class="counter-anim">30</span>%</span
+                      ><span class="counter-anim">51</span>%</span
                     ><span class="block txt-grey">Male</span></span
                   >
                   <i
@@ -748,7 +751,7 @@ onMounted(() => {
                   <span
                     class="clabels-text font-12 inline-block txt-dark capitalize-font pull-left"
                     ><span class="block font-16 weight-500 mb-5"
-                      ><span class="counter-anim">70</span>%</span
+                      ><span class="counter-anim">49</span>%</span
                     ><span class="block txt-grey">Female</span></span
                   >
                   <i
@@ -864,10 +867,10 @@ onMounted(() => {
                   <div class="row">
                     <div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
                       <span class="txt-dark block counter"
-                        ><span class="counter-anim">914,001</span></span
+                        ><span class="counter-anim">5.530625761%</span></span
                       >
                       <span class="weight-500 uppercase-font block font-13"
-                        >visits</span
+                        >人口自然增长率</span
                       >
                     </div>
                     <div class="col-xs-6 text-center pl-0 pr-0 data-wrap-right">
@@ -891,10 +894,10 @@ onMounted(() => {
                   <div class="row">
                     <div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
                       <span class="txt-dark block counter"
-                        ><span class="counter-anim">46.41</span>%</span
+                        ><span class="counter-anim">203950.8</span>（万人）</span
                       >
                       <span class="weight-500 uppercase-font block"
-                        >bounce rate</span
+                        >就业人口</span
                       >
                     </div>
                     <div class="col-xs-6 text-center pl-0 pr-0 data-wrap-right">
@@ -918,10 +921,10 @@ onMounted(() => {
                   <div class="row">
                     <div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
                       <span class="txt-dark block counter"
-                        ><span class="counter-anim">4,054,876</span></span
+                        ><span class="counter-anim">711059.34（亿元）</span></span
                       >
                       <span class="weight-500 uppercase-font block"
-                        >pageviews</span
+                        >国家财政收入</span
                       >
                     </div>
                     <div class="col-xs-6 text-center pl-0 pr-0 data-wrap-right">
@@ -945,10 +948,10 @@ onMounted(() => {
                   <div class="row">
                     <div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
                       <span class="txt-dark block counter"
-                        ><span class="counter-anim">46.43</span>%</span
+                        ><span class="counter-anim">245588.47（亿元）</span></span
                       >
                       <span class="weight-500 uppercase-font block"
-                        >growth rate</span
+                        >国家财政支出</span
                       >
                     </div>
                     <div
@@ -978,7 +981,7 @@ onMounted(() => {
           </div>
           <div class="panel-heading">
             <div class="pull-left">
-              <h6 class="panel-title txt-dark">Advertising & Promotions</h6>
+              <h6 class="panel-title txt-dark">国内对外贸易发展水平</h6>
             </div>
             <div class="pull-right">
               <a href="#" class="pull-left inline-block refresh mr-15">
@@ -1028,21 +1031,21 @@ onMounted(() => {
                   <span class="clabels inline-block bg-primary mr-5"></span>
                   <span
                     class="clabels-text font-12 inline-block txt-dark capitalize-font"
-                    >Active</span
+                    >经营单位</span
                   >
                 </div>
                 <div class="inline-block mr-15">
                   <span class="clabels inline-block bg-purple mr-5"></span>
                   <span
                     class="clabels-text font-12 inline-block txt-dark capitalize-font"
-                    >Closed</span
+                    >外商投资企业</span
                   >
                 </div>
                 <div class="inline-block">
                   <span class="clabels inline-block bg-skyblue mr-5"></span>
                   <span
                     class="clabels-text font-12 inline-block txt-dark capitalize-font"
-                    >Hold</span
+                    >境内目的地货源地</span
                   >
                 </div>
               </div>
@@ -1057,7 +1060,7 @@ onMounted(() => {
           </div>
           <div class="panel-heading">
             <div class="pull-left">
-              <h6 class="panel-title txt-dark">social campaigns</h6>
+              <h6 class="panel-title txt-dark">重点城市受高等教育发展情况</h6>
             </div>
             <div class="pull-right">
               <a href="#" class="pull-left inline-block refresh mr-15">
@@ -1106,103 +1109,103 @@ onMounted(() => {
                   <table class="table table-hover mb-0">
                     <thead>
                       <tr>
-                        <th>Campaign</th>
-                        <th>Client</th>
+                        <th>area</th>
+                        <th>count（w）</th>
                         <th>Changes</th>
-                        <th>Budget</th>
-                        <th>Status</th>
+                        <th>different(w)</th>
+<!--                        <th>Status</th>-->
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
                         <td>
-                          <span class="txt-dark weight-500">Facebook</span>
+                          <span class="txt-dark weight-500">北京</span>
                         </td>
-                        <td>Beavis</td>
+                        <td>13.08</td>
                         <td>
                           <span class="txt-success"
                             ><i class="zmdi zmdi-caret-up mr-10 font-20"></i
-                            ><span>2.43%</span></span
+                            ><span>0.076%</span></span
                           >
                         </td>
                         <td>
-                          <span class="txt-dark weight-500">$1478</span>
+                          <span class="txt-dark weight-500">0.01</span>
                         </td>
-                        <td>
-                          <span class="label label-primary">Active</span>
-                        </td>
+<!--                        <td>-->
+<!--                          <span class="label label-primary">Active</span>-->
+<!--                        </td>-->
                       </tr>
                       <tr>
                         <td>
-                          <span class="txt-dark weight-500">Youtube</span>
+                          <span class="txt-dark weight-500">天津</span>
                         </td>
-                        <td>Felix</td>
+                        <td>8.92</td>
                         <td>
                           <span class="txt-success"
                             ><i class="zmdi zmdi-caret-up mr-10 font-20"></i
-                            ><span>1.43%</span></span
+                            ><span>1.133%</span></span
                           >
                         </td>
                         <td>
-                          <span class="txt-dark weight-500">$951</span>
+                          <span class="txt-dark weight-500">0.1</span>
                         </td>
-                        <td>
-                          <span class="label label-danger">Closed</span>
-                        </td>
+<!--                        <td>-->
+<!--                          <span class="label label-danger">Closed</span>-->
+<!--                        </td>-->
                       </tr>
                       <tr>
                         <td>
-                          <span class="txt-dark weight-500">Twitter</span>
+                          <span class="txt-dark weight-500">上海</span>
                         </td>
-                        <td>Cannibus</td>
+                        <td>10.23</td>
                         <td>
-                          <span class="txt-danger"
+                          <span class="txt-success"
                             ><i class="zmdi zmdi-caret-down mr-10 font-20"></i
-                            ><span>-8.43%</span></span
+                            ><span>1.994%</span></span
                           >
                         </td>
                         <td>
-                          <span class="txt-dark weight-500">$632</span>
+                          <span class="txt-dark weight-500">0.2</span>
                         </td>
-                        <td>
-                          <span class="label label-default">Hold</span>
-                        </td>
+<!--                        <td>-->
+<!--                          <span class="label label-default">Hold</span>-->
+<!--                        </td>-->
                       </tr>
                       <tr>
                         <td>
-                          <span class="txt-dark weight-500">Spotify</span>
+                          <span class="txt-dark weight-500">重庆</span>
                         </td>
-                        <td>Neosoft</td>
+                        <td>11.74</td>
                         <td>
                           <span class="txt-success"
                             ><i class="zmdi zmdi-caret-up mr-10 font-20"></i
-                            ><span>7.43%</span></span
+                            ><span>1.748%</span></span
                           >
                         </td>
                         <td>
-                          <span class="txt-dark weight-500">$325</span>
+                          <span class="txt-dark weight-500">0.09</span>
                         </td>
-                        <td>
-                          <span class="label label-default">Hold</span>
-                        </td>
+<!--                        <td>-->
+<!--                          <span class="label label-default">Hold</span>-->
+<!--                        </td>-->
                       </tr>
                       <tr>
                         <td>
-                          <span class="txt-dark weight-500">Instagram</span>
+                          <span class="txt-dark weight-500">武汉</span>
                         </td>
-                        <td>Hencework</td>
+                        <td>22.7</td>
                         <td>
                           <span class="txt-success"
                             ><i class="zmdi zmdi-caret-up mr-10 font-20"></i
-                            ><span>9.43%</span></span
+                            ><span>0.773%</span></span
                           >
                         </td>
                         <td>
-                          <span class="txt-dark weight-500">$258</span>
+                          <span class="txt-dark weight-500">0.39</span>
                         </td>
-                        <td>
-                          <span class="label label-primary">Active</span>
-                        </td>
+<!--                        <td>-->
+<!--                          <span class="label label-primary">Active</span>-->
+<!--                        </td>-->
                       </tr>
                     </tbody>
                   </table>
