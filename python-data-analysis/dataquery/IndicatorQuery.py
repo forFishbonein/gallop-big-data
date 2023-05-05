@@ -122,6 +122,20 @@ def getIndicatorAllData(indicator):
     print(dictIndicator)
     return json.dumps(dictIndicator)
 
+def GdpCity(GDPcity,GDPyear):
+    table = Connection.getTable('city')
+    collection = list(table.find())
+    data = pd.DataFrame(collection)
+    # data = pd.read_csv(r'E:\fast_data\data\city.csv',encoding='gbk')
+    cols = data[['地区', '年份', '地区生产总值(万元)', '第一产业增加值(万元)', '第二产业增加值(万元)', '第三产业增加值(万元)']]
+    indi = cols[cols['地区'] == GDPcity]
+    indi = indi[indi['年份'] == GDPyear]
+    city_gdp_list = indi.dropna()
+    city_gdp_list =city_gdp_list.reset_index(drop=True)
+    # print(city_gdp_list)
+    resList = city_gdp_list.to_dict(orient='list')
+    return resList
+
 # if __name__ == "__main__":
     #
     # re  = getProvinceData("地区生产总值",2018)
