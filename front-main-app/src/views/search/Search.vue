@@ -131,8 +131,8 @@ onMounted(() => {
                 text: "林业投资国内贷款",
                 href: "#search/result/林业投资国内贷款",
                 tags: ["0"],
-              }
-            ]
+              },
+            ],
           },
           {
             text: "畜牧业",
@@ -207,7 +207,7 @@ onMounted(() => {
                 href: "#search/result/牛奶产量",
                 tags: ["0"],
               },
-            ]
+            ],
           },
           {
             text: "渔业",
@@ -232,7 +232,7 @@ onMounted(() => {
                 href: "#search/result/海水养殖产量",
                 tags: ["0"],
               },
-             {
+              {
                 text: "虾蟹类产量",
                 href: "#search/result/虾蟹类产量",
                 tags: ["0"],
@@ -292,7 +292,7 @@ onMounted(() => {
                 href: "#search/result/浅海养殖面积",
                 tags: ["0"],
               },
-            ]
+            ],
           },
         ],
       },
@@ -322,7 +322,7 @@ onMounted(() => {
                 href: "#search/result/规模以上工业企业应收账款净额",
                 tags: ["0"],
               },
-             {
+              {
                 text: "规模以上工业企业外商资本金",
                 href: "#search/result/规模以上工业企业外商资本金",
                 tags: ["0"],
@@ -442,7 +442,7 @@ onMounted(() => {
                 href: "#search/result/国有经济石油加工及炼焦业固定资产投资",
                 tags: ["0"],
               },
-             {
+              {
                 text: "能源工业投资",
                 href: "#search/result/能源工业投资",
                 tags: ["0"],
@@ -537,7 +537,7 @@ onMounted(() => {
                 href: "#search/result/燃料油消费量",
                 tags: ["0"],
               },
-            ]
+            ],
           },
           {
             text: "制造业",
@@ -1075,7 +1075,7 @@ onMounted(() => {
         <div class="panel panel-default card-view">
           <div class="panel-heading">
             <div class="pull-left">
-              <h6 class="panel-title txt-dark">Default</h6>
+              <h6 class="panel-title txt-dark">全部指标</h6>
             </div>
             <div class="clearfix"></div>
           </div>
