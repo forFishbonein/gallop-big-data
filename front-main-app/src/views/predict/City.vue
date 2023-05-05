@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted, inject } from "vue";
-import { getLinePredictInfoApi } from "@/apis/predict";
+import { getLinePredictInfoApiCity } from "@/apis/predict";
 let echarts = inject("ec"); //引入
-const indicatorName = ref("");
-let result = [];
+const cityName = ref("");
 let resultReal = [];
 let resultPredict = [];
 let dataX = [];
@@ -12,28 +11,22 @@ let predictY = [];
 const getLinePredictInfo = async () => {
   // @ts-ignore
   ElMessage({ type: "success", message: "开始计算，请耐心等待！" });
-  await getLinePredictInfoApi(indicatorName.value)
+  await getLinePredictInfoApiCity(cityName.value)
     .then((res) => {
       // @ts-ignore
       ElMessage({ type: "success", message: "计算成功！" });
-      result = res.realData.concat(res.predictData);
-      // @ts-ignore
-      result.forEach((e) => {
-        // @ts-ignore
-        dataX.push(e[0]);
-      });
-      resultReal = res.realData;
+
+      resultReal = res.realGdp;
       resultReal.forEach((e) => {
         // @ts-ignore
-        realY.push(e[1].toFixed(2));
+        realY.push(e[1]);
       });
-      resultPredict = res.predictData;
+      resultPredict = res.predictGdp;
       resultPredict.forEach((e) => {
+        dataX.push(e[0]);
         // @ts-ignore
         predictY.push(e[1].toFixed(2));
       });
-      // @ts-ignore
-      predictY = new Array(resultReal.length).fill(NaN).concat(predictY);
       console.log(dataX);
       console.log(realY);
       console.log(predictY);
@@ -49,21 +42,6 @@ const initLine = () => {
   if ($("#e_chart_3").length > 0) {
     // @ts-ignore
     var eChart_3 = echarts.init(document.getElementById("e_chart_3"));
-    // var base = +new Date(1968, 9, 3);
-    // var oneDay = 24 * 3600 * 1000;
-    // var date = [];
-    // var data = [Math.random() * 300];
-
-    // for (var i = 1; i < 5000; i++) {
-    //   var now = new Date((base += oneDay));
-    //   date.push(
-    //     // @ts-ignore
-    //     [now.getFullYear(), now.getMonth() + 1, now.getDate()].join("/")
-    //   );
-    //   data.push(Math.round((Math.random() - 0.5) * 40 + data[i - 1]));
-    // }
-    // console.log(data);
-    // console.log(date);
     var option3 = {
       tooltip: {
         trigger: "axis",
@@ -185,7 +163,7 @@ onMounted(() => {
       <div class="panel panel-default card-view">
         <div class="panel-heading">
           <div class="pull-left">
-            <h6 class="panel-title txt-dark">预测之后10年的值</h6>
+            <h6 class="panel-title txt-dark">预测之后5年的gdp值</h6>
           </div>
           <div class="clearfix"></div>
         </div>
@@ -199,13 +177,13 @@ onMounted(() => {
               >
                 <div class="form-group mr-15">
                   <label class="control-label mr-10" for="email_inline"
-                    >指标名称:</label
+                    >城市名称:（北京）</label
                   >
                   <input
                     type="input"
                     class="form-control"
                     id="email_inline"
-                    v-model="indicatorName"
+                    v-model="cityName"
                   />
                 </div>
                 <!-- <div class="form-group mr-15">
@@ -280,7 +258,7 @@ onMounted(() => {
                 <span class="clabels inline-block bg-primary mr-5"></span>
                 <span
                   class="clabels-text font-12 inline-block txt-dark capitalize-font"
-                  >{{ indicatorName }}</span
+                  >{{ cityName }}GDP</span
                 >
               </div>
             </div>

@@ -76,148 +76,148 @@ const initEcharts1 = () => {
   myChart = echarts.init(document.getElementById("map-container"));
   // @ts-ignore
   echarts.registerMap("china", chinaJson);
-  let dataList = [
-    {
-      name: "北京",
-      value: 16926,
-    },
-    {
-      name: "南海诸岛",
-      value: 0,
-    },
-    {
-      name: "天津",
-      value: 7275,
-    },
-    {
-      name: "上海",
-      value: 19229,
-    },
-    {
-      name: "重庆",
-      value: 10393,
-    },
-    {
-      name: "河北",
-      value: 18606,
-    },
-    {
-      name: "河南",
-      value: 25280,
-    },
-    {
-      name: "云南",
-      value: 10058,
-    },
-    {
-      name: "辽宁",
-      value: 14359,
-    },
-    {
-      name: "黑龙江",
-      value: 8415,
-    },
-    {
-      name: "湖南",
-      value: 18345,
-    },
-    {
-      name: "安徽",
-      value: 16225,
-    },
-    {
-      name: "山东",
-      value: 36541,
-    },
-    {
-      name: "新疆",
-      value: 6340,
-    },
-    {
-      name: "江苏",
-      value: 46848,
-    },
-    {
-      name: "浙江",
-      value: 30128,
-    },
-    {
-      name: "江西",
-      value: 11143,
-    },
-    {
-      name: "湖北",
-      value: 19728,
-    },
-    {
-      name: "广西",
-      value: 9909,
-    },
-    {
-      name: "甘肃",
-      value: 4422,
-    },
-    {
-      name: "山西",
-      value: 8859,
-    },
-    {
-      name: "内蒙古",
-      value: 8607,
-    },
-    {
-      name: "陕西",
-      value: 11660,
-    },
-    {
-      name: "吉林",
-      value: 6643,
-    },
-    {
-      name: "福建",
-      value: 18348,
-    },
-    {
-      name: "贵州",
-      value: 6705,
-    },
-    {
-      name: "广东",
-      value: 51473,
-    },
-    {
-      name: "青海",
-      value: 1352,
-    },
-    {
-      name: "西藏",
-      value: 707,
-    },
-    {
-      name: "四川",
-      value: 20697,
-    },
-    {
-      name: "宁夏",
-      value: 1747,
-    },
-    {
-      name: "海南",
-      value: 2449,
-    },
-    {
-      name: "台湾",
-      value: 0,
-    },
-    {
-      name: "香港",
-      value: 5,
-    },
-    {
-      name: "澳门",
-      value: 5,
-    },
-  ];
+  // let dataList = [
+  //   {
+  //     name: "北京",
+  //     value: 16926,
+  //   },
+  //   {
+  //     name: "南海诸岛",
+  //     value: 0,
+  //   },
+  //   {
+  //     name: "天津",
+  //     value: 7275,
+  //   },
+  //   {
+  //     name: "上海",
+  //     value: 19229,
+  //   },
+  //   {
+  //     name: "重庆",
+  //     value: 10393,
+  //   },
+  //   {
+  //     name: "河北",
+  //     value: 18606,
+  //   },
+  //   {
+  //     name: "河南",
+  //     value: 25280,
+  //   },
+  //   {
+  //     name: "云南",
+  //     value: 10058,
+  //   },
+  //   {
+  //     name: "辽宁",
+  //     value: 14359,
+  //   },
+  //   {
+  //     name: "黑龙江",
+  //     value: 8415,
+  //   },
+  //   {
+  //     name: "湖南",
+  //     value: 18345,
+  //   },
+  //   {
+  //     name: "安徽",
+  //     value: 16225,
+  //   },
+  //   {
+  //     name: "山东",
+  //     value: 36541,
+  //   },
+  //   {
+  //     name: "新疆",
+  //     value: 6340,
+  //   },
+  //   {
+  //     name: "江苏",
+  //     value: 46848,
+  //   },
+  //   {
+  //     name: "浙江",
+  //     value: 30128,
+  //   },
+  //   {
+  //     name: "江西",
+  //     value: 11143,
+  //   },
+  //   {
+  //     name: "湖北",
+  //     value: 19728,
+  //   },
+  //   {
+  //     name: "广西",
+  //     value: 9909,
+  //   },
+  //   {
+  //     name: "甘肃",
+  //     value: 4422,
+  //   },
+  //   {
+  //     name: "山西",
+  //     value: 8859,
+  //   },
+  //   {
+  //     name: "内蒙古",
+  //     value: 8607,
+  //   },
+  //   {
+  //     name: "陕西",
+  //     value: 11660,
+  //   },
+  //   {
+  //     name: "吉林",
+  //     value: 6643,
+  //   },
+  //   {
+  //     name: "福建",
+  //     value: 18348,
+  //   },
+  //   {
+  //     name: "贵州",
+  //     value: 6705,
+  //   },
+  //   {
+  //     name: "广东",
+  //     value: 51473,
+  //   },
+  //   {
+  //     name: "青海",
+  //     value: 1352,
+  //   },
+  //   {
+  //     name: "西藏",
+  //     value: 707,
+  //   },
+  //   {
+  //     name: "四川",
+  //     value: 20697,
+  //   },
+  //   {
+  //     name: "宁夏",
+  //     value: 1747,
+  //   },
+  //   {
+  //     name: "海南",
+  //     value: 2449,
+  //   },
+  //   {
+  //     name: "台湾",
+  //     value: 0,
+  //   },
+  //   {
+  //     name: "香港",
+  //     value: 5,
+  //   },
+  //   {
+  //     name: "澳门",
+  //     value: 5,
+  //   },
+  // ];
   dataA.sort(function (a, b) {
     return a.value - b.value;
   });
