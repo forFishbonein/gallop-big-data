@@ -19,6 +19,7 @@ import Year from "@/views/evaluate/Year.vue";
 import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
 import NotFound from "@/views/error/NotFound.vue";
+import Chat from "@/views/chat/Chat.vue";
 
 export const routes: Array<RouteRecordRaw> = [
   {
@@ -194,6 +195,13 @@ export const routes: Array<RouteRecordRaw> = [
         ],
       },
     ],
+  },
+  {
+    path: "/chat",
+    name: "Chat",
+    component: Chat, //这个不行，会加载不出来
+    // component: Home,
+    meta: { title: "HaoGPT", keepAlive: true, showTab: true },
   },
   {
     path: "/login",

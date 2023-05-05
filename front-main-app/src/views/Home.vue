@@ -89,11 +89,11 @@ const testEcharts = () => {
           },
           data: [
             { value: 8265207754, name: "第一产业生产总值" },
-//46003416813
+            //46003416813
             { value: 44030132010, name: "第二产业生产总值" },
-//2961858143
+            //2961858143
             { value: 44060986406, name: "第三产业生产总值" },
-//19386245233
+            //19386245233
           ].sort(function (a, b) {
             return a.value - b.value;
           }),
@@ -538,8 +538,7 @@ onMounted(() => {
                   ></span>
                   <span
                     class="clabels-text font-12 inline-block txt-dark capitalize-font pull-left"
-                    ><span class="block font-15 weight-500 mb-5"
-                      >45.73%</span
+                    ><span class="block font-15 weight-500 mb-5">45.73%</span
                     ><span class="block txt-grey">第三产业生产总值</span></span
                   >
                   <div
@@ -558,8 +557,7 @@ onMounted(() => {
                   ></span>
                   <span
                     class="clabels-text font-12 inline-block txt-dark capitalize-font pull-left"
-                    ><span class="block font-15 weight-500 mb-5"
-                      >45.69%</span
+                    ><span class="block font-15 weight-500 mb-5">45.69%</span
                     ><span class="block txt-grey">第二产业生产总值</span></span
                   >
                   <div
@@ -894,7 +892,8 @@ onMounted(() => {
                   <div class="row">
                     <div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
                       <span class="txt-dark block counter"
-                        ><span class="counter-anim">203950.8</span>（万人）</span
+                        ><span class="counter-anim">203950.8</span
+                        >（万人）</span
                       >
                       <span class="weight-500 uppercase-font block"
                         >就业人口</span
@@ -921,7 +920,9 @@ onMounted(() => {
                   <div class="row">
                     <div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
                       <span class="txt-dark block counter"
-                        ><span class="counter-anim">711059.34（亿元）</span></span
+                        ><span class="counter-anim"
+                          >711059.34（亿元）</span
+                        ></span
                       >
                       <span class="weight-500 uppercase-font block"
                         >国家财政收入</span
@@ -948,7 +949,7 @@ onMounted(() => {
                   <div class="row">
                     <div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
                       <span class="txt-dark block counter"
-                        ><span class="counter-anim">245588.47（亿元）</span></span
+                        ><span>245588.47（亿元）</span></span
                       >
                       <span class="weight-500 uppercase-font block"
                         >国家财政支出</span
@@ -1113,7 +1114,7 @@ onMounted(() => {
                         <th>count（w）</th>
                         <th>Changes</th>
                         <th>different(w)</th>
-<!--                        <th>Status</th>-->
+                        <!--                        <th>Status</th>-->
                       </tr>
                     </thead>
                     <tbody>
@@ -1131,9 +1132,9 @@ onMounted(() => {
                         <td>
                           <span class="txt-dark weight-500">0.01</span>
                         </td>
-<!--                        <td>-->
-<!--                          <span class="label label-primary">Active</span>-->
-<!--                        </td>-->
+                        <!--                        <td>-->
+                        <!--                          <span class="label label-primary">Active</span>-->
+                        <!--                        </td>-->
                       </tr>
                       <tr>
                         <td>
@@ -1149,9 +1150,9 @@ onMounted(() => {
                         <td>
                           <span class="txt-dark weight-500">0.1</span>
                         </td>
-<!--                        <td>-->
-<!--                          <span class="label label-danger">Closed</span>-->
-<!--                        </td>-->
+                        <!--                        <td>-->
+                        <!--                          <span class="label label-danger">Closed</span>-->
+                        <!--                        </td>-->
                       </tr>
                       <tr>
                         <td>
@@ -1167,9 +1168,9 @@ onMounted(() => {
                         <td>
                           <span class="txt-dark weight-500">0.2</span>
                         </td>
-<!--                        <td>-->
-<!--                          <span class="label label-default">Hold</span>-->
-<!--                        </td>-->
+                        <!--                        <td>-->
+                        <!--                          <span class="label label-default">Hold</span>-->
+                        <!--                        </td>-->
                       </tr>
                       <tr>
                         <td>
@@ -1185,9 +1186,9 @@ onMounted(() => {
                         <td>
                           <span class="txt-dark weight-500">0.09</span>
                         </td>
-<!--                        <td>-->
-<!--                          <span class="label label-default">Hold</span>-->
-<!--                        </td>-->
+                        <!--                        <td>-->
+                        <!--                          <span class="label label-default">Hold</span>-->
+                        <!--                        </td>-->
                       </tr>
                       <tr>
                         <td>
@@ -1203,9 +1204,9 @@ onMounted(() => {
                         <td>
                           <span class="txt-dark weight-500">0.39</span>
                         </td>
-<!--                        <td>-->
-<!--                          <span class="label label-primary">Active</span>-->
-<!--                        </td>-->
+                        <!--                        <td>-->
+                        <!--                          <span class="label label-primary">Active</span>-->
+                        <!--                        </td>-->
                       </tr>
                     </tbody>
                   </table>
