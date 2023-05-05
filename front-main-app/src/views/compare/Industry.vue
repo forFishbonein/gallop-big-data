@@ -1,6 +1,68 @@
 <script setup lang="ts">
 import { ref, onMounted, inject } from "vue";
+import { getThreeIndustry } from "@/apis/compare";
 let echarts = inject("ec"); //引入
+let list1 = [];
+let list2 = [];
+let list3 = [];
+let result = [];
+let pro = [];
+const getThreeIndustryInfo = () => {
+  getThreeIndustry()
+    .then((res) => {
+      // @ts-ignore
+      list1 = res.firstPrimary.slice(0, 50);
+      // @ts-ignore
+      list1 = list1.map(function (subArr) {
+        return [
+          decodeURI(encodeURIComponent(subArr[0])),
+          // @ts-ignore
+          subArr[1].toString(),
+          // @ts-ignore
+          Number(subArr[2]),
+        ];
+      });
+      list1.forEach((e) => {
+        if (!pro.includes(e[0])) {
+          pro.push(e[0]);
+        }
+      });
+      list2 = res.secondPrimary.slice(0, 50);
+      // @ts-ignore
+      list2 = list2.map(function (subArr) {
+        return [
+          decodeURI(encodeURIComponent(subArr[0])),
+          // @ts-ignore
+          subArr[1].toString(),
+          // @ts-ignore
+          Number(subArr[2]),
+        ];
+      });
+      list3 = res.thirdPrimary.slice(0, 50);
+      // @ts-ignore
+      list3 = list3.map(function (subArr) {
+        return [
+          decodeURI(encodeURIComponent(subArr[0])),
+          // @ts-ignore
+          subArr[1].toString(),
+          // @ts-ignore
+          Number(subArr[2]),
+        ];
+      });
+      // @ts-ignore
+      result.push(list1);
+      // @ts-ignore
+      result.push(list2);
+      // @ts-ignore
+      result.push(list3);
+      console.log(result);
+    })
+    .catch((error) => {
+      // @ts-ignore
+      ElMessage({ type: "error", message: error.message });
+    });
+  initEcharts();
+};
 const initEcharts = () => {
   // @ts-ignore
   if ($("#e_chart_1").length > 0) {
@@ -40,8 +102,8 @@ const initEcharts = () => {
         ["重庆市", "2015", 1067],
         ["青海省", "2015", 208],
       ],
-     [
-       ["北京市", "2010", 3233],
+      [
+        ["北京市", "2010", 3233],
         ["河北省", "2010", 8470],
         ["辽宁省", "2010", 7181],
         ["重庆市", "2010", 3624],
@@ -73,7 +135,7 @@ const initEcharts = () => {
         ["青海省", "2015", 761],
       ],
       [
-       ["北京市", "2010", 11608],
+        ["北京市", "2010", 11608],
         ["河北省", "2010", 7060],
         ["辽宁省", "2010", 5245],
         ["重庆市", "2010", 3791],
@@ -103,7 +165,7 @@ const initEcharts = () => {
         ["辽宁省", "2015", 9811],
         ["重庆市", "2015", 7764],
         ["青海省", "2015", 1041],
-      ]
+      ],
       //   [
       //     [48604, 77, 17096869, "Australia", 1990],
       //     [21163, 77.4, 27662440, "Canada", 1990],
@@ -176,7 +238,7 @@ const initEcharts = () => {
       },
       xAxis: {
         type: "category",
-        data: ["北京市", "河北省", "辽宁省", "重庆市", "青海省"],
+        data: pro,
         axisLine: {
           show: false,
         },
@@ -193,7 +255,19 @@ const initEcharts = () => {
       },
       yAxis: {
         type: "category",
-        data: ["2010", "2011", "2012", "2013", "2015","2015"],
+        data: [
+          "2010",
+          "2011",
+          "2012",
+          "2013",
+          "2014",
+          "2015",
+          "2016",
+          "2017",
+          "2018",
+          "2019",
+          "2020",
+        ],
         axisLine: {
           show: false,
         },
@@ -210,13 +284,12 @@ const initEcharts = () => {
         scale: true,
       },
       series: [
-
         {
           name: "第二产业",
-          data: data[1],
+          data: result[1],
           type: "scatter",
           symbolSize: function (data) {
-            return Math.sqrt(data[2]) / 1.5;
+            return Math.sqrt(data[2]) / 10;
           },
           label: {
             emphasis: {
@@ -236,12 +309,12 @@ const initEcharts = () => {
             },
           },
         },
-         {
+        {
           name: "第一产业",
-          data: data[0],
+          data: result[0],
           type: "scatter",
           symbolSize: function (data) {
-            return Math.sqrt(data[2]) / 1.5;
+            return Math.sqrt(data[2]) / 10;
           },
           label: {
             emphasis: {
@@ -275,7 +348,7 @@ const initEcharts = () => {
           },
           smooth: true,
           showSymbol: true,
-          data: data[2],
+          data: result[2],
           markPoint: {
             itemStyle: {
               normal: {
@@ -295,7 +368,8 @@ const selected = () => {
   alert(industry.value);
 };
 onMounted(() => {
-  initEcharts();
+  // initEcharts();
+  getThreeIndustryInfo();
   // 下面是用于改变大小的
   /*****Resize function start*****/
   var sparkResize, echartResize;
@@ -336,7 +410,9 @@ $(document).ready(function () {
       <div class="panel panel-default card-view">
         <div class="panel-heading">
           <div class="pull-left">
-            <h6 class="panel-title txt-dark">Yearly Revenue</h6>
+            <h6 class="panel-title txt-dark">
+              第一产业、第二产业、第三产业对比：行业增加值衡量经济发展情况
+            </h6>
           </div>
           <div class="pull-right">
             <div class="pull-left form-group mb-0 sm-bootstrap-select mr-15">
@@ -369,7 +445,7 @@ $(document).ready(function () {
         </div>
         <div class="panel-wrapper collapse in">
           <div class="panel-body">
-            <ul class="flex-stat mb-10 ml-15">
+            <!-- <ul class="flex-stat mb-10 ml-15">
               <li class="text-left auto-width mr-60">
                 <span class="block">Last Year</span>
                 <span class="block txt-dark weight-500 font-18"
@@ -403,7 +479,7 @@ $(document).ready(function () {
                 </span>
                 <div class="clearfix"></div>
               </li>
-            </ul>
+            </ul> -->
             <div id="e_chart_1" class="" style="height: 324px"></div>
           </div>
         </div>
