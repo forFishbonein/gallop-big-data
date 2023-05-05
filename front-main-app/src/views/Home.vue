@@ -650,13 +650,13 @@ onMounted(() => {
                 <li>
                   <span class="block">政府消费水平</span>
                   <span class="block txt-dark weight-500 font-18"
-                    ><span class="counter-anim">111667.6（亿元）</span></span
+                    ><span>111667.6（亿元）</span></span
                   >
                 </li>
                 <li>
                   <span class="block">居民消费水平</span>
                   <span class="block txt-dark weight-500 font-18"
-                    ><span class="counter-anim">325216（亿元)</span></span
+                    ><span>325216（亿元)</span></span
                   >
                 </li>
                 <li>
@@ -731,7 +731,7 @@ onMounted(() => {
                   <span
                     class="clabels-text font-12 inline-block txt-dark capitalize-font pull-left"
                     ><span class="block font-16 weight-500 mb-5"
-                      ><span class="counter-anim">51</span>%</span
+                      ><span>51</span>%</span
                     ><span class="block txt-grey">Male</span></span
                   >
                   <i
@@ -749,7 +749,7 @@ onMounted(() => {
                   <span
                     class="clabels-text font-12 inline-block txt-dark capitalize-font pull-left"
                     ><span class="block font-16 weight-500 mb-5"
-                      ><span class="counter-anim">49</span>%</span
+                      ><span>49</span>%</span
                     ><span class="block txt-grey">Female</span></span
                   >
                   <i
@@ -865,7 +865,7 @@ onMounted(() => {
                   <div class="row">
                     <div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
                       <span class="txt-dark block counter"
-                        ><span class="counter-anim">5.530625761%</span></span
+                        ><span>5.53063%</span></span
                       >
                       <span class="weight-500 uppercase-font block font-13"
                         >人口自然增长率</span
@@ -892,8 +892,7 @@ onMounted(() => {
                   <div class="row">
                     <div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
                       <span class="txt-dark block counter"
-                        ><span class="counter-anim">203950.8</span
-                        >（万人）</span
+                        ><span>203950.8</span></span
                       >
                       <span class="weight-500 uppercase-font block"
                         >就业人口</span
@@ -920,9 +919,7 @@ onMounted(() => {
                   <div class="row">
                     <div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
                       <span class="txt-dark block counter"
-                        ><span class="counter-anim"
-                          >711059.34（亿元）</span
-                        ></span
+                        ><span>711059.34</span></span
                       >
                       <span class="weight-500 uppercase-font block"
                         >国家财政收入</span
@@ -949,7 +946,7 @@ onMounted(() => {
                   <div class="row">
                     <div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
                       <span class="txt-dark block counter"
-                        ><span>245588.47（亿元）</span></span
+                        ><span>245588.47</span></span
                       >
                       <span class="weight-500 uppercase-font block"
                         >国家财政支出</span
