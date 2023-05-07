@@ -1,5 +1,5 @@
 /*Dashboard2 Init*/
-"use strict"; 
+"use strict";
 
 /*****Ready function start*****/
 $(document).ready(function(){
@@ -17,36 +17,36 @@ $(document).ready(function(){
 			}
 		});
 	}
-	
+
 	if( $('#datable_1').length > 0 )
 		$('#datable_1').DataTable({
 			"bFilter": false,
 			"bLengthChange": false,
 			"bPaginate": false,
 			"bInfo": false,
-			
+
 		});
 });
 /*****Ready function end*****/
 
-/*****Load function start*****/
-$(window).load(function(){
-	window.setTimeout(function(){
-		$.toast({
-			heading: 'Welcome to Elmer',
-			text: 'Use the predefined ones, or specify a custom position object.',
-			position: 'bottom-left',
-			loaderBg:'#f8b32d',
-			icon: 'success',
-			hideAfter: 3500, 
-			stack: 6
-		});
-	}, 3000);
-});
-/*****Load function* end*****/
+// /*****Load function start*****/
+// $(window).load(function(){
+// 	window.setTimeout(function(){
+// 		$.toast({
+// 			heading: 'Welcome to Elmer',
+// 			text: 'Use the predefined ones, or specify a custom position object.',
+// 			position: 'bottom-left',
+// 			loaderBg:'#f8b32d',
+// 			icon: 'success',
+// 			hideAfter: 3500,
+// 			stack: 6
+// 		});
+// 	}, 3000);
+// });
+// /*****Load function* end*****/
 
 /*****E-Charts function start*****/
-var echartsConfig = function() { 
+var echartsConfig = function() {
 	if( $('#e_chart_1').length > 0 ){
 		var eChart_1 = echarts.init(document.getElementById('e_chart_1'));
 		var option = {
@@ -785,7 +785,7 @@ var echartsConfig = function() {
 						}],
 						lineStyle:{
 							normal:{
-							  color:'#f8b32d',  
+							  color:'#f8b32d',
 							}
 						}
 					}
@@ -833,7 +833,7 @@ var echartsConfig = function() {
 					}
 				}
 			},
-			
+
 			series: [{
 				type: 'bar',
 				data: [70, 0, 0],
@@ -888,7 +888,7 @@ var echartsConfig = function() {
 					fontWeight: 'normal',
 					fontFamily: "'Roboto', sans-serif",
 					fontSize: 12
-				}	
+				}
 			},
 			series: [{
 				type: 'pie',
@@ -910,7 +910,7 @@ var echartsConfig = function() {
 /*****E-Charts function end*****/
 
 /*****Sparkline function start*****/
-var sparklineLogin = function() { 
+var sparklineLogin = function() {
 		if( $('#sparkline_4').length > 0 ){
 			$("#sparkline_4").sparkline([2,4,4,6,8,5,6,4,8,6,6,2 ], {
 				type: 'line',
@@ -924,7 +924,7 @@ var sparklineLogin = function() {
 				highlightLineColor: '#667add',
 				highlightSpotColor: '#667add'
 			});
-		}	
+		}
 		if( $('#sparkline_5').length > 0 ){
 			$("#sparkline_5").sparkline([0,2,8,6,8], {
 				type: 'bar',
@@ -936,7 +936,7 @@ var sparklineLogin = function() {
 				barColor: '#667add',
 				highlightSpotColor: '#667add'
 			});
-		}	
+		}
 		if( $('#sparkline_6').length > 0 ){
 			$("#sparkline_6").sparkline([0, 23, 43, 35, 44, 45, 56, 37, 40, 45, 56, 7, 10], {
 				type: 'line',
@@ -961,11 +961,11 @@ $(window).on("resize", function () {
 	/*Sparkline Resize*/
 	clearTimeout(sparkResize);
 	sparkResize = setTimeout(sparklineLogin, 200);
-	
+
 	/*E-Chart Resize*/
 	clearTimeout(echartResize);
 	echartResize = setTimeout(echartsConfig, 200);
-}).resize(); 
+}).resize();
 /*****Resize function end*****/
 
 /*****Function Call start*****/

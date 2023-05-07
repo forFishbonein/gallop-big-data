@@ -1,29 +1,29 @@
 /*Dashboard Init*/
- 
-"use strict"; 
+
+"use strict";
 
 /*****Load function start*****/
-$(window).load(function(){
-	window.setTimeout(function(){
-		$.toast({
-			heading: 'Welcome to Elmer',
-			text: 'Use the predefined ones, or specify a custom position object.',
-			position: 'bottom-left',
-			loaderBg:'#f8b32d',
-			icon: 'success',
-			hideAfter: 3500, 
-			stack: 6
-		});
-	}, 3000);
-});
+// $(window).load(function(){
+// 	window.setTimeout(function(){
+// 		$.toast({
+// 			heading: 'Welcome to Elmer',
+// 			text: 'Use the predefined ones, or specify a custom position object.',
+// 			position: 'bottom-left',
+// 			loaderBg:'#f8b32d',
+// 			icon: 'success',
+// 			hideAfter: 3500,
+// 			stack: 6
+// 		});
+// 	}, 3000);
+// });
 /*****Load function* end*****/
 
 /*****E-Charts function start*****/
-var echartsConfig = function() { 
+var echartsConfig = function() {
 	if( $('#e_chart_1').length > 0 ){
 		var eChart_1 = echarts.init(document.getElementById('e_chart_1'));
 		var option = {
-			color: ['#fd7397','#d36ee8', '#119dd2', '#667add'],		
+			color: ['#fd7397','#d36ee8', '#119dd2', '#667add'],
 			tooltip: {
 				trigger: 'axis',
 				backgroundColor: 'rgba(33,33,33,1)',
@@ -41,7 +41,7 @@ var echartsConfig = function() {
 					fontWeight: 'normal',
 					fontFamily: "'Roboto', sans-serif",
 					fontSize: 12
-				}	
+				}
 			},
 			toolbox: {
 				show: true,
@@ -129,7 +129,7 @@ var echartsConfig = function() {
 /*****E-Charts function end*****/
 
 /*****Sparkline function start*****/
-var sparklineLogin = function() { 
+var sparklineLogin = function() {
 	if( $('#sparkline_6').length > 0 ){
 		$("#sparkline_6").sparkline([12,4,7,3,8,6,8,5], {
 			type: 'bar',
@@ -141,7 +141,7 @@ var sparklineLogin = function() {
 			barColor: '#667add',
 			highlightSpotColor: '#667add'
 		});
-	}	
+	}
 	if( $('#sparkline_7').length > 0 ){
 		$("#sparkline_7").sparkline([5,4,24], {
 			type: 'pie',
@@ -149,7 +149,7 @@ var sparklineLogin = function() {
 			height: '100',
 			sliceColors: ['#d36ee8', '#119dd2', '#667add'],
 		});
-	}	
+	}
 }
 /*****Sparkline function end*****/
 
@@ -159,11 +159,11 @@ $(window).on("resize", function () {
 	/*Sparkline Resize*/
 	clearTimeout(sparkResize);
 	sparkResize = setTimeout(sparklineLogin, 200);
-	
+
 	/*E-Chart Resize*/
 	clearTimeout(echartResize);
 	echartResize = setTimeout(echartsConfig, 300);
-}).resize(); 
+}).resize();
 /*****Resize function end*****/
 
 /*****Function Call start*****/

@@ -80,6 +80,13 @@ export const routes: Array<RouteRecordRaw> = [
         name: "Detail",
         component: Detail,
         meta: { title: "指标详情页", keepAlive: true, showTab: true },
+        // beforeEnter: (to, from, next) => {
+        //   console.log(from);
+        //   // 假设要传递参数为"paramValue"
+        //   const fromFlag = 0;
+        //   // 将参数传递给下一个导航
+        //   next();
+        // },
         props(route) {
           return {
             keyword: route.params.keyword,

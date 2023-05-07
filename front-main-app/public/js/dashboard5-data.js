@@ -1,6 +1,6 @@
 /*Dashboard Init*/
- 
-"use strict"; 
+
+"use strict";
 
 /*****Ready function start*****/
 $(document).ready(function(){
@@ -16,23 +16,23 @@ $(document).ready(function(){
 /*****Ready function end*****/
 
 /*****Load function start*****/
-$(window).load(function(){
-	window.setTimeout(function(){
-		$.toast({
-			heading: 'Welcome to Elmer',
-			text: 'Use the predefined ones, or specify a custom position object.',
-			position: 'bottom-left',
-			loaderBg:'#f8b32d',
-			icon: 'success',
-			hideAfter: 3500, 
-			stack: 6
-		});
-	}, 3000);
-});
+// $(window).load(function(){
+// 	window.setTimeout(function(){
+// 		$.toast({
+// 			heading: 'Welcome to Elmer',
+// 			text: 'Use the predefined ones, or specify a custom position object.',
+// 			position: 'bottom-left',
+// 			loaderBg:'#f8b32d',
+// 			icon: 'success',
+// 			hideAfter: 3500,
+// 			stack: 6
+// 		});
+// 	}, 3000);
+// });
 /*****Load function* end*****/
 
 /*****E-Charts function start*****/
-var echartsConfig = function() { 
+var echartsConfig = function() {
 	if( $('#e_chart_1').length > 0 ){
 		var eChart_1 = echarts.init(document.getElementById('e_chart_1'));
 		//data
@@ -68,9 +68,9 @@ var echartsConfig = function() {
 					fontWeight: 'normal',
 					fontFamily: "'Roboto', sans-serif",
 					fontSize: 12
-				}	
+				}
 			},
-			color: ['#667add'],	
+			color: ['#667add'],
 			grid:{
 				top: 60,
 				left:40,
@@ -153,9 +153,9 @@ var echartsConfig = function() {
 					fontWeight: 'normal',
 					fontFamily: "'Roboto', sans-serif",
 					fontSize: 12
-				}	
+				}
 			},
-			color: ['#667add'],	
+			color: ['#667add'],
 			grid: {
 				top: 60,
 				left:40,
@@ -249,7 +249,7 @@ var echartsConfig = function() {
 					fontWeight: 'normal',
 					fontFamily: "'Roboto', sans-serif",
 					fontSize: 12
-				}	
+				}
 			},
 			xAxis: {
 				type: 'category',
@@ -271,7 +271,7 @@ var echartsConfig = function() {
 				"splitArea": {
 					"show": false
 				},
-				
+
 				data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
 			},
 			grid: {
@@ -398,7 +398,7 @@ var echartsConfig = function() {
 					fontWeight: 'normal',
 					fontFamily: "'Roboto', sans-serif",
 					fontSize: 12
-				}	
+				}
 			},
 			angleAxis: {
 				type: 'value',
@@ -449,7 +449,7 @@ var echartsConfig = function() {
 						color: '#667add'
 					}
 					},
-				
+
 				data: data
 			}]
 		};
@@ -465,7 +465,7 @@ $(window).on("resize", function () {
 	/*E-Chart Resize*/
 	clearTimeout(echartResize);
 	echartResize = setTimeout(echartsConfig, 200);
-}).resize(); 
+}).resize();
 /*****Resize function end*****/
 
 /*****Function Call start*****/

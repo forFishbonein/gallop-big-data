@@ -3,7 +3,11 @@ import { ref } from "vue";
 import SearchInput from "@/components/SearchInput.vue";
 import { useRouter } from "vue-router";
 import { keywordStore } from "@/store/keyword";
+import { onBeforeRouteLeave } from "vue-router";
+import { useRoute } from "vue-router";
 const router = useRouter();
+const route = useRoute();
+
 // let searchKey2 = ref("");
 const kstore = keywordStore();
 // let searchData2 = ref("");
@@ -12,14 +16,30 @@ const onSearch = (searchKey) => {
   // alert(searchKey);
   // searchKey2.value = searchKey;
   // searchData2.value = searchData;
+  console.log(route.path);
   kstore.keyword = searchKey;
-  router.push({
-    name: "Detail",
-    // params: {
-    //   keyword: searchKey2.value,
-    // },
-  });
+  if (route.path == "/detail") {
+    // alert(111);
+    // location.reload();
+    // @ts-ignore
+    location.reload(true); //TODO失效
+  } else {
+    // alert(222);
+    router.push({
+      name: "Detail",
+      // params: {
+      //   keyword: searchKey2.value,
+      // },
+    });
+  }
 };
+// onBeforeRouteLeave((to, from, next) => {
+//   // 在此处执行你的逻辑
+//   // 可以进行清理操作或者弹出确认提示框
+//   console.log(to);
+//   // 继续路由导航
+//   next();
+// });
 </script>
 
 <template>

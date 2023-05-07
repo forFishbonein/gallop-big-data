@@ -7,8 +7,8 @@ let list2 = [];
 let list3 = [];
 let result = [];
 let pro = [];
-const getThreeIndustryInfo = () => {
-  getThreeIndustry()
+const getThreeIndustryInfo = async () => {
+  await getThreeIndustry()
     .then((res) => {
       // @ts-ignore
       list1 = res.firstPrimary.slice(0, 50);

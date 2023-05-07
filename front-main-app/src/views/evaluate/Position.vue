@@ -5,6 +5,7 @@ import ecStat from "echarts-stat";
 let echarts = inject("ec"); //引入
 const name = ref("");
 let result = [];
+let haveData = ref(false);
 const getScatterEvaluateInfo = async () => {
   // @ts-ignore
   ElMessage({ type: "success", message: "开始计算，请耐心等待！" });
@@ -25,6 +26,7 @@ const getScatterEvaluateInfo = async () => {
         ];
       });
       console.log(result);
+      haveData.value = true;
     })
     .catch((error) => {
       // @ts-ignore
@@ -201,7 +203,10 @@ onMounted(() => {
   </div>
   <div class="row row-center">
     <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
-      <div class="panel panel-default card-view panel-refresh relative">
+      <div
+        class="panel panel-default card-view panel-refresh relative"
+        v-if="haveData"
+      >
         <div class="refresh-container">
           <div class="la-anim-1"></div>
         </div>
@@ -217,6 +222,7 @@ onMounted(() => {
           </div>
         </div>
       </div>
+      <el-empty :image-size="200" description="无结果" v-else />
     </div>
   </div>
 </template>

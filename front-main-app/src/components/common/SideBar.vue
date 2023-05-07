@@ -126,13 +126,13 @@
         </a>
         <ul id="ecom_dr2" class="collapse collapse-level-1">
           <li>
-            <router-link to="/predict/indicator">基于指标预测</router-link>
+            <router-link to="/predict/province">基于省份预测</router-link>
           </li>
           <li>
             <router-link to="/predict/city">基于城市预测</router-link>
           </li>
           <li>
-            <router-link to="/predict/province">基于省份预测</router-link>
+            <router-link to="/predict/indicator">基于指标预测</router-link>
           </li>
         </ul>
       </li>

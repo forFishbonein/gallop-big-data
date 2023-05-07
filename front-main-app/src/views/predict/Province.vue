@@ -8,6 +8,7 @@ let resultPredict = [];
 let dataX = [];
 let realY = [];
 let predictY = [];
+let haveData = ref(false);
 const getLinePredictInfo = async () => {
   // @ts-ignore
   ElMessage({ type: "success", message: "开始计算，请耐心等待！" });
@@ -30,6 +31,7 @@ const getLinePredictInfo = async () => {
       console.log(dataX);
       console.log(realY);
       console.log(predictY);
+      haveData.value = true;
     })
     .catch((error) => {
       // @ts-ignore
@@ -208,7 +210,10 @@ onMounted(() => {
   </div>
   <div class="row row-center">
     <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
-      <div class="panel panel-default card-view panel-refresh relative">
+      <div
+        class="panel panel-default card-view panel-refresh relative"
+        v-if="haveData"
+      >
         <div class="refresh-container">
           <div class="la-anim-1"></div>
         </div>
@@ -265,6 +270,7 @@ onMounted(() => {
           </div>
         </div>
       </div>
+      <el-empty :image-size="200" description="无结果" v-else />
     </div>
   </div>
 </template>

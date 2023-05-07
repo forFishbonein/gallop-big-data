@@ -10,6 +10,11 @@ import {
   getLineInfoByAreaApi,
 } from "@/apis/detail";
 import { keywordStore } from "@/store/keyword";
+// import { useRoute } from "vue-router";
+// const route = useRoute();
+// console.log(route.params);
+// const fromFlag = route.query.param;
+// alert(fromFlag);
 // const props = defineProps<{
 //   keyword: string;
 // }>();
@@ -513,7 +518,7 @@ const initMap = () => {
     }
   });
 };
-const displayFlag = ref(1);
+const displayFlag = ref(0);
 // 保证每次进入该页面都会刷新一次的工具方法：
 const refresh = () => {
   //refreshFlag为true代表刷新过
@@ -572,17 +577,19 @@ const selectOptions = () => {
     // alert(year.value);
   } else {
     // @ts-ignore
-    ElMessage({ type: "error", message: "请先搜索指标！" });
+    ElMessage({ type: "warning", message: "请先搜索指标！" });
   }
 };
 onMounted(() => {
+  // alert(111);
   if (kstore.keyword.length > 0) {
+    displayFlag.value = 1;
     // alert("开始查询");
     getBubbleInfo();
     getLineInfo();
   } else {
     // @ts-ignore
-    ElMessage({ type: "error", message: "请先搜索指标！" });
+    ElMessage({ type: "warning", message: "请先搜索指标！" });
   }
   // initEcharts2();
   // initMap();
@@ -591,6 +598,7 @@ onBeforeRouteLeave((to, from, next) => {
   // 在此处执行你的逻辑
   // 可以进行清理操作或者弹出确认提示框
   kstore.keyword = "";
+  store.refreshFlag = false;
   // 继续路由导航
   next();
 });
@@ -691,12 +699,17 @@ onBeforeRouteLeave((to, from, next) => {
         确认
       </button>
     </div>
+    <div class="row row-center" v-if="displayFlag === 0">
+      <div class="col-lg-10">
+        <el-empty :image-size="200" description="无结果" />
+      </div>
+    </div>
     <div class="row row-center" v-if="displayFlag === 1">
       <div class="col-lg-10">
         <div class="panel panel-default card-view">
           <div class="panel-heading">
             <div class="pull-left">
-              <h6 class="panel-title txt-dark">气泡图</h6>
+              <h6 class="panel-title txt-dark">指标数据分布</h6>
             </div>
             <div class="clearfix"></div>
           </div>
@@ -713,7 +726,7 @@ onBeforeRouteLeave((to, from, next) => {
         <div class="panel panel-default card-view">
           <div class="panel-heading">
             <div class="pull-left">
-              <h6 class="panel-title txt-dark">折线图</h6>
+              <h6 class="panel-title txt-dark">指标平均值年份趋势</h6>
             </div>
             <div class="clearfix"></div>
           </div>
@@ -730,7 +743,7 @@ onBeforeRouteLeave((to, from, next) => {
         <div class="panel panel-default card-view">
           <div class="panel-heading">
             <div class="pull-left">
-              <h6 class="panel-title txt-dark">world map</h6>
+              <h6 class="panel-title txt-dark">省份指标数值</h6>
             </div>
             <div class="clearfix"></div>
           </div>
@@ -750,7 +763,7 @@ onBeforeRouteLeave((to, from, next) => {
           </div>
           <div class="panel-heading">
             <div class="pull-left">
-              <h6 class="panel-title txt-dark">Line Chart</h6>
+              <h6 class="panel-title txt-dark">年份趋势</h6>
             </div>
             <div class="clearfix"></div>
           </div>

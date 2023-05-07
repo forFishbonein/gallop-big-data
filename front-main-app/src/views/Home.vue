@@ -472,6 +472,19 @@ onMounted(() => {
     })
     .resize();
   /*****Resize function end*****/
+  $(window).load(function () {
+    window.setTimeout(function () {
+      $.toast({
+        heading: "欢迎来到飞驰大数据",
+        text: "我们将为你呈现最全面的宏观经济发展状况！",
+        position: "bottom-left",
+        loaderBg: "#f8b32d",
+        icon: "success",
+        hideAfter: 3500,
+        stack: 6,
+      });
+    }, 3000);
+  });
 });
 </script>
 <template>

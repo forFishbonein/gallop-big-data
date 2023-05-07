@@ -9,6 +9,7 @@ let result = [];
 let dataMap = [];
 let max = 0;
 let min = 0;
+let haveData = ref(false);
 const getMapEvaluateInfo = async () => {
   // @ts-ignore
   ElMessage({ type: "success", message: "开始计算，请耐心等待！" });
@@ -49,6 +50,7 @@ const getMapEvaluateInfo = async () => {
           value: parseFloat(e[1].toFixed(2)),
         });
         console.log(dataMap);
+        haveData.value = true;
       });
     })
     .catch((error) => {
@@ -297,7 +299,10 @@ onMounted(() => {
   </div>
   <div class="row row-center">
     <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-      <div class="panel panel-default card-view panel-refresh relative">
+      <div
+        class="panel panel-default card-view panel-refresh relative"
+        v-if="haveData"
+      >
         <div class="refresh-container">
           <div class="la-anim-1"></div>
         </div>
@@ -313,6 +318,7 @@ onMounted(() => {
           </div>
         </div>
       </div>
+      <el-empty :image-size="200" description="无结果" v-else />
     </div>
   </div>
 </template>
